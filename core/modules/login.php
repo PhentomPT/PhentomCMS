@@ -2,14 +2,16 @@
 //Refuses direct access
 if (!defined("PhentomCMS")){ exit; }
 
+include_once "language/".$_SESSION['lang']."/login.php";
+
 if (!isset($_SESSION['username']) OR empty($_SESSION['username'])){
 	?>
 	<!-- Content -->
-		<h2 class="user">Login</h2>
+		<h2 class="user"><?php echo $lang['login']; ?></h2>
 		<form action="" method="post">
-			Username:<br />
+			<?php echo $lang['username']; ?>:<br />
 			<input type="text" name="username" required="required" autocomplete="off"/><p />
-			Password:<br />
+			<?php echo $lang['password']; ?>:<br />
 			<input type="password" name="password" required="required" autocomplete="off"/><p />
 			<input type="submit" value="Login" />
 		</form>
@@ -19,6 +21,6 @@ if (!isset($_SESSION['username']) OR empty($_SESSION['username'])){
 	}
 }
 else{
-	echo "<div class='fail'>You already have an account...</div>";
+	echo "<div class='fail'>".$lang['has_account']."</div>";
 }
 ?>

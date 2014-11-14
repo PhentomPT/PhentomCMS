@@ -2,6 +2,8 @@
 //Refuses direct access
 if (!defined("PhentomCMS")){ exit; }
 
+include_once "language/".$_SESSION['lang']."/news.php";
+
 $mysqli -> select_db("wowcms");
 $result = $mysqli -> query("SELECT * FROM news ORDER BY id DESC LIMIT 5");
 

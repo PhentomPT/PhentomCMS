@@ -1,8 +1,17 @@
 <?php
+session_start();
+
 define("PhentomCMS", "WoW Free CMS");
 
 include_once "../content/include/db.php";
 include_once "include/functions.php";
+
+//Checks If language Exists
+if(!isset($_SESSION['lang']) OR empty($_SESSION['lang'])){
+	$_SESSION['lang'] = "english";
+}
+
+include_once "include/language/".$_SESSION['lang']."/general.php";
 
 $time = microtime();	
 $time = explode(' ', $time);
@@ -14,7 +23,7 @@ $start = $time;
 <html>
 	<head>
 		<meta charset="UTF-8" />
-		<title>PhentomCMS - Admin Panel</title>
+		<title>PhentomCMS - <?php echo $lang['admin_panel']; ?></title>
 		<link rel="icon" type="image/x-icon" href="images/wowicon.png"/>
     	<link rel="stylesheet" type="text/css" href="style/main.css">
     	<script src="../content/scripts/jquery.min.js"></script>
@@ -57,11 +66,11 @@ $start = $time;
 									header("Location: index.php");
 								}
 								else{
-									echo "<div class='fail'>Wrong Email/Password</div>";
+									echo "<div class='fail'>".$lang['wrong_userpass']."</div>";
 								}
 							}
 							else{
-								echo "<div class='fail'>Wrong Email/Password</div>";
+								echo "<div class='fail'>".$lang['wrong_userpass']."</div>";
 							}
 						}
 						else{
@@ -75,20 +84,20 @@ $start = $time;
 								}
 							}
 							else{
-								echo "<div class='fail'>Wrong Email/Password</div>";
+								echo "<div class='fail'>".$lang['wrong_userpass']."</div>";
 							}
 						}
 					}
 					else{
-						echo "<div class='fail'>Wrong Email/Password</div>";
+						echo "<div class='fail'>".$lang['wrong_userpass']."</div>";
 					}
 					?>
 				</div>
 				<div id="login">
 					<form action="" method="post">
-						Username:<br /><input type="text" name="username" required="required" autocomplete="off"/><br />
-						Password:<br /><input type="password" name="password" required="required" autocomplete="off"/><p />
-						<input type="submit" value="Entrar" />
+						<?php echo $lang['username']; ?>:<br /><input type="text" name="username" required="required" autocomplete="off"/><br />
+						<?php echo $lang['password']; ?>:<br /><input type="password" name="password" required="required" autocomplete="off"/><p />
+						<input type="submit" value="<?php echo $lang['login']; ?>" />
 					</form>
 				</div>
 				<div class="div_bar"></div><p/>
@@ -103,21 +112,21 @@ $start = $time;
 			<div id="cpanel">
 				<div id='menu'>
 					<div class="welcome">
-						<a class="welcome_txt">Welcome,<b> <?php echo ucfirst($_SESSION['adminuser']); ?>.</b></a>
+						<a class="welcome_txt"><?php echo $lang['welcome']; ?>,<b> <?php echo ucfirst($_SESSION['adminuser']); ?>.</b></a>
 					</div>
 					<div class="menu">
-						<a href="?page=dashboard"><button><img src="images/dashboard.png"/> Dashboard</button></a>
-						<a href="?page=website"><button><img src="images/website.png"/> Website</button></a>
-						<a href="?page=accounts"><button><img src="images/accounts.png"/> Accounts</button></a>
-						<a href="?page=tools"><button><img src="images/settings.png"/> Tools</button></a>
-						<a href="?page=extensions"><button><img src="images/extensions.png"/> Extensions</button></a>
-						<a href="?page=modules"><button><img src="images/modules.png"/> Modules</button></a>
-						<a href="?page=plugins"><button><img src="images/plugins.png"/> Plugins</button></a>
-						<a href="?page=statistics"><button><img src="images/statistics.png"/> Statistics</button></a>
-						<a href="?page=themes"><button><img src="images/themes.png"/> Themes</button></a>
-						<a href="?page=languages"><button><img src="images/languages.png"/> Languages</button></a>
-						<a href="?page=info"><button><img src="images/info.png"/> Info</button></a>
-						<a href='?page=sair'><button><img src="images/logout.png"/> Logout</button></a>
+						<a href="<?php echo "?page=".strtolower($lang['dashboard']); ?>"><button><img src="images/dashboard.png"/> <?php echo $lang['dashboard']; ?></button></a>
+						<a href="<?php echo "?page=".strtolower($lang['website']); ?>"><button><img src="images/website.png"/> <?php echo $lang['website']; ?></button></a>
+						<a href="<?php echo "?page=".strtolower($lang['accounts']); ?>"><button><img src="images/accounts.png"/> <?php echo $lang['accounts']; ?></button></a>
+						<a href="<?php echo "?page=".strtolower($lang['tools']); ?>"><button><img src="images/settings.png"/> <?php echo $lang['tools']; ?></button></a>
+						<a href="<?php echo "?page=".strtolower($lang['extensions']); ?>"><button><img src="images/extensions.png"/> <?php echo $lang['extensions']; ?></button></a>
+						<a href="<?php echo "?page=".strtolower($lang['modules']); ?>"><button><img src="images/modules.png"/> <?php echo $lang['modules']; ?></button></a>
+						<a href="<?php echo "?page=".strtolower($lang['plugins']); ?>"><button><img src="images/plugins.png"/> <?php echo $lang['plugins']; ?></button></a>
+						<a href="<?php echo "?page=".strtolower($lang['statistics']); ?>"><button><img src="images/statistics.png"/> <?php echo $lang['statistics']; ?></button></a>
+						<a href="<?php echo "?page=".strtolower($lang['themes']); ?>"><button><img src="images/themes.png"/> <?php echo $lang['themes']; ?></button></a>
+						<a href="<?php echo "?page=".strtolower($lang['languages']); ?>"><button><img src="images/languages.png"/> <?php echo $lang['languages']; ?></button></a>
+						<a href="<?php echo "?page=".strtolower($lang['info']); ?>"><button><img src="images/info.png"/> <?php echo $lang['info']; ?></button></a>
+						<a href="<?php echo "?page=".strtolower($lang['logout']); ?>"><button><img src="images/logout.png"/> <?php echo $lang['logout']; ?></button></a>
 					</div>
 				</div>
 				<div id='content'>
@@ -125,7 +134,7 @@ $start = $time;
 						<a class="page_title_txt">
 							<?php
 							if (!isset($_GET['page'])){
-								echo "Dashboard";
+								echo $lang['dashboard'];
 							}
 							else{
 								echo ucfirst($_GET['page']);
@@ -136,44 +145,44 @@ $start = $time;
 					<div class="content">
 						<?php
 						//Modules
-						if (!isset($_GET['page']) OR $_GET['page']=="dashboard"){
+						if (!isset($_GET['page']) OR $_GET['page'] == strtolower($lang['dashboard'])){
 							include_once "include/dashboard.php";
 						}
-						elseif($_GET['page']=="website"){
+						elseif($_GET['page'] == strtolower($lang['website'])){
 							include_once "include/website.php";
 						}
-						elseif($_GET['page']=="accounts"){
+						elseif($_GET['page'] == strtolower($lang['accounts'])){
 							include_once "include/accounts.php";
 						}
-						elseif($_GET['page']=="tools"){
+						elseif($_GET['page'] == strtolower($lang['tools'])){
 							include_once "include/tools.php";
 						}
-						elseif($_GET['page']=="extensions"){
+						elseif($_GET['page'] == strtolower($lang['extensions'])){
 							include_once "include/extensions.php";
 						}
-						elseif($_GET['page']=="modules"){
+						elseif($_GET['page'] == strtolower($lang['modules'])){
 							include_once "include/modules.php";
 						}
-						elseif($_GET['page']=="plugins"){
+						elseif($_GET['page'] == strtolower($lang['plugins'])){
 							include_once "include/plugins.php";
 						}
-						elseif($_GET['page']=="statistics"){
+						elseif($_GET['page'] == strtolower($lang['statistics'])){
 							include_once "include/statistics.php";
 						}
-						elseif($_GET['page']=="themes"){
+						elseif($_GET['page'] == strtolower($lang['themes'])){
 							include_once "include/themes.php";
 						}
-						elseif($_GET['page']=="languages"){
+						elseif($_GET['page'] == strtolower($lang['languages'])){
 							include_once "include/languages.php";
 						}
-						elseif($_GET['page']=="info"){
+						elseif($_GET['page'] == strtolower($lang['info'])){
 							include_once "include/info.php";
 						}
-						elseif ($_GET['page']=="sair"){
+						elseif ($_GET['page'] == strtolower($lang['logout'])){
 							logout();
 						}
 						else {
-							echo "<p><div class='fail'>Page not found</div></p>";
+							echo "<p><div class='fail'>".$lang['page_not_found']."</div></p>";
 						}
 						?>
 						<div class="clear"></div>

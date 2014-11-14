@@ -2,10 +2,8 @@
 //Refuses direct access
 if (!defined("PhentomCMS")){ exit; }
 ?>
-<div class="fail">
-	We're sorry but the page your trying to access its not available in this CMS version.<br />
-	This feature will be added in future versions.
-</div>
+<!-- Content -->
+<?php echo $lang['not_available']; ?>
 <!--Content
 <div class="content_b">
 	<div class="box">

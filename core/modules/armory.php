@@ -1,10 +1,11 @@
 <?php
 //Refuses direct access
 if (!defined("PhentomCMS")){ exit; }
+
+include_once "language/".$_SESSION['lang']."/armory.php";
 ?>
 <div class="fail">
-	We're sorry but the page your trying to access its not available in this CMS version.<br />
-	This feature will be added in future versions.
+	<?php echo $lang['not_available']; ?>
 </div>
 <!--<img src="content/images/armory.png" />
 <form >

@@ -2,12 +2,14 @@
 //Refuses direct access
 if (!defined("PhentomCMS")){ exit; }
 
+include_once "language/".$_SESSION['lang']."/vote.php";
+
 if (!isset($_SESSION['username']) OR empty($_SESSION['username'])){
-	echo "<div class='fail'>Sorry but have to login first to view this page.</div>";
+	echo "<div class='fail'>".$lang['login_first']."</div>";
 }
 else{
 	?>
-	<h2 class="user">Vote</h2>
+	<h2 class="user"><?php echo $lang['vote'] ; ?></h2>
 	<?php 
 	$mysqli -> select_db($acc_db);
 	

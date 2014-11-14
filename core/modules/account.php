@@ -2,6 +2,8 @@
 //Refuses direct access
 if (!defined("PhentomCMS")){ exit; }
 
+include_once "language/".$_SESSION['lang']."/account.php";
+
 if (!isset($_SESSION['username']) OR empty($_SESSION['username'])){
 	echo "<div class='fail'>Sorry but you must fist login to view this page.</div>";
 }
@@ -11,8 +13,8 @@ else{
 		<tr>
 			<th>User</th>
 			<th>Email</th>
-			<th>VP</th>
-			<th>DP</th>
+			<th>Vote Points</th>
+			<th>Donation Points</th>
 		</tr>
 		<tr>
 			<td>Phentom</td>

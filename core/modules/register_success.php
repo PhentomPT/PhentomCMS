@@ -1,2 +1,8 @@
-<h2 class="user">Account Created!</h2>
-Thank you for joining us, hope to see you in-game!
+<?php
+//Refuses direct access
+if (!defined("PhentomCMS")){ exit; }
+
+include_once "language/".$_SESSION['lang']."/register_success.php";
+?>
+<h2 class="user"><?php echo $lang['created']; ?></h2>
+<?php echo $lang['created_success']; ?>

@@ -1,6 +1,8 @@
 <?php
 //Refuses direct access
 if (!defined("PhentomCMS")){ exit; }
+
+include_once "language/".$_SESSION['lang']."/chat.php";
 ?>
 <div class="box">
 	<h3>Chat</h3>
