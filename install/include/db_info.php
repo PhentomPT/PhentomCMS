@@ -32,6 +32,7 @@ else{
 			<?php	
 		}
 		else{
+			$db_name = "wowcms";
 			$config_file = 'content/include/db.php';
 			$handle = fopen($config_file, 'a') or die('Cannot open file:  '.$config_file); //opens file
 			$data = '//Refuses direct access
@@ -42,7 +43,7 @@ ob_start();
 $host="'.$_POST["host"].'"; 
 $user="'.$_POST["db-user"].'"; 
 $password="'.$_POST["db-pass"].'"; 
-$database="wowcms";
+$database="'.$db_name.'";
 
 $mysqli = new mysqli($host, $user, $password, $database);
 			
@@ -96,7 +97,7 @@ switch ($expansion) {
 			fwrite($handle, $data);
 			fclose($handle);
 			
-			$create_database = "CREATE DATABASE IF NOT EXISTS `test`";
+			$create_database = "CREATE DATABASE IF NOT EXISTS `".$db_name."`";
 			
 			$create_table1 = "
 				CREATE TABLE IF NOT EXISTS `chat` (
@@ -177,7 +178,7 @@ switch ($expansion) {
 					(8, 'Register', '?page=register', 5, 0, 'right');";
 				
 			mysqli_query($try_connection, $create_database);
-			mysqli_select_db($try_connection, "test");
+			mysqli_select_db($try_connection, $db_name);
 			mysqli_query($try_connection, $create_table1);
 			mysqli_query($try_connection, $create_table2);
 			mysqli_query($try_connection, $create_table3);
