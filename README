@@ -16,12 +16,3 @@ Warning:
 Author: Phentom
 Website: Phentom.net
 Description: Wow Free CMS
-
----
-Advices:
-- Make the code following object oriented concepts, create classes any sign of procedural programming
-- Separate markup from programming language => MVC
-- Think of introducing an advanced module system (easier to do with OOP & MVC)
-- Use abstraction and polymorphism to support alle famous World of Warcraft Server Emulators (at least TrinityCore, MaNGOS and ArcEmu)
-- Create a seperate folder or file for configuration and settings
-- Make the language system more centralized
