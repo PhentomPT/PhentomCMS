@@ -1,6 +1,6 @@
 	PhentomCMS
 - The Best WoW Free CMS -
--------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
 
 Warning:
 -This project is under development.
@@ -11,8 +11,10 @@ Warning:
 -If you use this CMS i would love that you left the credits.
 -If you want to see more or different features just tell your idea.
 
--------------------------------------------------------------------------------------------------------------
+Login/Register works in TrinityCore,TrinityCoreV6,Mangos,Arcemu.
+----------------------------------------------------------------------------------------
 
 Author: Phentom
 Website: Phentom.net
 Description: Wow Free CMS
+Special Thanks: jChriz17(German translations), Lionzero's(Files to support trinity core v6)
