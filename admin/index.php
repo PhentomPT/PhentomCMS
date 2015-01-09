@@ -1,6 +1,5 @@
 <?php
 session_start();
-ob_start();
 
 define("PhentomCMS", "WoW Free CMS");
 
