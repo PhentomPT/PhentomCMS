@@ -37,8 +37,6 @@ else{
 			$handle = fopen($config_file, 'a') or die('Cannot open file:  '.$config_file); //opens file
 			$data = '//Refuses direct access
 if (!defined("PhentomCMS")){ exit; }
-
-ob_start();
 			
 $host="'.$_POST["host"].'"; 
 $user="'.$_POST["db-user"].'"; 
@@ -66,7 +64,7 @@ while($row = $infoquery -> fetch_array(MYSQLI_ASSOC)){
 	$slider = $row["slider"];
 }
 			
-$cms_version = "1.0 Beta";
+$cms_version = "1.1 Beta";
 			
 switch ($expansion) {
 	case "0":
