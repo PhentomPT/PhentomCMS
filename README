@@ -22,8 +22,9 @@ Special Thanks: jChriz17(German translations), Lionzero's(Files to support trini
 --------------------------------------------------------------------------------
 
 V2 Release(Comming Soon)
-New Specs:
--A New File Structure
--Template Engine
--OOP
--Plugin System
+ChangeLog:
+-A New File Structure.
+-Template Engine.
+-OOP.
+-Plugin System.
+-Integrated Forum.
