@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 ob_start();
 
@@ -8,6 +9,11 @@ include_once(ROOT.'/core/lib/AltoRouter.php');
 include_once(ROOT.'/core/lib/layout.php');
 include_once(ROOT.'/core/lib/medoo.php');
 include_once(ROOT.'/core/lib/page.php');
+
+$globalSettings['projectRoot'] = str_replace($_SERVER['DOCUMENT_ROOT'],'',str_replace('\\','/',__DIR__));
+$globalSettings['themeAssets'] = $globalSettings['projectRoot'].'/content/styles/';
+
+
 
 
 function __autoload($className)
@@ -19,8 +25,7 @@ function __autoload($className)
 	// $error->Add('Could not load page '.$className);
 	// $error->abort();
 } 
-//temp global settings
-$globalSettings = array();
+
 
 //Create the layout
 $layout = new layout('default',$globalSettings);
@@ -29,11 +34,20 @@ $layout = new layout('default',$globalSettings);
 $router = new AltoRouter();
 
 //set basepath to current directory
-$router->setBasePath(ROOT);
+$router->setBasePath('/git/PhentomCMS');
 
 //static routes
-$router->map( 'GET', '/', $home = new home($layout, 0,null,1), 'home' );
-$router->map( 'GET', '/', $notfound = new page($layout, 0, '404',0) );
+
+
+
+$router->map( 'GET', '/', function(){
+	$home = new home($GLOBALS['layout'], 0,null,0);
+	$home->active();
+}, 'home' );
+$router->map( 'GET', '/404/', function(){
+	$notfound = new page($GLOBALS['layout'], 0, '404',0);
+	$notfound->active();
+},'404' );
 
 //CMS Constant
 define("PhentomCMS", "WoW Free CMS");
@@ -41,8 +55,18 @@ define("PhentomCMS", "WoW Free CMS");
 //Installation Folder
 define("install", "install/");
 
+$match = $router->match();
+
+if( $match && is_callable( $match['target'] ) ) {
+	call_user_func_array( $match['target'], $match['params'] ); 
+} else {
+	// no route was matched
+	header('Location: ./404/');
+}
+
 // print page when complete
 echo $layout->printBlock();
+
 
 /*
 

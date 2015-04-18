@@ -16,11 +16,13 @@
 		
 		public function __construct($layout='default', $globalSettings = array())
 		{
+			$this->globalSettings = $globalSettings;
 			$template = file_get_contents(ROOT.'/content/styles/'.$layout.'/layout.html');
 			if($template)
 			{
 				$this->theme = $layout;
 				$this->layout = $template;
+				$this->getBlocks();
 			}
 			else
 			{
@@ -36,7 +38,7 @@
 			preg_match_all("#{% ([^`]*?) %}#s", $this->layout, $match);
 			if($match)
 			{
-				foreach($match as $key => $val)
+				foreach($match[1] as $key => $val)
 				{
 					$this->tags[$val] = '';
 				}
@@ -64,10 +66,21 @@
 			}
 		}
 		
+		private function replaceBlock()
+		{
+			foreach($this->tags as $key => $val)
+			{
+				$this->layout = preg_replace("#{% ".$key." %}#s",$val, $this->layout);
+			}
+			
+		}
+		
 		//When everything is done return the layout and print it to the user
 		public function printBlock()
 		{
 			$this->page->complete();
+			$this->setGlobals();
+			$this->replaceBlock();
 			return $this->layout;
 		}
 	}

@@ -7,27 +7,39 @@
 		
 		private $layout;
 		
+		private $template =null;
+		
 		private $content='';
 		
 		private $accesslevel = 0;
 		
+		private $accountLevel = 0;
+		
 		
 		public function __construct($layout, $accountLevel=0, $template=null, $accesslevel=0)
 		{
-			
 			$this->accesslevel = $accesslevel;
 			$this->layout = $layout;
-			$this->layout->page = $this;
+			$this->accountLevel = $accountLevel;
+			$this->template = $template;
 			
-			$this->content = ($template!=null) ? $this->loadTemplate($template) : $this->content;
-			if($accountLevel<$this->accesslevel)
+		}
+		
+		public function active()
+		{
+			echo 1;
+			$this->layout->page = $this;
+			$this->content = ($this->template!=null) ? $this->loadTemplate($this->template) : $this->content;
+			if($this->accountLevel<$this->accesslevel)
 			{
 				$this->accessDenied();
 			}
 			$this->onStart();
 		}
+		
 		private function loadTemplate($template)
 		{
+			
 			$template = file_get_contents(ROOT.'/content/styles/'.$this->layout->theme.'/'.$template.'.html');
 			if($template)
 			{
@@ -36,7 +48,7 @@
 		}
 		public function accessDenied()
 		{
-			//header('Location: ./404/');
+			header('Location: ./404/');
 		}
 		
 		public function onStart()
