@@ -2,8 +2,9 @@
 	class layout
 	{
 		private $layout = '';
+		public 	$theme = '';
 		private $tags = array();
-		public 	$page = array();
+		public 	$page;
 		
 		public 	$globalSettings = array();
 		
@@ -15,9 +16,10 @@
 		
 		public function __construct($layout='default', $globalSettings = array())
 		{
-			$template = file_get_contents('../../content/styles/'.$layout.'layout.html');
+			$template = file_get_contents(ROOT.'/content/styles/'.$layout.'/layout.html');
 			if($template)
 			{
+				$this->theme = $layout;
 				$this->layout = $template;
 			}
 			else
@@ -65,6 +67,7 @@
 		//When everything is done return the layout and print it to the user
 		public function printBlock()
 		{
+			$this->page->complete();
 			return $this->layout;
 		}
 	}
