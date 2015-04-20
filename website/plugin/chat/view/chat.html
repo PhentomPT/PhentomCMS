@@ -1,0 +1,54 @@
+{literal}
+<script>
+$(document).ready(function(){
+	$("input[name='say']").on("submit", function(){
+		$msg = $("input[name='chatmsg']").val();
+		
+		if($msg != "undefined"){
+			$.ajax({
+				method: "POST",
+				url: "plugin/chat/include/refresh_chat.php",
+				data: { chatmsg: $msg }
+			});
+		}
+
+		return false;
+	});
+	setInterval(function(){
+		$.ajax({
+			method: "POST",
+			url: "website/plugin/chat/include/refresh_chat.php",
+			data: { refresh: "1" }
+		})
+		.done(function(data){
+			$data = JSON.parse(data);
+			alert($data['chatmsg']);
+			$("#chat_msgs").html($data['chatmsg']);
+		});
+	}, 3000);
+});
+</script>
+{/literal}
+<div class="box">
+	<h3>{$chat_title}</h3>
+	<div id="chat_msgs" class="chat">
+		{foreach from=$chat_messsages item=item key=key}
+		<a class='user'>
+			{if $chat_messsages.$key.user == "phentom"}
+			<img src='image/blizz.gif' alt="Blizz"/>
+			{/if}
+			{$chat_messsages.$key.user|ucfirst}
+		</a>: 
+		<a>{$chat_messsages.$key.msg}</a>
+		<div class='div_chat'></div>
+		{/foreach}
+	</div>
+	<p>
+	{if !empty($smarty.session.username)}
+		<form action="" method="post">
+			<p>{$chat_message} <input type="text" name="chatmsg" required="required" autocomplete="off"/></p>
+			<input type="submit" name="say" value="{$chat_say}"/>
+		</form>
+	{/if}
+	</p>
+</div>

@@ -1,0 +1,128 @@
+<div id="navigation">
+	<a href="index.php"><button>Board index</button></a> >
+	<a href="?page=forum&id={$smarty.get.fid}"><button>First Forum</button></a> >
+	<a href=""><button>First Topic</button></a>
+</div>
+{if $locked == "locked"}
+	<button class="lock">Topic Locked</button>
+{else}
+	<a><button class="button reply"><i class="uk-icon-mail-reply"></i> Post a reply</button></a>
+{/if}
+
+<a class="num_page base-color">Page 1 of 1</a><a class="num_topics base-color">{$replys_num} replys</a>
+<div class="clear"> </div>
+
+{foreach from=$get_topic key=key item=value}
+<h1 style="text-align: center;">{$get_topic.$key.title|ucfirst}</h1>
+<div class="topic">
+	<div class="user_topic">
+		<a href="?page=profile&user={$get_topic.$key.username}" class="user" style="font-size: 20px;">{$get_topic.$key.username|ucfirst}</a><br />
+		<img class="avatar" src="image/avatars/{$get_topic.$key.avatar}" style="padding-left: 0;" alt="profile-photo" /><br />
+		{if !empty($topic_user.$key.special_rank)}
+			<p><img src="image/ranks/{$get_topic.$key.special_rank}.png" alt="special-rank" /></p>
+		{/if}
+		
+		{if $get_topic.$key.rank >= 0 && $get_topic.$key.rank < 10}
+			<img src="image/ranks/newbie.png" alt="rank" /><br/>
+		{elseif $get_topic.$key.rank >= 10 && $get_topic.$key.rank < 30}
+			<img src="image/ranks/senior.png" alt="rank" /><br/>
+		{elseif $get_topic.$key.rank >= 30 && $get_topic.$key.rank < 60}
+			<img src="image/ranks/veteran.png" alt="rank" /><br/>
+		{elseif $get_topic.$key.rank >= 60 && $get_topic.$key.rank < 100}
+			<img src="image/ranks/super_user.png" alt="rank" /><br/>
+		{elseif $get_topic.$key.rank >= 100 && $get_topic.$key.rank < 150}
+			<img src="image/ranks/heroic_user.png" alt="rank" /><br/>
+		{elseif $get_topic.$key.rank >= 200}
+			<img src="image/ranks/mythical.png" alt="rank" /><br/>
+		{/if}
+		<b>Posts</b>: 30
+		<p><b>Joined</b>: {$get_topic.$key.join_date} Ago</p>
+		{if !empty($smarty.session.username) && $smarty.session.username != $get_topic.$key.posted_by}
+				<a href="?topic={$smarty.get.id}&fid={$smarty.get.fid}&rep={$get_topic.$key.posted_by}&by={$smarty.session.username}"><img src="image/rep.ico" style="height: 30px;" alt="add_rep"/></a>
+				<img src="image/report.ico" style="height: 30px;" alt="report"/>
+		{/if}
+	</div>
+	<div class="info_align_left">
+		<h3>{$get_topic.$key.title|ucfirst}</h3>
+		<p>{$get_topic.$key.posted_time} Ago.</p>
+		{$get_topic.$key.content}
+	</div>
+	<div class="clear"> </div>
+</div>
+{/foreach}
+
+{if $replys_num > 0}
+	{foreach from=$replys key=key item=value}
+	<div class="topic">
+		<div class="user_topic">
+			<a href="?page=profile&user={$replys.$key.username}" class="user" style="font-size: 20px;">{$replys.$key.username|ucfirst}</a><br />
+			<img class="avatar" src="image/avatars/{$replys.$key.avatar}" style="padding-left: 0;" alt="profile-photo" /><br />
+			{if !empty($replys.$key.special_rank)}
+				<img src="image/ranks/$replys.$key.special_rank}.png" alt="special-rank" /><br />
+			{/if}
+			{if $replys.$key.rank >= 0 && $replys.$key.rank < 10}
+				<img src="image/ranks/newbie.png" alt="rank" /><br/>
+			{elseif $replys.$key.rank >= 10 && $replys.$key.rank < 30}
+				<img src="image/ranks/senior.png" alt="rank" /><br/>
+			{elseif $replys.$key.rank >= 30 && $replys.$key.rank < 60}
+				<img src="image/ranks/veteran.png" alt="rank" /><br/>
+			{elseif $replys.$key.rank >= 60 && $replys.$key.rank < 100}
+				<img src="image/ranks/super_user.png" alt="rank" /><br/>
+			{elseif $replys.$key.rank >= 100 && $replys.$key.rank < 150}
+				<img src="image/ranks/heroic_user.png" alt="rank" /><br/>
+			{elseif $replys.$key.rank >= 200}
+				<img src="image/ranks/mythical.png" alt="rank" /><br/>
+			{/if}
+			<b>Posts</b>: 30
+			<p><b>Joined</b>: {$replys.$key.join_date} Ago</p>
+			{if !empty($smarty.session.username) && $smarty.session.username != $replys.$key.posted_by}
+				<a href="?page=rep&tid={$smarty.get.id}&fid={$smarty.get.fid}&rep={$replys.$key.posted_by}&by={$smarty.session.username}"><img src="image/rep.ico" style="height: 30px;" alt="add_rep"/></a>
+				<img src="image/report.ico" style="height: 30px;" alt="report"/>
+			{/if}
+		</div>			
+		<div class="info_align_left">
+			<h3>RE: {$replys.$key.title|ucfirst}</h3>
+			<p>{$replys.$key.posted_time} Ago.</p>
+			{$replys.$key.content}
+		</div>
+		<div class="clear"> </div>
+	</div>
+	{/foreach}
+{/if}
+
+{if $locked == "locked"}
+	<button class="lock">Topic Locked</button>
+{else}
+	<a><button class="button reply"><i class="uk-icon-mail-reply"></i> Post a reply</button></a>
+{/if}
+	<a class="num_page base-color">Page 1 of 1</a><a class="num_topics base-color">{$replys_num} replys</a>
+<div class="clear"> </div>
+<div id="blank" class="hide">
+	<div class="info">
+	<h3>Reply</h3>
+	<div id="reply_box">
+		<div id="bbcodes">
+			<img src="image/bbcode/text_bold.png" alt="bold" />
+			<img src="image/bbcode/text_italic.png" alt="italic" />
+			<img src="image/bbcode/page_white_code.png" alt="quote" />
+			<img src="image/bbcode/page_white_code.png" alt="code" />
+			<img src="image/bbcode/image.png" alt="image" />
+			<img src="image/bbcode/world_link.png" alt="link" /><br />
+			<img src="image/bbcode/0.gif" alt="smile" />
+			<img src="image/bbcode/1.gif" alt="smile" />
+			<img src="image/bbcode/2.gif" alt="smile" />
+			<img src="image/bbcode/3.gif" alt="smile" />
+			<img src="image/bbcode/4.gif" alt="smile" />
+			<img src="image/bbcode/5.gif" alt="smile" />
+			<img src="image/bbcode/6.gif" alt="smile" />
+			<img src="image/bbcode/7.gif" alt="smile" />
+			<img src="image/bbcode/8.gif" alt="smile" />
+			<img src="image/bbcode/9.gif" alt="smile" />
+		</div>
+		<form action="" method="post">
+		<textarea required="required" placeholder="Right you reply here" ></textarea><br />
+		<input type="submit" class="form_submit" value="Reply" />
+		</form>
+	</div>
+</div>
+</div>

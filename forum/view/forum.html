@@ -1,0 +1,151 @@
+<div id="navigation">
+	<a href="index.php"><button>Board index</button></a> >
+	<a href=""><button>First Forum</button></a>
+</div>
+
+<h1>First forum</h1>
+{if $locked_forum > 0}
+	<button class='lock'>Forum Locked</button>
+{else}
+	<a href='?page=post'><button class='button'><i class="uk-icon-mail-reply"></i> Post a new topic</button></a>
+{/if}
+
+{assign var=topics_num value=0}
+
+{if $num_topics > 0}
+	{foreach from=$topics item=item}
+		{$topics_num = $topics_num + 1}
+	{/foreach}
+{/if}
+
+<a class='num_page base-color'>{$page} 1 {$of} 1</a><a class='num_topics base-color'>{$topics_num} {$topics_title}</a>
+<div class='clear'> </div>
+
+{if $announce > 0}
+	{foreach from=$announce item=item}
+		<div class='titles'>
+			<div class='first_title'> Announcements </div>
+			<div class='second_title'> Replies / Views </div>
+			<div class='third_title uk-hidden-small'> Last post </div>
+			<div class='clear'></div>
+		</div>
+		
+		{if $topics_count == 0}
+			<div class='forum_topics'>
+				<i class="uk-icon-close uk-icon-large"></i>
+				<div class='first_forum_topic'>
+					<a class='forum_topic_title'>There are no Topics in this Forum.</a><br />
+				</div>
+			</div>
+		{else}
+			{foreach from=$topics key=topics_key item=topics_item}
+				<div class='forum_topics'>
+					<i class="uk-icon-bullhorn uk-icon-large"></i>
+					<div class='first_forum_topic'>
+						<a href='?page=topic&fid={$smarty.get.id}&id={$topics.$topics_key.id}' class='forum_topic_title'>Announcement: {$topics.$topics_key.title}</a><br />
+						<a class='forum_topic_description'>by <a href='?profile={$topics.$topics_key.posted_by}' class='user'>{$topics.$topics_key.posted_by}</a> » {$topics.$topics_key.posted_time} ago.</a>
+					</div>
+				
+				{assign var=num_replies value=0}
+				{assign var=num_views value=0}
+				
+				{if $replys_count > 0}
+					{foreach from=$replys_count item=replys_count_item}
+						{$num_replies = $num_replies + 1}
+					{/foreach}
+					{foreach from=$views key=views_key item=views_item}
+						{if $views.$views_key.id == $topics.$topics_key.id }
+							{$num_views = $views.$views_key.views}
+						{/if}
+					{/foreach}
+				{/if}
+				
+				<div class='second_forum_topic'>
+					<a class='topics_posts'>{$num_replies}/ {$num_views}</a>
+				</div>
+				
+				{if $last_topic_count > 0}
+					{foreach from=$last_topic key=last_topic_key item=last_topic_item}
+						{if $last_topic.$last_topic_key.id_topic == $topics.$topics_key.id_topic}
+							<div class='third_forum_topic uk-hidden-small'>
+								<a class='last_post'>by <a href='?page=profile&user={$last_topic.$last_topic_key.posted_by}' class='user'>{$last_topic.$last_topic_key.posted_by}</a> ><br /> {$last_topic.$last_topic_key.posted_time} ago.</a>
+							</div>
+						{/if}
+					{/foreach}
+				{else}
+					<div class='third_forum_topic uk-hidden-small'>
+						<a class='last_post'>Has no posts</a>
+					</div>
+				{/if}
+				</div>
+			{/foreach}
+		{/if}
+	{/foreach}
+{/if}
+
+<div class='titles'>
+	<div class='first_title'> Topics </div>
+	<div class='second_title'> Replies / Views </div>
+	<div class='third_title'> Last post </div>
+	<div class='clear'></div>
+</div>
+
+{if $topics2_count == 0}
+			<div class='forum_topics'>
+				<i class="uk-icon-close uk-icon-large"></i>
+				<div class='first_forum_topic'>
+					<a class='forum_topic_title'>There are no Topics in this Forum.</a><br />
+				</div>
+			</div>
+		{else}
+			{foreach from=$topics2 key=topics2_key item=topics2_item}
+				<div class='forum_topics'>
+					<i class="uk-icon-bullhorn uk-icon-large"></i>
+					<div class='first_forum_topic'>
+						<a href='?page=topic&fid={$smarty.get.id}&id={$topics2.$topics2_key.id}' class='forum_topic_title'>Announcement: {$topics2.$topics2_key.title}</a><br />
+						<a class='forum_topic_description'>By <a href='?page=profile&user={$topics2.$topics2_key.posted_by}' class='user'>{$topics2.$topics2_key.posted_by|ucfirst}</a> » {$topics2.$topics2_key.posted_time} ago.</a>
+					</div>
+				
+				{assign var=num_replies2 value=0}
+				{assign var=num_views2 value=0}
+				
+				{if $replys_count2 > 0}
+					{foreach from=$replys2_count item=replys2_count_item}
+						{$num_replies2 = $num_replies2 + 1}
+					{/foreach}
+					{foreach from=$views2 key=views2_key item=views2_item}
+						{if $views2.$views2_key.id == $topics2.$topics2_key.id }
+							{$num_views2 = $views2.$views2_key.views}
+						{/if}
+					{/foreach}
+				{/if}
+				
+				<div class='second_forum_topic'>
+					<a class='topics_posts'>{$num_replies2}/ {$num_views2}</a>
+				</div>
+				
+				{if $last_topic2_count > 0}
+					{foreach from=$last_topic2 key=last_topic2_key item=last_topic2_item}
+						{if $last_topic2.$last_topic2_key.id_topic == $topics2.$topics2_key.id_topic}
+							<div class='third_forum_topic uk-hidden-small'>
+								<a class='last_post'>By <a href='?profile={$last_topic2.$last_topic2_key.posted_by}' class='user'>{$last_topic2.$last_topic_key2.posted_by|ucfirst}</a> ><br /> {$last_topic2.$last_topic_key2.posted_time} ago.</a>
+							</div>
+						{/if}
+					{/foreach}
+				{else}
+					<div class='third_forum_topic uk-hidden-small'>
+						<a class='last_post'>Has no posts</a>
+					</div>
+				{/if}
+				</div>
+			{/foreach}
+		{/if}
+
+{if $locked_forum > 0}
+	<button class='lock'>Forum Locked</button>
+{else}
+	<a href='?post='><button class='button'><i class="uk-icon-mail-reply"></i> Post a new topic</button></a>
+{/if}
+
+<a class='num_page base-color'>{$page} 1 {$of} 1</a><a class='num_topics base-color'">{$topics_num} {$topics_title}</a>
+<div class='clear'> </div>

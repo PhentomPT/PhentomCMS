@@ -1,0 +1,79 @@
+						<div class="content_b">
+							<div class="box">
+								<h3 class="box_title">{$visits}</h3>
+								<div class="separator"></div><p/>
+								{$visitors_today}: 1<br />
+								{$unique_visitors}: 1<p/>
+								{$total_visitors}: 0<br />
+								{$total_unique_visitors}: {$true_total_views}<p/>
+								{$visits_per_day}: 1
+							</div>
+							<div class="box">
+								<h3 class="box_title">{$accounts}</h3>
+								<div class="separator"></div><p/>
+								{$registered_users_today}: 1<p />
+								{$unvalidated_users}: 0<br />
+								{$banned_users}: 0<p/>
+								{$total_amount_of_users}: 1<br/>
+								{$registered_users_per_day}: 1
+							</div>
+							<div class="box">
+								<h3 class="box_title">{$system}</h3>
+								<div class="separator"></div><p/>
+								{$php_version}: {$php}<br />
+								{$mysql_version}: {$mysql}<p/>
+								{$cms_version}: {$cms_current_version}<br />
+								{if $update_version!=""}
+									{$update}: <a style="color: red;">{$update_required}</a>, {$update_version} {$available}<p/>
+								{else}
+									{$update}: <a style="color: green;">{$latest}</a> <p/>
+								{/if}
+								<a href="index.php"><button>{$check}</button></a>
+								{if $update_version!=""}
+									<a href="http://phentom.net/downloads/PhentomCMS_{$update_version}.rar" target="_blank"><button>{$download}</button></a>
+								{/if}
+							</div>
+							<div class="clear"></div>
+						</div>
+						<div id="content_left">
+							<div class="content_s_l">
+								<h3>{$right_now}</h3>
+								<div class="box2 uk-height-1-1">
+								<h4>{$extensions}</h4>
+								{$enabled}: extension1 ,extension2
+								</div>
+								<div class="box2 uk-height-1-1">
+								<h4>{$modules}</h4>
+								{$enabled}: News, Blog, Forum, Account.
+								</div>
+								<div class="box2 uk-height-1-1">
+								<h4>{$plugins}</h4>
+								{$enabled}: Tooltip, Sidebar_login, Sidebar_realmstatus.
+								</div>
+								<div class="box2 uk-height-1-1">
+								<h4>{$themes}</h4>
+								{$enabled}: Main
+								</div>
+								<div class="box2 uk-height-1-1">
+								<h4>{$languages}</h4>
+								{$enabled}: english, portuguese
+								</div>
+								<div class="clear"></div>
+							</div>
+							<div class="content_s_l">
+								<h3>{$acp_performance}</h3>
+								{$load_time}: {$time_spent} seconds<br/>
+								{$memory_usage}: {$memory_used}
+							</div>
+						</div>
+						<div id="content_right">
+							<div class="content_s">
+								<h3>{$post_news}</h3>
+								<form action="" method="post">
+									{$title}<br /><input type="text" name="newstitle" required="required" autocomplete="off"/><br />
+									{$image}<br /><input type="text" name="newsimg" autocomplete="off"/><br />
+									{$content}<br /><textarea rows="5" required="required" name="newscontent" required="required" autocomplete="off"></textarea><p />
+									<input type="submit" name="submit_news" value="{$post}"/>
+								</form>
+							</div>
+						</div>

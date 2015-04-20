@@ -1,0 +1,13 @@
+		<div class="news uk-width-small-1-1">
+			<div class="announce">
+			{foreach from=$news key=key item=value}
+				<h3>{$news.$key.title|ucfirst}</h3>
+				{if !empty($news.$key.media)}
+					<img src="image/{$news.$key.media}" />
+				{/if}
+				<p>Posted by: <a class="user">{$news.$key.user|ucfirst}</a>, {$news.$key.posttime} ago.</p>
+				<p>{$news.$key.content}</p>
+				<div class="news_div"></div>
+			{/foreach}
+			</div>
+		</div>

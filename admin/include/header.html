@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>{$admin_panel} - Phentom CMS</title>
+		<link rel="stylesheet" href="../core/ui/css/uikit.almost-flat.min.css" />
+		<link rel="stylesheet" href="style/main.css" />
+        <script src="../core/ui/js/jquery.min.js"></script>
+        <script src="../core/ui/js/uikit.min.js"></script>
+	</head>
+	<body>
+		<div id="cpanel">
+			<div id='menu' class="uk-hidden-small uk-width-2-10">
+				<div class="welcome">
+					<a class="welcome_txt">{$welcome},<b> {$smarty.session.uadmin|ucfirst}.</b></a>
+				</div>
+				<div class="menu">
+					<a href="index.php"><button><i class="uk-icon-dashboard"></i> {$dashboard}</button></a>
+					<a href=""><button><i class="uk-icon-home"></i> {$website}</button></a>
+					<a href=""><button><i class="uk-icon-users"></i> {$accounts}</button></a>
+					<a href=""><button><i class="uk-icon-cogs"></i> {$tools}</button></a>
+					<a href=""><button><i class="uk-icon-link"></i> {$extensions}</button></a>
+					<a href=""><button><i class="uk-icon-cubes"></i> {$modules}</button></a>
+					<a href=""><button><i class="uk-icon-plug"></i> {$plugins}</button></a>
+					<a href="?page=statistics"><button><i class="uk-icon-bar-chart"></i> {$statistics}</button></a>
+					<a href=""><button><i class="uk-icon-paint-brush"></i> {$themes}</button></a>
+					<a href=""><button><i class="uk-icon-language"></i> {$languages}</button></a>
+					<a href=""><button><i class="uk-icon-info"></i> {$info}</button></a>
+					<a href="?page=logout"><button><i class="uk-icon-sign-out"></i> {$logout}</button></a>
+				</div>
+			</div>
+			<div id="off-menu" class="uk-offcanvas">
+				<div class="uk-offcanvas-bar">
+					<ul class="uk-nav uk-nav-offcanvas">
+						<li class="uk-nav-header">{$welcome},<b> {$smarty.session.uadmin}.</b></li>
+						<li><a href="index.php"><i class="uk-icon-dashboard"></i> {$dashboard}</a></li>
+						<li><a href=""><i class="uk-icon-home"></i> {$website}</a></li>
+						<li><a href=""><i class="uk-icon-users"></i> {$accounts}</a></li>
+						<li><a href=""><i class="uk-icon-cogs"></i> {$tools}</a></li>
+						<li><a href=""><i class="uk-icon-link"></i> {$extensions}</a></li>
+						<li><a href=""><i class="uk-icon-cubes"></i> {$modules}</a></li>
+						<li><a href=""><i class="uk-icon-plug"></i> {$plugins}</a></li>
+						<li><a href="?page=statistics"><i class="uk-icon-bar-chart"></i> {$statistics}</a></li>
+						<li><a href=""><i class="uk-icon-paint-brush"></i> {$themes}</a></li>
+						<li><a href=""><i class="uk-icon-language"></i> {$languages}</a></li>
+						<li><a href=""><i class="uk-icon-info"></i> {$info}</a></li>
+						<li><a href="?page=logout"><i class="uk-icon-sign-out"></i> {$logout}</a></li>
+						<li class="uk-nav-divider"></li>
+					</ul>
+				</div>
+			</div>
+			<div id='content' class="uk-width-medium-8-10 uk-width-small-1-1">
+				<div class="page_title">
+					<a href="#off-menu" class="uk-navbar-toggle uk-visible-small uk-align-left" data-uk-offcanvas></a>
+					<a class="page_title_txt"> {${$page_title}}</a>
+				</div>
+				<div class="content">

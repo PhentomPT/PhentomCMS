@@ -1,0 +1,9 @@
+		</div>
+		<div class="uk-width-1-1 footer">
+			{foreach from=$flag key=key item=item}
+					<a href="?lang={$item}&callback_link={$smarty.server.REQUEST_URI}"><img width="30" height="20" alt="{$item|upper}" src="image/language/{$item}.png"></a>
+			{/foreach}<br/>
+			{$powered_by} <a href="http://phentom.net" target="_blank" style="color: #357eca;">Phentom</a> 2015
+		</div>
+	<body>
+</html>

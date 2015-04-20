@@ -1,0 +1,28 @@
+<div class="news uk-width-medium-7-10 uk-width-small-1-1">
+{if !isset($smarty.session.username)}
+	Sorry but you must fist login to view this page.
+{else}
+	<table align='center'>
+		<tr>
+			<th>{$username}</th>
+			<th>{$email}</th>
+			<th>{$vote_points}</th>
+			<th>{$donation_points}</th>
+		</tr>
+		<tr>
+			<td>{$smarty.session.username}</td>
+			<td>{$smarty.session.account_email}</td>
+			<td>{$user_info.0.vp}</td>
+			<td>{$user_info.0.dp}</td>
+		</tr>
+	</table>
+	<a href="?page=store" class="user"><div class="acc_opt"><img src="image/global_icons/store.png" />{$store}</div></a>
+	<a href="?page=revive" class="user"><div class="acc_opt"><img src="image/global_icons/ress.png" />{$revive}</div></a>
+	<a href="?page=unstuck" class="user"><div class="acc_opt"><img src="image/global_icons/unstuck.png" />{$unstuck}</div></a>
+	<a href="?page=teleport" class="user"><div class="acc_opt"><img src="image/global_icons/tele.png" />{$teleport}</div></a>
+	<a href="?page=changef" class="user"><div class="acc_opt"><img src="image/global_icons/changef.png" />{$change_faction}</div></a>
+	<a href="?page=changen" class="user"><div class="acc_opt"><img src="image/armor.jpg" />{$change_name}</div></a>
+	<a href="?page=donate" class="user"><div class="acc_opt"><img src="image/global_icons/donate.png" />{$donate}</div></a>
+	<a href="?page=vote" class="user"><div class="acc_opt"><img src="image/global_icons/vote.png" />{$vote}</div></a>
+{/if}
+</div>

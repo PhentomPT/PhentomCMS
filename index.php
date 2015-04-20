@@ -1,23 +1,21 @@
 <?php
-session_start();
-ob_start();
+//Defines system constant
+define("SSC", "Secure System Constant");
 
-//CMS Constant
-define("PhentomCMS", "WoW Free CMS");
+//Checks for Installation
+$install_folder = "install";
 
-//Installation Folder
-define("install", "install/");
-
-//Checks If language Exists
-if(!isset($_SESSION['lang']) OR empty($_SESSION['lang'])){
-	$_SESSION['lang'] = "english";
-}
-
-//Checks Where To Go
-if(file_exists(install)){
-	include_once "install/index.php";
+if (is_dir($install_folder)){
+	header("Location: $install_folder/");
 }
 else{
-	include_once "content/include/home.php";	
+	//Checks for Main Application
+	$main_app = "website";
+	
+	if (is_dir($main_app)){
+		header("Location: $main_app/");
+	}
+	else{
+		echo "The main Application folder is not properly set. Please edit the index.php.";
+	}
 }
-?>

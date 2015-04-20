@@ -1,0 +1,57 @@
+{foreach from=$categorys key=categorys_key item=categorys_item}
+	<div class='titles'>
+		<div class='first_title'>{$categorys.$categorys_key.name}</div>
+		<div class='second_title'>{$topics_title} / {$posts_title}</div>
+		<div class='third_title uk-hidden-small'>{$last_post}</div>
+		<div class='clear'></div>
+	</div>
+	{assign var=num_categorys value=0}
+	{foreach from=$forums key=forum_key item=forum_item}
+		{if $forums.$forum_key.id_category == $categorys.$categorys_key.id}
+			{$num_categorys = $num_categorys + 1}
+			<div class='forum_topics' style='background: {$forum.$forum_key.color};'>
+				{if $forums.$forum_key.type == "locked"}
+					{assign var=img value="lock"}
+				{else}
+					{assign var=img value="comments-o"}
+				{/if}
+				<i class="uk-icon-{$img} uk-icon-large"></i>
+				<div class='first_forum_topic'>
+					<a href='?page=forum&id={$forums.$forum_key.id}' class='forum_topic_title'>{$forums.$forum_key.name}</a><br />
+					<a class='forum_topic_description'>{$forums.$forum_key.description}</a>
+				</div>
+				{assign var=id_forum value=$forums.$forums_key.id}
+				{assign var=num_topics value=0}
+				{assign var=num_posts value=0}
+				{foreach from=$topics key=topics_key item=topics_key}
+					{if $topics.$topics_key.id_forum == $forums.$forum_key.id}
+						{$num_topics = $num_topics + 1}
+						{foreach from=$replys key=replays_key item=replays_key}
+							{if $replys.$replays_key.id_topic == $topics.$topics_key.id}
+								{$num_posts = $num_posts + 1}
+							{/if}
+						{/foreach}
+					{/if}
+				{/foreach}
+				<div class='second_forum_topic'>
+					<a class='topics_posts'>{$num_topics} / {$num_posts}</a>
+				</div>
+				<div class='third_forum_topic uk-hidden-small'>
+					{if $num_topics == 0}
+						<a class='last_post'>{$has_no_posts}</a>
+					{else}
+						<a class='last_post'>By <a href='?page=profile&user={$topics.0.posted_by}' class='user'>{$topics.0.posted_by|ucfirst}</a><br />{$topics.0.posted_time} ago.</a>
+					{/if}
+				</div>
+			</div>
+		{/if}
+	{/foreach}
+	{if $num_categorys == 0}
+		<div class='forum_topics'>
+			<i class="uk-icon-close uk-icon-large"></i>
+			<div class='first_forum_topic'>
+				<a class='forum_topic_title'>{$no_forum_in_category}</a><br />
+			</div>
+		</div>
+	{/if}
+{/foreach}

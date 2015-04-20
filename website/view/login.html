@@ -1,0 +1,22 @@
+<div class="news uk-width-medium-7-10 uk-width-small-1-1">
+{if empty($smarty.session.username)}
+	<h3>{$login}</h3>
+	<p>
+		{if isset($error_login)}
+			<div class="uk-form-row">
+				<div class='uk-alert uk-alert-danger uk-text-center' data-uk-alert>
+					<a href="" class="uk-alert-close uk-close"></a>
+					<p>{${$error_login}}</p>
+				</div>
+			</div>
+		{/if}
+		<form action="" method="post">
+			{$username}<br/><input type="text" name="username" required="required" autocomplete="off"/><p />
+			{$password}<br/><input type="password" name="password" required="required" autocomplete="off"/><p />
+			<input type="submit" name="login" value="{$login}" />
+		</form>
+	</p>
+{else}
+	Welcome, <a class='user'>{$smarty.session.username|ucfirst}</a>
+{/if}
+</div>

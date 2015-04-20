@@ -1,0 +1,97 @@
+								<article class="uk-article">
+									<form class="uk-form uk-form-horizontal" action="" method="post">
+										<legend><h3><i class="uk-icon-info-circle"></i> {$server_info}</h3></legend>
+										{if $error!=""}
+										<div class='uk-alert uk-alert-danger uk-text-center' data-uk-alert>
+											<a href="" class="uk-alert-close uk-close"></a>
+											<p>{${$error}}</p>
+										</div>
+										{/if}
+										<div class="uk-form-row">
+											<label class="uk-form-label" for="">{$server_name}:</label>
+											<div class="uk-form-controls">
+												<div class="uk-form-icon">
+													<i class="uk-icon-tag"></i>
+													<input type="text" value="{$server_name_value}" required="required" name="server_name"/>
+												</div>
+											</div>
+										</div>
+										<div class="uk-form-row">
+											<label class="uk-form-label" for="">{$server_slogan}:</label>
+											<div class="uk-form-controls">
+												<div class="uk-form-icon">
+													<i class="uk-icon-italic"></i>
+													<input type="text" value="{$slogan}" name="slogan"/>
+												</div>
+											</div>
+										</div>
+										<div class="uk-form-row">
+											<label class="uk-form-label" for="">{$user}:</label>
+											<div class="uk-form-controls">
+												<div class="uk-form-icon">
+													<i class="uk-icon-user"></i>
+													<input type="text" value="{$user_value}" required="required" name="user"/>
+												</div>
+											</div>
+										</div>
+										<div class="uk-form-row">
+											<label class="uk-form-label" for="">{$password}:</label>
+											<div class="uk-form-controls">
+												<div class="uk-form-icon">
+													<i class="uk-icon-key"></i>
+													<input type="password" required="required" name="password"/>
+													<i class="uk-icon-key"></i>
+													<input type="password" required="required" name="password_check"/>
+												</div>
+											</div>
+										</div>
+										<div class="uk-form-row">
+											<label class="uk-form-label" for="">{$server_core}:</label>
+											<div class="uk-form-controls">
+												<div class="uk-form-icon">
+													<select name="core">
+														<option value="trinity" {if $core == "trinity"}selected="selected"{/if}>Trinity</option>
+														<option value="trinity_v6" {if $core == "trinity_v6"}selected="selected"{/if}>Trinity V6</option>
+														<option value="mangos" {if $core == "mangos"}selected="selected"{/if}>Mangos</option>
+														<option value="arcemu" {if $core == "arcemu"}selected="selected"{/if}>Arcemu</option>
+													</select>
+												</div>
+											</div>
+										</div>
+										<div class="uk-form-row">
+											<label class="uk-form-label" for="">{$expansion}:</label>
+											<div class="uk-form-controls">
+												<div class="uk-form-icon">
+													<select name="expansion">
+														<option value="0" {if $expansion_value == "0"}selected="selected"{/if}>Vanilla</option>
+														<option value="1" {if $expansion_value == "1"}selected="selected"{/if}>The Burning Crusade</option>
+														<option value="2" {if $expansion_value == "2"}selected="selected"{/if}>Wrath Of The Lich King</option>
+														<option value="3" {if $expansion_value == "3"}selected="selected"{/if}>Cataclysm</option>
+														<option value="4" {if $expansion_value == "4"}selected="selected"{/if}>Mists Of Pandarea</option>
+														<option value="5" {if $expansion_value == "5"}selected="selected"{/if}>WarLords Of Dreanor</option>
+													</select>
+												</div>
+											</div>
+										</div>
+										<div class="uk-form-row">
+											<label class="uk-form-label" for="">{$max_players}:</label>
+											<div class="uk-form-controls">
+												<div class="uk-form-icon">
+													<i class="uk-icon-users"></i>
+													<input type="number" name="players" value="{if !empty($players)}{$players}{else}200{/if}"/>
+												</div>
+											</div>
+										</div>
+										<div class="uk-form-row">
+											<label class="uk-form-label" for="">{$slider}:</label>
+											<div class="uk-form-controls" name="slider">
+												On <input type="radio" {if $slider_value == "on" || empty($slider_value)}checked="checked"{/if} name="slider" value="on"/>
+												Off <input type="radio" {if $slider_value == "off"}checked="checked"{/if} name="slider" value="off"/>
+											</div>
+										</div>
+										<div class="uk-form-row uk-text-right">
+											<input type="hidden" value="done" name="server_submit">
+											<input type="submit" value="{$next}" class="uk-button">
+										</div>
+									</form>
+								</article>

@@ -1,0 +1,18 @@
+				<article class="uk-article">
+					<form class="uk-form uk-form-horizontal" action="" method="post">
+						<legend><h3><i class="uk-icon-check-circle"></i> {$config_info}</h3></legend>
+						<div class='uk-alert uk-alert-{if !empty($error)}danger{else}success{/if} uk-text-center' data-uk-alert>
+							<p>{if !empty($error)}
+								{foreach from=$error key=key item=item}
+									{$error_in} <i>{$key}</i> {$query}<br /> 
+								{/foreach}
+							{else}
+								{$no_error}
+							{/if}</p>
+						</div>
+						<div class="uk-form-row uk-text-right">
+							<input type="hidden" value="done" name="web_submit">
+							<input type="submit" value="{$finish}" class="uk-button">
+						</div>
+					</form>
+				</article>

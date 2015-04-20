@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Forum - {$server_info.0.title}</title>
+		<link rel="stylesheet" href="../core/ui/css/uikit.almost-flat.min.css" />
+		<link rel="stylesheet" href="style/main.css" />
+        <script src="../core/ui/js/jquery.min.js"></script>
+        <script src="../core/ui/js/uikit.min.js"></script>
+        <script src="script/main.js"></script>
+	</head>
+	<body>
+		<div id="top">
+			<div id="title">	
+					<a class="ftitle">Forum</a><br />
+			</div>
+			<div id="menu">
+				<div class="uk-hidden-small">
+					{foreach from=$menu_top key=key item=value}
+						<a href="{$menu_top.$key.link}"><button><i class="uk-icon-{$menu_top.$key.icon}"></i> {$menu_top.$key.name}</button></a>
+					{/foreach}
+				</div>
+			</div>
+			<div class="clear"> </div>
+			<div id="status">
+				<form>
+					<input class="search" type="text" placeholder="{$search}" required="required" autocomplete="off"/>
+					<input class="search_submit" type="submit" value="" />
+				</form>
+				<div class="uk-hidden-small">
+					{foreach from=$menu_bar key=key item=value}
+						<a href='{if $menu_bar.$key.link == "?page=notifications"}{else}{$menu_bar.$key.link}{/if}'><button class='acc_option'><i class="uk-icon-{$menu_bar.$key.icon}"></i>{if $menu_bar.$key.link == "?page=notifications"}<div class='notification'>9</div>{/if} {$menu_bar.$key.name}</button></a>
+					{/foreach}
+				</div>
+				<a href="#off-menu" class="uk-navbar-toggle uk-visible-small uk-align-right" data-uk-offcanvas></a>
+				<div class="clear"> </div>
+			</div>
+			<div id="off-menu" class="uk-offcanvas">
+				<div class="uk-offcanvas-bar">
+					<ul class="uk-nav uk-nav-offcanvas">
+						<li class="uk-nav-header">Menu</li>
+						<li><a href="index.php"><i class="uk-icon-home"></i> {$home}</a></li>
+						<li><a href="?page=rules"><i class="uk-icon-list-ul"></i> {$rules}</a></li>
+						<li><a href="?page=members"><i class="uk-icon-group"></i> {$members}</a></li>
+						<li><a href="?page=faq"><i class="uk-icon-book"></i> {$faq}</a></li>
+						<li class="uk-nav-divider">C
+						{if !empty($smarty.session.username)}
+							<li><a href='?page=account_panel'><i class="uk-icon-user"></i> {$account}</a></li>
+							<!-- <li class="uk-parent">
+                          		<a href="#">Parent</a>
+                            	<div><ul class="uk-nav-sub uk-dropdown">
+                                    <li><a href="">Sub item</a></li>
+                           			<li><a href="">Sub item</a></li>
+                            	</ul></div>
+                            </li> -->
+							<li><a href='?page=notifications'><i class="uk-icon-certificate"></i> {$notifications}</a></li>
+							<li><a href='?page=logout'><i class="uk-icon-sign-out"></i> {$logout}</a></li>
+						{else}
+							<li><a href='?page=login'><i class="uk-icon-sign-in"></i> {$login}</a></li>
+							<li><a href='?page=register'><i class="uk-icon-pencil"></i> {$register}</a></li>
+						{/if}
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div id="middle">
+			<div id="navigation">
+				<a href=""><button>{$v_unanswered_posts}</button></a>
+				<a href=""><button>{$v_active_topics}</button></a>
+			</div>

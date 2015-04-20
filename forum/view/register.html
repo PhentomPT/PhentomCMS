@@ -1,0 +1,14 @@
+<div class="info">
+	<h1>{$register}</h1>
+	{if !empty($error)}
+		<div class='fail'>{${$error}}</div>
+	{/if}
+	<form action="" method="post" autocomplete="off">
+		<input type="email" name="email" placeholder="{$email}" required="required" class="form_login"/><br />
+		<input type="text" name="username" placeholder="{$username}" required="required" class="form_login"/><br />
+		<input type="password" name="password" placeholder="{$password}" required="required" class="form_login"/><br />
+		<input type="password" name="password_verify" placeholder="{$verify_password}" required="required" class="form_login"/><br />
+		<input type="hidden" name="register" value="register" />
+		<input type="submit" value="{$register}" class="form_submit"/>
+	</form>
+</div>

@@ -1,0 +1,46 @@
+<h1>Viewing profile - {$user_info.0.username|ucfirst}</h1>
+<div class="info">
+	<div class="left">
+			<img class='avatar' src='image/avatars/{$user_info.0.avatar}' alt='profile-photo' /><br />
+			
+			{if !empty($user_info.0.special_rank)}
+				<p><img src='image/ranks/{$user_info.0.special_rank}.png' alt='special-rank' /></p>
+			{/if}
+			
+			{if $user_info.0.rank >= 0 && $user_info.0.rank < 10}
+				<img src='image/ranks/newbie.png' alt='rank' />
+			{elseif $user_info.0.rank >= 10 && $user_info.0.rank < 30}
+				<img src='image/ranks/senior.png' alt='rank' />
+			{elseif $user_info.0.rank >= 30 && $user_info.0.rank < 60}
+				<img src='image/ranks/veteran.png' alt='rank' />
+			{elseif $user_info.0.rank >= 60 && $user_info.0.rank < 100}
+				<img src='image/ranks/super_user.png' alt='rank' />
+			{elseif $user_info.0.rank >= 100 && $user_info.0.rank < 150}
+				<img src='image/ranks/heroic_user.png' alt='rank' />
+			{elseif $user_info.0.rank >= 200}
+				<img src='image/ranks/mythical.png' alt='rank' />
+			{/if}
+	</div>
+	<div class="left">
+		Username: <a class="user">{$user_info.0.username|ucfirst}</a><br />
+		<h3>User Info</h3>
+	<p>Joined: {$user_info.0.join_date} Ago</p>
+	<p>Last visited: 07 Nov 2014 19:43</p>
+	<p>Total posts: {$user_info.0.total_posts}</p>
+	</div>
+	<div class="clear"> </div>
+</div>
+<div class="info">
+	<div class="left">
+		<h3>Contact Info</h3>
+	</div>
+	<div class="left">
+		<h3>User Statistics</h3>
+		Joined: 16 Feb 2014 17:21<br />
+		Last visited: 07 Nov 2014 19:43<br />
+		Total posts: 30 | Search user’s posts (100.00% of all posts / 0.11 posts per day)<br />
+		Most active forum: First forum (27 Posts / 90.00% of user’s posts)<br />
+		Most active topic: Announce [Few Pages]	(22 Posts / 73.33% of user’s posts)<br />
+	</div>
+	<div class="clear"> </div>
+</div>

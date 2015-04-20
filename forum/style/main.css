@@ -1,0 +1,495 @@
+html {
+	background: #161e29;
+	height: 100%;
+}
+
+body {
+	background: #eaecf0;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 300;
+	font-size: 10px;
+	color: #323a45;
+	margin: 0;
+	padding: 0;
+}
+
+h1{
+	color: #1861ad;
+	margin-top: 5px;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 300;
+	font-size: 30px;
+}
+
+.hide{
+	display: none;
+}
+
+.base-color{
+	color: #323a45;
+	text-decoration: none;
+}
+
+.base-color:hover{
+	color: #323a45;
+	text-decoration: none;
+}
+
+#top {
+	background: none;
+	margin: 0 5%;
+}
+
+	#title{
+		float: left;
+		height: 100px;
+		line-height: 100px;
+		text-align: center;
+		margin-right: 20px;
+	}
+	
+		.ftitle{
+			font-family: 'Open Sans', sans-serif;
+			font-weight: 200;
+			font-size: 4em;
+		}
+
+	#menu{
+		float: left;
+		height: 100px;
+	}
+	
+	#menu button{
+		background: none;
+		height: 100px;
+		border: none;
+		padding: 0 15px;
+		color: #323a45;
+		font-family: 'Open Sans', sans-serif;
+		font-weight: 400;
+		font-size: 1.2em;
+		outline: none;
+	}
+	
+	#menu button:hover{
+		background: rgba(221,223,227,1.0);
+		cursor: pointer;
+	}
+	
+	#status{
+		background: #323a45;
+		height: 45px;
+		padding: 5px;
+		font-size: 1.2em;
+	}
+	
+		.search{
+			background: #161e29;
+			width: 200px;
+			height: 43px;
+			border: none;
+			border-left: 20px solid #161e29;
+			color: #fff;
+			outline: none;
+			font-family: 'Open Sans', sans-serif;
+			font-weight: 400;
+			font-size: 1em;
+			float: left;
+			transition: background 300ms, border-left 300ms;
+		}
+		
+		.search:hover, .search:focus{
+			background: #357eca;
+			border-left: 20px solid #357eca;
+		}
+		
+		.search:hover ~ .search_submit, .search:focus ~ .search_submit{
+			background: url(../image/find.png) no-repeat center #357eca;
+		}
+		
+		.search_submit{
+			background: url(../image/find.png) no-repeat center #161e29;
+			width: 40px;
+			height: 45px;
+			border: none;
+			outline: none;
+			float: left;
+			transition: background 300ms;
+		}
+		
+		.search_submit:hover{
+			background: url(../image/find.png) no-repeat center #357eca;
+			cursor: pointer;
+		}
+		
+		.acc_option{
+			background: #323a45;
+			width: 80px;
+			height: 45px;
+			border: none;
+			color: #fff;
+			font-family: 'Open Sans', sans-serif;
+			font-weight: 400;
+			font-size: 1em;
+			text-align: center;
+			outline: none;
+			float: right;
+			transition: background 300ms;
+		}
+		
+		.acc_option img{
+			vertical-align: middle;
+		}
+		
+		.acc_option:hover{
+			background: #357eca;
+			cursor: pointer;
+		}
+		
+		.notification{
+			position: absolute;
+			color: #fff;
+			margin: -25px 0 0 45px;
+		}
+	
+	#navigation{
+		background: #dddfe3;
+		height: 40px;
+		margin-bottom: 40px;
+	}
+	
+		#navigation button{
+			background: none;
+			height: 40px;
+			padding-right: 20px;
+			padding-left: 20px;
+			color: #323a45;
+			font-family: 'Open Sans', sans-serif;
+			font-weight: 400;
+			font-size: 1.1em;
+			border: none;
+			outline: none;
+			transition: background 300ms;
+		}
+		
+		#navigation button:hover{
+			background: #c6c8cc;
+			cursor: pointer;
+		}
+
+#middle {
+	margin: 0 5%;
+}
+
+	.info{
+		background: #fafafa;
+		height: 100%;
+		padding: 15px;
+		padding-left: 20px;
+		margin-top: 40px;
+		font-family: 'Open Sans', sans-serif;
+		font-weight: 400;
+		font-size: 13px;
+	}
+	
+		.left{
+			width: 50%;
+			float: left;
+		}
+	
+	.topic, .topic_reply{
+		background: #dddfe3;
+		width: 100%;
+		height: 100%;
+		margin-top: 20px;
+		overflow: hidden;
+		box-shadow: 0 0 1px rgba(0,0,0,0.2);
+	}
+	
+	.topic_reply{
+		width: 80%;
+		margin: 0 auto;
+	}
+	
+	#reply_box{
+		text-align: center;
+	}
+	
+		#reply_box textarea{
+			width: 50%;
+			height: 200px;
+			border: 1px solid #dddfe3;
+			color: #888;
+			resize: none;
+			outline: none;
+		}
+		
+	.info_align_left{
+		background: #fafafa;
+		width: 78.24%;
+		height: 100%;
+		padding: 10px;
+		font-family: 'Open Sans', sans-serif;
+		font-weight: 400;
+		font-size: 13px;
+		float: left;
+		box-shadow: 2px 0px 2px rgba(0,0,0,0.2);
+	}
+		
+	.user_topic{
+		background: #dddfe3;
+		width: 20%;
+		height: 100%;
+		text-align: center;
+		float: right;
+	}
+
+	.titles{
+		background: #357eca;
+		padding: 15px;
+		color: #fff;
+		margin-top: 20px;
+		font-family: 'Open Sans', sans-serif;
+		font-weight: 400;
+		font-size: 1.1em;
+	}
+	
+		.first_title{
+			width: 50%;
+			float: left;
+		}
+		
+		.second_title{
+			width: 20%;
+			text-align: center;
+			margin-left: 55px;
+			float: left;
+		}
+		
+		.third_title{
+			width: 20%;
+			text-align: center;
+			float: left;
+		}
+	
+	.forum_topics{
+		background: #fafafa;
+		height: 60px;
+		padding: 10px;
+		font-family: 'Open Sans', sans-serif;
+		font-weight: 400;
+	}
+	
+		.forum_topics img,.forum_topics i{
+			width: 20px;
+			padding: 20px 10px;
+			float: left;
+		}
+		
+		.first_forum_topic{
+			width: 52%;
+			height: 60px;
+			padding-top: 10px;
+			float: left;
+		}
+		
+			.forum_topic_title{
+				text-decoration: none;
+				color: #323a45;
+				font-weight: bold;
+				font-size: 1.3em;
+			}
+		
+			.forum_topic_description{
+				font-size: 1.3em;
+			}
+			
+		.second_forum_topic{
+			text-align: center;
+			width: 20%;
+			height: 60px;
+			float: left;
+			font-size: 1.1em;
+		}
+		
+			.topics_posts{
+
+			}
+			
+		.third_forum_topic{
+			width: 20%;
+			height: 60px;
+			text-align: center;
+			float: left;
+		}
+
+#bottom {
+	background: #161e29;
+	color: #fff;
+	padding: 20px;
+	font-size: 1.3em;
+	text-align: center;
+	margin-top: 40px;
+}
+
+.user{
+	color: #aa0000;
+	font-weight: bold;
+}
+
+.avatar{
+	height: 100px;
+	padding-left: 32px;
+}
+
+.button,.lock{
+	background: #357eca;
+	background-size: 20px;
+	width: 150px;
+	height: 40px;
+	color: #fff;
+	border: 0px;
+	border-left: 10px solid #357eca;
+	border-bottom: 2px solid #1861ad;
+	border-radius: 3px;
+	margin-top: 20px;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 400;
+	font-size: 12px;
+	outline: none;
+	transition: background 300ms, border 300ms;
+}
+
+.lock{
+	background: url(../image/lock.png) no-repeat 0% 50% #dddfe3;
+	border-left: 10px solid #dddfe3;
+	border-bottom: 2px solid #dddfe3;
+	color: #86909f;
+	outline: none;
+}
+
+.button:hover{
+	background: #1861ad;
+	background-size: 20px;
+	border-left: 10px solid #1861ad;
+	cursor: pointer;
+}
+
+.num_topics{
+	background: #d3d5d9;
+	padding: 12px;
+	border-top-left-radius: 3px;
+	border-bottom-left-radius: 3px;
+	font-weight: 400;
+	font-size: 12px;
+	margin-top: 20px;
+	float: right;
+}
+
+.num_page{
+	background: #dddfe3;
+	padding: 12px;
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;
+	font-weight: 400;
+	font-size: 12px;
+	margin-top: 20px;
+	float: right;
+}
+
+.form_login{
+	background: #eaecf0;
+	width: 210px;
+	height: 30px;
+	border: 0px;
+	padding: 5px;
+	margin-top: 10px;
+	outline: none;
+	transition: background 300ms;
+}
+
+.form_login:hover,.form_login:focus{
+	background: #d2d4d8;
+}
+
+.form_submit{
+	background: #357eca;
+	width: 150px;
+	height: 50px;
+	border: 0px;
+	border-radius: 5px;
+	color: #fff;
+	margin-top: 10px;
+	margin-left: 35px;
+	font-size: 12px;
+	outline: none;
+	transition: background 300ms;
+}
+
+.form_submit:hover{
+	background: #2a64a1;
+	cursor: pointer;
+}
+
+.fail{
+	background: #cc181e;
+	width: 200px;
+	padding: 10px;
+	text-align: center;
+	color: #fff;
+}
+
+.clear{
+	clear: both;
+}
+
+.quote{
+	background: #eaecf0;
+}
+
+.quote:before {
+	background: #eaecf0;
+	width: 45px;
+	height: 45px;
+	font-family: FontAwesome;
+	font-size: 17px;
+	content: "\f10e";
+	border: 1px solid #eaecf0;
+	border-radius: 50px;
+	margin-top: 25px;
+	margin-left: -70px;
+	line-height: 45px;
+	display: block;
+	position: absolute;
+	text-align: center;
+	box-shadow: 2px 0px 1px rgba(0,0,0,0.1);
+}
+
+.code:before {
+	background: #eaecf0;
+	width: 45px;
+	height: 45px;
+	font-family: FontAwesome;
+	font-size: 17px;
+	content: "\f121";
+	border: 1px solid #eaecf0;
+	border-radius: 50px;
+	margin-top: 25px;
+	margin-left: -70px;
+	line-height: 45px;
+	display: block;
+	position: absolute;
+	text-align: center;
+	box-shadow: 2px 0px 1px rgba(0,0,0,0.1);
+}
+
+cite{
+	width: 100%;
+	border-bottom: 1px solid #dddfe3;
+}
+
+blockquote{
+	background: #eaecf0;
+	border-radius: 4px;
+	padding: 20px 50px 20px 50px;
+}

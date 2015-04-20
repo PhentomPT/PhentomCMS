@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>{$server_info.0.title}</title>
+		<link rel="shortcut icon" type="icon/ico" href="image/fav.png" />
+		<link rel="stylesheet" href="../core/ui/css/uikit.min.css" />
+		<link rel="stylesheet" href="style/{$server_info.0.style}/main.css" />
+        <script src="../core/ui/js/jquery.min.js"></script>
+        <script src="../core/ui/js/uikit.min.js"></script>
+        <style>
+			.box .on_players_bar:before {
+				width: {($total_online_players * 100) / $server_info.0.onplayers}%;
+			}
+		</style>
+	</head>
+	<body class="uk-container uk-width-1-1">
+			<nav class="uk-navbar uk-navbar-attached navbar">
+				<div class="menu uk-width-1-1">
+					<ul class="uk-navbar-nav uk-hidden-medium uk-hidden-small">
+						<div class='align_nav_l'>
+							{foreach from=$menu_left key=key item=value}
+								<a href='{$menu_left.$key.link}'><button>{$menu_left.$key.name}</button></a>
+							{/foreach}
+						</div>
+						<img src='image/cms_logo.png'/>
+						<div class='align_nav_r'>
+							{foreach from=$menu_right key=key item=value}
+								<a href='{$menu_right.$key.link}'><button>{$menu_right.$key.name}</button></a>
+							{/foreach}
+						</div>
+					</ul>
+				</div>
+			    <a href="#menu" class="uk-navbar-toggle uk-hidden-large" data-uk-offcanvas></a>
+			</nav>
+			
+			<div id="menu" class="uk-offcanvas">
+			    <div class="uk-offcanvas-bar">
+			        <ul class="uk-nav uk-nav-offcanvas" data-uk-nav>
+			        	<li class="uk-nav-header"><img width="50" src='image/cms_logo.png'/></li>
+			        	{foreach from=$menu_left key=key item=value}
+			        		<li><a href="{$menu_left.$key.link}"><i class=""></i> {$menu_left.$key.name}</a></li>
+						{/foreach}
+						{foreach from=$menu_right key=key item=value}
+							<li><a href="{$menu_right.$key.link}"><i class=""></i> {$menu_right.$key.name}</a></li>
+						{/foreach}
+			        </ul>
+			    </div>
+			</div>
+			
+			<div class="uk-width-1-1 sname">
+				<a>{$server_info.0.title}</a>
+				<p>{$server_info.0.slogan}</p>
+			</div>
+			
+			<div class="uk-width-1-1 main">

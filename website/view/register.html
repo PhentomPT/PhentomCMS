@@ -1,0 +1,26 @@
+		<div class="news uk-width-medium-7-10 uk-width-small-1-1">
+		{if !empty($smarty.session.username)}
+			{$already_registered}
+		{else}
+			<h2 class="user">Register</h2>
+			{if isset($error_registered)}
+				<div class="uk-form-row">
+					<div class='uk-alert uk-alert-danger uk-text-center' data-uk-alert>
+						<a href="" class="uk-alert-close uk-close"></a>
+						<p>{${$error_registered}}</p>
+					</div>
+				</div>
+			{/if}
+			<form action="" method="post">
+				Username:<br />
+				<input type="text" name="rusername" required="required" autocomplete="off"/><p />
+				Password:<br />
+				<input type="password" name="rpassword" required="required" autocomplete="off"/><p />
+				Check Password:<br />
+				<input type="password" name="vpassword" required="required" autocomplete="off"/><p />
+				Email:<br />
+				<input type="text" name="remail" required="required" autocomplete="off"/><p />
+				<input type="submit" name="register" value="Register" />
+			</form>
+		{/if}
+		</div>

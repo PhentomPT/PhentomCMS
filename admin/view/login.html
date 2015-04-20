@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en-gb" dir="ltr" class="uk-height-1-1">
+	<head>
+		<meta charset="utf-8">
+		<title>{$admin_panel} - Phentom CMS</title>
+		<link rel="stylesheet" href="../core/ui/css/uikit.almost-flat.min.css" />
+        <script src="../core/ui/js/jquery.min.js"></script>
+        <script src="../core/ui/js/uikit.min.js"></script>
+	</head>
+	<body class="uk-height-1-1">
+		<div class="uk-vertical-align uk-text-center uk-height-1-1">
+			<div class="uk-vertical-align-middle" style="width: 250px;">
+				<img class="uk-margin-bottom" width="140" height="120" src="image/cms_logo.png" alt="CMS">
+				<form class="uk-panel uk-panel-box uk-form" action="" method="post">
+					{if isset($error)}
+						<div class="uk-form-row">
+							<div class='uk-alert uk-alert-danger uk-text-center' data-uk-alert>
+								<a href="" class="uk-alert-close uk-close"></a>
+								<p>{${$error}}</p>
+							</div>
+						</div>
+					{/if}
+					<div class="uk-form-row">
+						<input class="uk-width-1-1 uk-form-large" type="text" name="username" placeholder="{$username}" />
+					</div>
+					<div class="uk-form-row">
+						<input class="uk-width-1-1 uk-form-large" type="password" name="password" placeholder="{$password}" />
+					</div>
+					<div class="uk-form-row">
+						<input class="uk-width-1-1 uk-button uk-button-primary uk-button-large uk-text-contrast" type="submit" name="submit" value="{$login}" />
+					</div>
+				</form><br/>
+				{foreach from=$flag key=key item=item}
+					<a href="?lang={$item}"><img width="30" height="20" alt="{$item|upper}" src="image/language/{$item}.png"></a>
+				{/foreach}
+				<div class="uk-panel widget_text">{$powered_by} <a href="http://phentom.net" target="_blank">Phentom</a> 2015</div>
+			</div>
+		</div>
+	</body>
+</html>

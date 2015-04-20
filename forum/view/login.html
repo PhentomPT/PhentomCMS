@@ -1,0 +1,12 @@
+<div class="info">
+	<h1>{$login}</h1>
+	{if !empty({$error})}
+		<div class='fail'>{${$error}}</div>
+	{/if}
+	<form action="" method="post" autocomplete="off">
+		<input type="text" name="email" placeholder="{$email}" required="required" class="form_login"/><br />
+		<input type="password" name="password" placeholder="{$password}" required="required" class="form_login"/><br />
+		<input type="hidden" name="login" value="login" />
+		<input type="submit" value="{$login}" class="form_submit"/>
+	</form>
+</div>

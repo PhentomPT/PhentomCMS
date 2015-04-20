@@ -1,0 +1,51 @@
+							<article class="uk-article">
+									<form class="uk-form uk-form-horizontal" action="" method="post">
+										<legend><h3><i class="uk-icon-database"></i> {$db_info}</h3></legend>
+										{if $error!=""}
+										<div class='uk-alert uk-alert-danger uk-text-center' data-uk-alert>
+											<a href="" class="uk-alert-close uk-close"></a>
+											<p>{${$error}}</p>
+										</div>
+										{/if}
+										<div class="uk-form-row">
+											<label class="uk-form-label" for="">{$db_host}:</label>
+											<div class="uk-form-controls">
+												<div class="uk-form-icon">
+													<i class="uk-icon-tag"></i>
+													<input type="text" required="required" name="dbhost" data-uk-tooltip="{literal} {delay:1000} {/literal}" title="{$example}: 127.0.0.1"/>
+												</div>
+											</div>
+										</div>
+										<div class="uk-form-row">
+											<label class="uk-form-label" for="">{$db_user}:</label>
+											<div class="uk-form-controls">
+												<div class="uk-form-icon">
+													<i class="uk-icon-italic"></i>
+													<input type="text" required="required" name="dbuser" data-uk-tooltip="{literal} {delay:1000} {/literal}" title="{$example}: root"/>
+												</div>
+											</div>
+										</div>
+										<div class="uk-form-row">
+											<label class="uk-form-label" for="">{$db_password}:</label>
+											<div class="uk-form-controls">
+												<div class="uk-form-icon">
+													<i class="uk-icon-key"></i>
+													<input type="password" name="dbpass" data-uk-tooltip="{literal} {delay:1000} {/literal}" title="{$example}: root"/>
+												</div>
+											</div>
+										</div>
+										<div class="uk-form-row">
+											<label class="uk-form-label" for="">{$db_name}:</label>
+											<div class="uk-form-controls">
+												<div class="uk-form-icon">
+													<i class="uk-icon-user"></i>
+													<input type="text" required="required" name="dbname" data-uk-tooltip="{literal} {delay:1000} {/literal}" title="{$example}: cms"/>
+												</div>
+											</div>
+										</div>
+										<div class="uk-form-row uk-text-right">
+											<input type="hidden" value="done" name="db_submit">
+											<input type="submit" value="{$next}" class="uk-button">
+										</div>
+									</form>
+								</article>
