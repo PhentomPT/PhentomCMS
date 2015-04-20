@@ -1,0 +1,206 @@
+body{
+	background: #f5f5f5;
+	font-family: "Raleway", Helvetica, sans-serif;
+	font-weight: 300;
+	font-size: 15px;
+	color: #888;
+}
+
+h3{
+	color: #444;
+	font-weight: 400;
+	font-size: 25px;
+}
+
+img{
+	width: 30px;
+	vertical-align: bottom;
+}
+
+#languages{
+	position: absolute;
+	background: #fff;
+	min-width: 20%;
+	padding: 5px;
+	top: 0px;
+	right: 0px;
+	text-align: center;
+	box-shadow: 0px 0px 5px rgba(0,0,0,0.2);
+}
+
+	#languages a{
+		margin-right: 5px;
+	}
+	
+	#languages a:last-child{
+		margin-right: 0px;
+	}
+
+#wrapper{
+	background: #fff;
+	width: 80%;
+	margin: 10% auto;
+	padding: 5px;
+	box-shadow: 0px 0px 5px rgba(0,0,0,0.2);
+}
+
+.block{
+	background: #fff;
+	width: 100%;
+	text-align: center;
+}
+
+#footer{
+	position: absolute;
+	width: 100%;
+	bottom: 0px;
+	right: 0px;
+	text-align: center;
+}
+
+.phentom{
+	color: #53b8f0;
+	text-decoration: none;
+}
+
+.fail{
+	background: #e04247;
+	width: 50%;
+	margin: 0 auto;
+	color: #fff;
+	padding: 5px;
+	text-align: center;
+}
+
+input[type='text'],input[type='password'],input[type='number'],select{
+	width: 30%;
+	height: 30px;
+	border-radius: 2px;
+	border: 1px solid #888;
+	outline: none;
+	font-family: "Raleway", Helvetica, sans-serif;
+	font-weight: 300;
+	transition: box-shadow 500ms;
+}
+
+input[type='text']:hover,input[type='text']:focus,input[type='password']:hover,input[type='number']:hover,select:hover,input[type='password']:focus,input[type='number']:focus,select:focus{
+	box-shadow: 0px 0px 5px rgba(0,0,0,0.4);
+}
+
+button{
+	background: url(../images/arrow_back.png) no-repeat 20% 50% #686868;
+	width: 40%;
+	height: 40px;
+	color: #fff;
+	font-family: "Raleway", Helvetica, sans-serif;
+	font-weight: 300;
+	font-size: 15px;
+	border-radius: 3px;
+	border: none;
+	box-shadow: inset 0px 0px 10px rgba(0,0,0,0.6);
+	transition: text-shadow 800ms, background 800ms, box-shadow 800ms;
+}
+
+button:hover{
+	text-shadow: 0px 0px 10px rgba(0,0,0,0.6);
+	background: url(../images/arrow_back.png) no-repeat 10% 50% #0473fe;
+	box-shadow: 0px 0px 10px rgba(0,0,0,0.6);
+	cursor: pointer;
+}
+
+input[type='submit']{
+	background: url(../images/arrow.png) no-repeat 80% 50% #686868;
+	width: 40%;
+	height: 40px;
+	color: #fff;
+	font-family: "Raleway", Helvetica, sans-serif;
+	font-weight: 300;
+	font-size: 15px;
+	border-radius: 3px;
+	border: none;
+	box-shadow: inset 0px 0px 10px rgba(0,0,0,0.6);
+	transition: text-shadow 800ms, background 800ms, box-shadow 800ms;
+}
+
+input[type='submit']:hover{
+	text-shadow: 0px 0px 10px rgba(0,0,0,0.6);
+	background: url(../images/arrow.png) no-repeat 90% 50% #0473fe;
+	box-shadow: 0px 0px 10px rgba(0,0,0,0.6);
+	cursor: pointer;
+}
+
+@media only screen and (min-width: 1em) and (max-width: 55em){
+	img{
+		width: 25px;
+		vertical-align: middle;
+	}
+	
+	#languages{
+		position: relative;
+		background: #fff;
+		width: 80%;
+		margin: 0 auto 5px auto;
+		padding: 5px;
+		text-align: center;
+		box-shadow: 0px 0px 5px rgba(0,0,0,0.2);
+	}
+	
+	#wrapper{
+		background: #fff;
+		width: 80%;
+		margin: 0 auto;
+		padding: 5px;
+		box-shadow: 0px 0px 5px rgba(0,0,0,0.2);
+	}
+	
+	#footer{
+		position: relative;
+		text-align: center;
+		margin-top: 20px;
+	}
+	
+	.fail{
+		background: #e04247;
+		width: 90%;
+		margin: 0 auto;
+		color: #fff;
+		padding: 5px;
+		text-align: center;
+	}
+
+	input[type='text'],input[type='password'],input[type='number'],select{
+		width: 85%;
+		height: 30px;
+		border-radius: 2px;
+		border: 1px solid #888;
+		outline: none;
+		font-family: "Raleway", Helvetica, sans-serif;
+		font-weight: 300;
+	}
+	
+	input[type='submit']{
+		background: url(../images/arrow.png) no-repeat 90% 50% #0473fe;
+		width: 90%;
+		height: 40px;
+		color: #fff;
+		font-family: "Raleway", Helvetica, sans-serif;
+		font-weight: 300;
+		font-size: 15px;
+		border-radius: 3px;
+		border: none;
+		box-shadow: 0px 0px 10px rgba(0,0,0,0.6);
+	}
+	
+	button{
+		background: url(../images/arrow_back.png) no-repeat 10% 50% #0473fe;
+		width: 90%;
+		height: 40px;
+		color: #fff;
+		font-family: "Raleway", Helvetica, sans-serif;
+		font-weight: 300;
+		font-size: 15px;
+		border-radius: 3px;
+		border: none;
+		box-shadow: 0px 0px 10px rgba(0,0,0,0.6);
+	}
+}
