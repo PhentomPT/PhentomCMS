@@ -78,12 +78,19 @@ class Install extends Database{
 	}
 	
 	public function insertAdmin($core,$core_db){
-		if ($core == "arcemu"){
-			$this->SimpleQuery("INSERT INTO account () VALUES ();");
-		}
-		else{
-			$this->SimpleQuery("INSERT INTO accounts () VALUES ();");
-			$this->SimpleQuery("INSERT INTO accounts () VALUES ();");
+		switch ($core[0]['core']){
+			//Arcemu
+			case "arcemu":
+				$this->SimpleQuery("INSERT INTO account () VALUES ();");
+				break;
+			//Trinity v6 and Up
+			case "trinity_v6":
+				$this->SimpleQuery("INSERT INTO account () VALUES ();");
+				break;
+			//Trinity 6 Down or Mangos
+			default:
+				$this->SimpleQuery("INSERT INTO account () VALUES ();");
+				break;
 		}
 	}
 	
@@ -100,7 +107,7 @@ class Install extends Database{
 				define("DBPORT", "3306");';
 	
 		//Scans Webpath to get all web applications
-		$apps = array_diff(scandir(WEB_PATH), array(".","..","index.php",".README.md.swp",".git","core"));
+		$apps = array_diff(scandir(WEB_PATH), array(".","..","index.php","README",".git","core","LICENSE"));
 	
 		//!TODO This is probably stupid... (Make only 1 config file at the main core location instead)
 		//Opens the config file of every web application and appends the data
@@ -133,6 +140,20 @@ class Install extends Database{
 				  `posttime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 				  PRIMARY KEY (`id`)
 				) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
+		
+		$create_table_account_info = "CREATE TABLE `account_info` (
+			`id` INT(11) NOT NULL AUTO_INCREMENT,
+			`account_id` INT(11) NOT NULL,
+			`username` VARCHAR(50) NOT NULL,
+			`vote_points` INT(11) NOT NULL DEFAULT '0',
+			`donation_points` INT(11) NOT NULL DEFAULT '0',
+			`avatar` VARCHAR(50) NOT NULL DEFAULT 'default.png',
+			`rank` INT(11) NOT NULL DEFAULT '0',
+			`special` VARCHAR(50) NOT NULL DEFAULT '0',
+			`join_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			PRIMARY KEY (`id`),
+			UNIQUE INDEX `account_id` (`account_id`)
+		) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
 				
 		$create_table_info = "CREATE TABLE IF NOT EXISTS `info` (
 				  `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -214,53 +235,91 @@ class Install extends Database{
 				
 		$create_database_forum = "CREATE DATABASE IF NOT EXISTS `forum`;";
 			
-		$create_table1_forum = "";
+		$create_forum_category = "CREATE TABLE `categorys` (
+			`id` INT(11) NOT NULL AUTO_INCREMENT,
+			`name` VARCHAR(150) NOT NULL,
+			PRIMARY KEY (`id`)
+		) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
 		
-		$create_table2_forum = "";
+		$create_forum_forums = "CREATE TABLE `forums` (
+			`id` INT(11) NOT NULL AUTO_INCREMENT,
+			`name` VARCHAR(150) NOT NULL,
+			`description` TEXT NOT NULL,
+			`id_category` INT(11) NOT NULL,
+			`color` VARCHAR(50) NOT NULL,
+			`type` VARCHAR(50) NOT NULL,
+			PRIMARY KEY (`id`)
+		) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
 		
-		$create_table3_forum = "";
+		$create_forum_menu = "CREATE TABLE `menu` (
+			`id` INT(11) NOT NULL AUTO_INCREMENT,
+			`name` VARCHAR(50) NOT NULL DEFAULT 'link name',
+			`link` VARCHAR(50) NOT NULL DEFAULT '?page=',
+			`link_order` INT(11) NULL DEFAULT NULL,
+			`logged` INT(11) NOT NULL DEFAULT '0',
+			`position` VARCHAR(50) NOT NULL DEFAULT 'left',
+			`icon` VARCHAR(50) NOT NULL,
+			PRIMARY KEY (`id`)
+		) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
 		
-		$create_table4_forum = "";
+		$create_forum_replys = "CREATE TABLE `replys` (
+			`id` INT(11) NOT NULL AUTO_INCREMENT,
+			`title` VARCHAR(50) NOT NULL,
+			`content` TEXT NOT NULL,
+			`posted_by` VARCHAR(50) NOT NULL,
+			`posted_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+			`id_topic` INT(11) NOT NULL,
+			`id_forum` INT(11) NOT NULL,
+			PRIMARY KEY (`id`)
+		) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
 		
-		$create_table5_forum = "";
+		$create_forum_topics = "CREATE TABLE `topics` (
+			`id` INT(11) NOT NULL AUTO_INCREMENT,
+			`title` VARCHAR(50) NOT NULL DEFAULT '0',
+			`content` TEXT NOT NULL,
+			`type` VARCHAR(50) NOT NULL DEFAULT '0',
+			`posted_by` VARCHAR(50) NOT NULL DEFAULT '0',
+			`posted_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			`views` INT(11) NOT NULL,
+			`id_forum` INT(11) NOT NULL,
+			PRIMARY KEY (`id`)
+		) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
 
 		//Creates tables for the Website
 		$this->SelectDb(DBNAME);
 		
 		/***********************************************
 		 * 
-		 * The SimpleUpdateQuery function was changed
+		 * The SimpleUpdateQuery function was changed,
 		 * before it returned and error to display in 
 		 * the end of the installation, now it clears 
 		 * the page and specifies the error.
 		 * 
 		 ***********************************************/
-		$this->error['chat'] = $this->SimpleUpdateQuery($create_table_chat);
-		$this->error['info'] = $this->SimpleUpdateQuery($create_table_info);
-		$this->error['menu'] = $this->SimpleUpdateQuery($create_table_menu);
-		$this->error['news'] = $this->SimpleUpdateQuery($create_table_news);
-		$this->error['vote_cooldown'] = $this->SimpleUpdateQuery($create_table_voted_cooldown);
-		$this->error['vote_links'] = $this->SimpleUpdateQuery($create_table_vote_links);
-		$this->error['statistics'] = $this->SimpleUpdateQuery($create_table_statistics);
-		$this->error['data_in_menu'] = $this->SimpleUpdateQuery($insert_data_menu);
-		$this->error['data_in_info'] = $this->SimpleUpdateQuery($insert_data_info);
-		
-		
-		//!TODO Make the rest of the forum database and tables (already in a sql file)
+		/*$this->error['chat'] =*/ $this->SimpleUpdateQuery($create_table_chat);
+		/*$this->error['account_info'] =*/ $this->SimpleUpdateQuery($create_table_account_info);
+		/*$this->error['info'] =*/ $this->SimpleUpdateQuery($create_table_info);
+		/*$this->error['menu'] =*/ $this->SimpleUpdateQuery($create_table_menu);
+		/*$this->error['news'] =*/ $this->SimpleUpdateQuery($create_table_news);
+		/*$this->error['vote_cooldown'] =*/ $this->SimpleUpdateQuery($create_table_voted_cooldown);
+		/*$this->error['vote_links'] =*/ $this->SimpleUpdateQuery($create_table_vote_links);
+		/*$this->error['statistics'] =*/ $this->SimpleUpdateQuery($create_table_statistics);
+		/*$this->error['data_in_menu'] =*/ $this->SimpleUpdateQuery($insert_data_menu);
+		/*$this->error['data_in_info'] =*/ $this->SimpleUpdateQuery($insert_data_info);
 		
 		//Creates database and tables for the Forum
-		//$error['create_database_forum'] = $this->SimpleQuery($create_database_forum);
-		//$this->SelectDb("forum");
-		/*$error['create_table1_forum'] = $this->SimpleUpdateQuery($create_table1_forum);
-		$error['create_table2_forum'] = $this->SimpleUpdateQuery($create_table2_forum);
-		$error['create_table3_forum'] = $this->SimpleUpdateQuery($create_table3_forum);
-		$error['create_table4_forum'] = $this->SimpleUpdateQuery($create_table4_forum);
-		$error['create_table5_forum'] = $this->SimpleUpdateQuery($create_table5_forum);*/
+		/*$error['create_database_forum'] =*/ $this->SimpleUpdateQuery($create_database_forum);
+		$this->SelectDb("forum");
+		/*$error['create_table1_forum'] =*/ $this->SimpleUpdateQuery($create_forum_category);
+		/*$error['create_table2_forum'] =*/ $this->SimpleUpdateQuery($create_forum_forums);
+		/*$error['create_table3_forum'] =*/ $this->SimpleUpdateQuery($create_forum_menu);
+		/*$error['create_table4_forum'] =*/ $this->SimpleUpdateQuery($create_forum_replys);
+		/*$error['create_table5_forum'] =*/ $this->SimpleUpdateQuery($create_forum_topics);
 	}
 	
 	public function finish(){
 		//Renames the install folder to trash
-		rename(WEB_PATH. "/install", WEB_PATH ."/trash");
+		rename(WEB_PATH ."/install", WEB_PATH ."/trash");
 		
 		//Unsets the language session variable
 		unset($_SESSION['lang']);

@@ -26,35 +26,29 @@ class Account extends Database{
 		
 		$core = $this->serverInfo();
 		
-		$this->SelectDb($core[0]['accounts']);
-		
-		//Arcemu
-		if ($core[0]['core'] == "arcemu"){
-			$check_account = $this->SimpleQuery("SELECT * FROM account WHERE login='$username' AND encrypted_password='$password'");
-			
-			if (count($check_account) > 0){
-				$_SESSION['username'] = $check_account[0]['username'];
-				$_SESSION['account_id'] = $check_account[0]['id'];
-				$_SESSION['account_email'] = $check_account[0]['email'];
-				return "logged";
-			}
-			else{
-				return "user_wrong_pass";
-			}
+		switch ($core[0]['core']){
+			//Arcemu
+			case "arcemu":
+				$check_account = $this->SimpleQuery("SELECT * FROM ". $core[0]['accounts'] .".account WHERE login='$username' AND encrypted_password='$password'");
+				break;
+			//Trinity v6 and Up
+			case "trinity_v6":
+				$check_account = $this->SimpleQuery("SELECT *, email as username FROM ". $core[0]['accounts'] .".battlenet_accounts WHERE email='$username' AND sha_pass_hash='$password'");
+				break;
+			//Trinity 6 Down or Mangos
+			default:
+				$check_account = $this->SimpleQuery("SELECT * FROM ". $core[0]['accounts'] .".account WHERE username='$username' AND sha_pass_hash='$password'");
+				break;
 		}
-		//Trinity , Mangos
+		
+		if (count($check_account) > 0){
+			$_SESSION['username'] = $check_account[0]['username'];
+			$_SESSION['account_id'] = $check_account[0]['id'];
+			$_SESSION['account_email'] = $check_account[0]['email'];
+			return "logged";
+		}
 		else{
-			$check_account = $this->SimpleQuery("SELECT * FROM account WHERE username='$username' AND sha_pass_hash='$password'");
-			
-			if (count($check_account) > 0){
-				$_SESSION['username'] = $check_account[0]['username'];
-				$_SESSION['account_id'] = $check_account[0]['id'];
-				$_SESSION['account_email'] = $check_account[0]['email'];
-				return "logged";
-			}
-			else{
-				return "user_wrong_pass";
-			}
+			return "user_wrong_pass";
 		}
 	}
 	
@@ -65,37 +59,44 @@ class Account extends Database{
 		$email = $this->escapeString($email);
 		
 		$core = $this->serverInfo();
-	
-		$this->SelectDb($core[0]['accounts']);
-		
-		//Arcemu
-		if ($core[0]['core'] == "arcemu"){
-			$check = $this->SimpleQuery("SELECT id FROM `account` WHERE email='$email'");
 				
-			if (count($check) > 0){
-				return "user_exists";
-			}
-			else{
-				$this->SimpleUpdateQuery("INSERT INTO `account` (username,email, sha_pass_hash) VALUES ('$username','$email','$password')");
-				$result = $this->SimpleQuery("SELECT id,username FROM `account` ORDER BY id DESC LIMIT 1");
-				$this->SimpleUpdateQuery("INSERT INTO ". DBNAME .".". WEB_TBL_ACCOUNT_INFO ." (account_id,username) VALUES ('". $result[0]['id'] ."', '". $result[0]['username'] ."')");
-				return "registered";
-			}
-		}
-		//Trinity, Mangos
-		else{
-			$check = $this->SimpleQuery("SELECT id FROM `account` WHERE email='$email'");
+		switch ($core[0]['core']){
+			//Arcemu
+			case "arcemu":
+				$check = $this->SimpleQuery("SELECT id FROM ". $core[0]['accounts'] .".account WHERE email='$email'");
 				
-			if (count($check) > 0){
-				return "user_exists";
-			}
-			else{
-				$this->SimpleUpdateQuery("INSERT INTO `account` (username,email, sha_pass_hash) VALUES ('$username','$email','$password')");
+				if (count($check) > 0){
+					return "user_exists";
+				}
+				
+				$this->SimpleUpdateQuery("INSERT INTO ". $core[0]['accounts'] .".account (login,email,encrypted_password) VALUES ('$username','$email','$password')");
 				$result = $this->SimpleQuery("SELECT id,username FROM `account` ORDER BY id DESC LIMIT 1");
-				$this->SimpleUpdateQuery("INSERT INTO ". DBNAME .".". WEB_TBL_ACCOUNT_INFO ." (account_id,username) VALUES ('". $result[0]['id'] ."', '". $result[0]['username'] ."')");
-				return "registered";
-			}
+				break;
+			//Trinity v6 and Up
+			case "trinity_v6":
+				$check = $this->SimpleQuery("SELECT id FROM ". $core[0]['accounts'] .".battlenet_accounts WHERE email='$email'");
+				
+				if (count($check) > 0){
+					return "user_exists";
+				}
+				
+				$this->SimpleUpdateQuery("INSERT INTO ". $core[0]['accounts'] .".battlenet_accounts (email,sha_pass_hash) VALUES ('$email','$password')");
+				$result = $this->SimpleQuery("SELECT id,email as username FROM battlenet_accounts ORDER BY id DESC LIMIT 1");
+				break;
+			//Trinity 6 Down or Mangos
+			default:
+				$check = $this->SimpleQuery("SELECT id FROM ". $core[0]['accounts'] .".account WHERE email='$email'");
+				
+				if (count($check) > 0){
+					return "user_exists";
+				}
+				$this->SimpleUpdateQuery("INSERT INTO ". $core[0]['accounts'] .".account (username,email,sha_pass_hash) VALUES ('$username','$email','$password')");
+				$result = $this->SimpleQuery("SELECT id,username FROM `account` ORDER BY id DESC LIMIT 1");
+				break;
 		}
+			
+		$this->SimpleUpdateQuery("INSERT INTO ". DBNAME .".". WEB_TBL_ACCOUNT_INFO ." (account_id,username) VALUES ('". $result[0]['id'] ."', '". $result[0]['username'] ."')");
+		return "registered";
 	}
 	
 	//Returns the user info
@@ -112,33 +113,39 @@ class Account extends Database{
 		
 		$core = $this->serverInfo();
 		
-		$this->SelectDb($core[0]['accounts']);
 		
-		//Arcemu
-		if ($core[0]['core'] == "arcemu"){
-			$query = "SELECT a.username as username, ai.join_date as join_date, COUNT(t.id) + COUNT(r.id) as total_posts, ai.vote_points as vp, ai.donation_points as dp, ai.avatar as avatar, ai.rank as rank, ai.special as special_rank
-			FROM account a
-				LEFT JOIN ". DBNAME .".". WEB_TBL_ACCOUNT_INFO ." ai ON ai.account_id = a.id
-				LEFT JOIN ". DBFORUM .".". FORUM_TBL_TOPICS ." t ON ai.username = t.posted_by
-				LEFT JOIN ". DBFORUM .".". FORUM_TBL_REPLYS ." r ON ai.username = r.posted_by
-			WHERE a.username='". $username ."' $email";
-			
-			$account_info = $this->SimpleQuery($query);
-			
-			return $account_info;
+		switch ($core[0]['core']){
+			//Arcemu
+			case "arcemu":
+				$query = "SELECT a.username as username, ai.join_date as join_date, COUNT(t.id) + COUNT(r.id) as total_posts, ai.vote_points as vp, ai.donation_points as dp, ai.avatar as avatar, ai.rank as rank, ai.special as special_rank
+				FROM ". $core[0]['accounts'] .".account a
+					LEFT JOIN ". DBNAME .".". WEB_TBL_ACCOUNT_INFO ." ai ON ai.account_id = a.id
+					LEFT JOIN ". DBFORUM .".". FORUM_TBL_TOPICS ." t ON ai.username = t.posted_by
+					LEFT JOIN ". DBFORUM .".". FORUM_TBL_REPLYS ." r ON ai.username = r.posted_by
+				WHERE a.username='". $username ."' $email";
+				break;
+			//Trinity v6 and Up
+			case "trinity_v6":
+				$query = "SELECT a.email as username, ai.join_date as join_date, COUNT(t.id) + COUNT(r.id) as total_posts, ai.vote_points as vp, ai.donation_points as dp, ai.avatar as avatar, ai.rank as rank, ai.special as special_rank
+				FROM ". $core[0]['accounts'] .".battlenet_accounts a
+					LEFT JOIN ". DBNAME .".". WEB_TBL_ACCOUNT_INFO ." ai ON ai.account_id = a.id
+					LEFT JOIN ". DBFORUM .".". FORUM_TBL_TOPICS ." t ON ai.username = t.posted_by
+					LEFT JOIN ". DBFORUM .".". FORUM_TBL_REPLYS ." r ON ai.username = r.posted_by
+				WHERE a.username='". $username ."' $email";
+				break;
+			//Trinity 6 Down or Mangos
+			default:
+				$query = "SELECT a.username as username, ai.join_date as join_date, COUNT(t.id) + COUNT(r.id) as total_posts, ai.vote_points as vp, ai.donation_points as dp, ai.avatar as avatar, ai.rank as rank, ai.special as special_rank
+				FROM ". $core[0]['accounts'] .".account a
+					LEFT JOIN ". DBNAME .".". WEB_TBL_ACCOUNT_INFO ." ai ON ai.account_id = a.id
+					LEFT JOIN ". DBFORUM .".". FORUM_TBL_TOPICS ." t ON ai.username = t.posted_by
+					LEFT JOIN ". DBFORUM .".". FORUM_TBL_REPLYS ." r ON ai.username = r.posted_by
+				WHERE a.username='". $username ."' $email";
+				break;
 		}
-		//Trinity, Mangos
-		else{
-			$query = "SELECT a.username as username, ai.join_date as join_date, COUNT(t.id) + COUNT(r.id) as total_posts, ai.vote_points as vp, ai.donation_points as dp, ai.avatar as avatar, ai.rank as rank, ai.special as special_rank
-			FROM account a
-				LEFT JOIN ". DBNAME .".". WEB_TBL_ACCOUNT_INFO ." ai ON ai.account_id = a.id
-				LEFT JOIN ". DBFORUM .".". FORUM_TBL_TOPICS ." t ON ai.username = t.posted_by
-				LEFT JOIN ". DBFORUM .".". FORUM_TBL_REPLYS ." r ON ai.username = r.posted_by
-			WHERE a.username='". $username ."' $email";
-			
-			$account_info = $this->SimpleQuery($query);
-
-			return $account_info;
-		}
+		
+		$account_info = $this->SimpleQuery($query);
+		
+		return $account_info;
 	}
 }

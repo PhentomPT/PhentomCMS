@@ -66,8 +66,6 @@ class Database{
 			include INCLUDE_PATH ."/db_error.php";
 			die();
 		}
-		
-		$stmt->close();
 	}
 
 	//Returns the values (in a array) from a query generated with the fields that are inputed
