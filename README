@@ -1,9 +1,10 @@
-	PhentomCMS V2
+      PhentomCMS V2
 - The Best WoW Free CMS -
 --------------------------------------------------------------------------------
 
 Warning:
--This project is under development.
+- This project is under development.
+- Before starting the installation give permissions to the website folder.
 
 --------------------------------------------------------------------------------
 
@@ -14,8 +15,9 @@ Description: Wow Free CMS
 --------------------------------------------------------------------------------
 
 ChangeLog:
--A New File Structure.
--Template Engine.
--OOP.
--Plugin System.
--Integrated Forum.
+- A New File Structure.
+- Smarty Template Engine.
+- UIkit Front-End Framework.
+- OOP.
+- Plugin System.
+- Integrated Forum.
