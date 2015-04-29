@@ -23,9 +23,10 @@ $system->debugging = false;
 $system->caching = false;
 $system->cache_lifetime = 120;
 
-//Checks for preload file
-if (file_exists(INCLUDE_PATH ."/preload.php")){
-	include (INCLUDE_PATH ."/preload.php");
+//Checks for language change
+if (isset($_GET['lang']) && !empty($_GET['lang'])){
+	$_SESSION['lang'] = $_GET['lang'];
+	$common->redirect();
 }
 
 //Checks for language
@@ -37,10 +38,9 @@ else{
 	include (LANGUAGE_PATH ."/". $_SESSION['lang'] ."/general.php");
 }
 
-//Checks for language change
-if (isset($_GET['lang']) && !empty($_GET['lang'])){
-	$_SESSION['lang'] = $_GET['lang'];
-	$common->redirect();
+//Checks for preload file
+if (file_exists(INCLUDE_PATH ."/preload.php")){
+	include (INCLUDE_PATH ."/preload.php");
 }
 
 //Displays the header

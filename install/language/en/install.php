@@ -3,7 +3,8 @@ $lang['db_info'] = "Database Info";
 $lang['db_host'] = "DB Host";
 $lang['db_user'] = "DB User";
 $lang['db_password'] = "DB Password";
-$lang['db_name'] = "DB Name";
+$lang['db_name'] = "Website DB Name";
+$lang['db_forum'] = "Forum DB Name";
 $lang['db_error'] = "Error connecting to db.";
 
 $lang['server_info'] = "Server Info";

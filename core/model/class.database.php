@@ -5,7 +5,7 @@ if (!defined("SSC")){ exit("You don't have access to this file"); }
 class Database{
 	
 	public function __construct(){
-		if (is_string(DBHOST)){
+		if (defined("DBHOST")){
 			$con = new mysqli(DBHOST, DBUSER, DBPASS, DBNAME, DBPORT);
 				
 			if ($con->connect_errno){
@@ -45,7 +45,7 @@ class Database{
 		$array = $this->con->query($query);
 	
 		if ($array == false){
-			ob_end_clean();
+			ob_clean();
 			include INCLUDE_PATH ."/db_error.php";
 			die();
 		}
@@ -62,7 +62,7 @@ class Database{
 		$stmt = $this->con->query($query);
 		
 		if (!$stmt){
-			ob_end_clean();
+			ob_clean();
 			include INCLUDE_PATH ."/db_error.php";
 			die();
 		}
@@ -91,7 +91,7 @@ class Database{
 		$array = $this->con->query($query);
 	
 		if ($array == false){
-			ob_end_clean();
+			ob_clean();
 			include INCLUDE_PATH ."/db_error.php";
 			die();
 		}

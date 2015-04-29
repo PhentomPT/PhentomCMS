@@ -1,5 +1,5 @@
-/*! UIkit 2.16.2 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
-(function($, UI) {
+/*! UIkit 2.20.1 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
+(function(UI) {
 
     "use strict";
 
@@ -16,40 +16,47 @@
             if (!element.length) return;
 
             var $body     = UI.$('body'),
-                bar       = element.find(".@-offcanvas-bar:first"),
+                bar       = element.find(".uk-offcanvas-bar:first"),
                 rtl       = (UI.langdirection == "right"),
-                flip      = bar.hasClass("@-offcanvas-bar-flip") ? -1:1,
+                flip      = bar.hasClass("uk-offcanvas-bar-flip") ? -1:1,
                 dir       = flip * (rtl ? -1 : 1);
 
             scrollpos = {x: window.pageXOffset, y: window.pageYOffset};
 
-            element.addClass("@-active");
+            element.addClass("uk-active");
 
-            $body.css({"width": window.innerWidth, "height": window.innerHeight}).addClass("@-offcanvas-page");
+            $body.css({"width": window.innerWidth, "height": window.innerHeight}).addClass("uk-offcanvas-page");
             $body.css((rtl ? "margin-right" : "margin-left"), (rtl ? -1 : 1) * (bar.outerWidth() * dir)).width(); // .width() - force redraw
 
             $html.css('margin-top', scrollpos.y * -1);
 
-            bar.addClass("@-offcanvas-bar-show");
+            bar.addClass("uk-offcanvas-bar-show");
 
             this._initElement(element);
 
-            $doc.trigger('show.uk.offcanvas', [element, bar]);
+            bar.trigger('show.uk.offcanvas', [element, bar]);
+
+            // Update ARIA
+            element.attr('aria-hidden', 'false');
         },
 
         hide: function(force) {
 
             var $body = UI.$('body'),
-                panel = UI.$(".@-offcanvas.@-active"),
+                panel = UI.$(".uk-offcanvas.uk-active"),
                 rtl   = (UI.langdirection == "right"),
-                bar   = panel.find(".@-offcanvas-bar:first"),
+                bar   = panel.find(".uk-offcanvas-bar:first"),
                 finalize = function() {
-                    $body.removeClass("@-offcanvas-page").css({"width": "", "height": "", "margin-left": "", "margin-right": ""});
-                    panel.removeClass("@-active");
-                    bar.removeClass("@-offcanvas-bar-show");
+                    $body.removeClass("uk-offcanvas-page").css({"width": "", "height": "", "margin-left": "", "margin-right": ""});
+                    panel.removeClass("uk-active");
+
+                    bar.removeClass("uk-offcanvas-bar-show");
                     $html.css('margin-top', '');
                     window.scrollTo(scrollpos.x, scrollpos.y);
-                    UI.$doc.trigger('hide.uk.offcanvas', [panel, bar]);
+                    bar.trigger('hide.uk.offcanvas', [panel, bar]);
+
+                    // Update ARIA
+                    panel.attr('aria-hidden', 'true');
                 };
 
             if (!panel.length) return;
@@ -61,7 +68,7 @@
                 }).css((rtl ? "margin-right" : "margin-left"), "");
 
                 setTimeout(function(){
-                    bar.removeClass("@-offcanvas-bar-show");
+                    bar.removeClass("uk-offcanvas-bar-show");
                 }, 0);
 
             } else {
@@ -79,9 +86,9 @@
 
                 if (!e.type.match(/swipe/)) {
 
-                    if (!target.hasClass("@-offcanvas-close")) {
-                        if (target.hasClass("@-offcanvas-bar")) return;
-                        if (target.parents(".@-offcanvas-bar:first").length) return;
+                    if (!target.hasClass("uk-offcanvas-close")) {
+                        if (target.hasClass("uk-offcanvas-bar")) return;
+                        if (target.parents(".uk-offcanvas-bar:first").length) return;
                     }
                 }
 
@@ -91,8 +98,8 @@
 
             element.on("click", "a[href^='#']", function(e){
 
-                var element = $(this),
-                    href = element.attr("href");
+                var link = UI.$(this),
+                    href = link.attr("href");
 
                 if (href == "#") {
                     return;
@@ -100,14 +107,20 @@
 
                 UI.$doc.one('hide.uk.offcanvas', function() {
 
-                    var target = $(href);
+                    var target;
+
+                    try {
+                        target = UI.$(href);
+                    } catch (e){
+                        target = ""
+                    }
 
                     if (!target.length) {
                         target = UI.$('[name="'+href.replace('#','')+'"]');
                     }
 
-                    if (UI.Utils.scrollToElement && target.length) {
-                        UI.Utils.scrollToElement(target);
+                    if (target.length && link.attr('data-uk-smooth-scroll') && UI.Utils.scrollToElement) {
+                        UI.Utils.scrollToElement(target, UI.Utils.options(link.attr('data-uk-smooth-scroll') || '{}'));
                     } else {
                         window.location.href = href;
                     }
@@ -125,14 +138,14 @@
         boot: function() {
 
             // init code
-            $html.on("click.offcanvas.uikit", "[data-@-offcanvas]", function(e) {
+            $html.on("click.offcanvas.uikit", "[data-uk-offcanvas]", function(e) {
 
                 e.preventDefault();
 
                 var ele = UI.$(this);
 
                 if (!ele.data("offcanvasTrigger")) {
-                    var obj = UI.offcanvasTrigger(ele, UI.Utils.options(ele.attr("data-@-offcanvas")));
+                    var obj = UI.offcanvasTrigger(ele, UI.Utils.options(ele.attr("data-uk-offcanvas")));
                     ele.trigger("click");
                 }
             });
@@ -149,7 +162,7 @@
 
             var $this = this;
 
-            this.options = $.extend({
+            this.options = UI.$.extend({
                 "target": $this.element.is("a") ? $this.element.attr("href") : false
             }, this.options);
 
@@ -162,4 +175,4 @@
 
     UI.offcanvas = Offcanvas;
 
-})(jQuery, UIkit);
+})(UIkit);

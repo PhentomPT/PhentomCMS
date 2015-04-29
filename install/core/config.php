@@ -4,6 +4,7 @@ if (!defined("SSC")){ exit("You don't have access to this file"); }
 
 //Stats session
 session_start();
+ob_start();
 
 //System constants
 define("DIR", dirname(__DIR__));
@@ -17,4 +18,3 @@ define("STYLE_PATH", DIR ."/style");
 define("LANGUAGE_PATH", DIR ."/language");
 define("IMAGE_PATH", DIR ."/image");
 define("INCLUDE_PATH", DIR ."/include");
-

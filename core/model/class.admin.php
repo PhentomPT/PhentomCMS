@@ -83,7 +83,7 @@ class Admin extends Database{
 		
 		//Arcemu
 		if ($server_info[0]['core'] == "arcemu"){
-			$query = "SELECT * 
+			$query = "SELECT a.acct as id, a.login as username , a.email as email, ai.joindate as joindate, ai.vote_points as vote_points, ai.donation_points as donation_points, ai.avatar as avatar, ai.rank as rank, ai.special as special 
 			FROM ". $server_info[0]['accounts'] .".accounts a
 				LEFT JOIN ". DBNAME .".". WEB_TBL_ACCOUNT_INFO ." ai ON ai.account_id = a.id
 			". $where ." ORDER BY a.id ";

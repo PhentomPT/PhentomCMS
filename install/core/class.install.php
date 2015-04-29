@@ -8,6 +8,7 @@ class Install extends Database{
 	public $dbuser;
 	public $dbpass;
 	public $dbname;
+	public $dbforum;
 	public $server_name;
 	public $server_slogan;
 	public $server_user;
@@ -48,20 +49,16 @@ class Install extends Database{
 	public function getCoreDatabases($core){
 		switch ($core) {
 			case "arcemu":
-				$core_db['accounts'] = "accounts";
-				$core_db['characters'] = "characters";
+				$core_db['accounts'] = "logon";
+				$core_db['characters'] = "character";
 				$core_db['world'] = "world";
 				break;
 			case "mangos":
-				$core_db['accounts'] = "auth";
-				$core_db['characters'] = "characters";
+				$core_db['accounts'] = "realm";
+				$core_db['characters'] = "character";
 				$core_db['world'] = "world";
 				break;
 			case "trinity":
-				$core_db['accounts'] = "auth";
-				$core_db['characters'] = "characters";
-				$core_db['world'] = "world";
-				break;
 			case "trinity_v6":
 				$core_db['accounts'] = "auth";
 				$core_db['characters'] = "characters";
@@ -83,11 +80,15 @@ class Install extends Database{
 			case "arcemu":
 				$this->SimpleQuery("INSERT INTO account () VALUES ();");
 				break;
-			//Trinity v6 and Up
+			//Trinity
+			case "trinity":
 			case "trinity_v6":
 				$this->SimpleQuery("INSERT INTO account () VALUES ();");
 				break;
-			//Trinity 6 Down or Mangos
+			//Mangos
+			case "mangos":
+				$this->SimpleQuery("INSERT INTO account () VALUES ();");
+				break;
 			default:
 				$this->SimpleQuery("INSERT INTO account () VALUES ();");
 				break;
@@ -98,18 +99,18 @@ class Install extends Database{
 		//Config File
 		$config_file = "core/config.php";
 	
-		$config_data = '//DB constants
-				define("DBHOST", "'.$this->dbhost.'");
-				define("DBUSER", "'.$this->dbuser.'");
-				define("DBPASS", "'.$this->dbpass.'");
-				define("DBNAME", "'.$this->dbname.'");
-				define("DBFORUM", "forum");
-				define("DBPORT", "3306");';
+		$config_data = '
+		//DB constants
+		define("DBHOST", "'.$this->dbhost.'");
+		define("DBUSER", "'.$this->dbuser.'");
+		define("DBPASS", "'.$this->dbpass.'");
+		define("DBNAME", "'.$this->dbname.'");
+		define("DBFORUM", "'.$this->dbforum.'");
+		define("DBPORT", "3306");';
 	
 		//Scans Webpath to get all web applications
 		$apps = array_diff(scandir(WEB_PATH), array(".","..","index.php","README",".git","core","LICENSE"));
 	
-		//!TODO This is probably stupid... (Make only 1 config file at the main core location instead)
 		//Opens the config file of every web application and appends the data
 		foreach ($apps as $value){
 			$handle = fopen(WEB_PATH ."/". $value ."/". $config_file, 'a') or die("Cannot open file:  ". WEB_PATH ."/". $value ."/". $config_file);
@@ -117,13 +118,15 @@ class Install extends Database{
 			fclose($handle);
 		}
 	
-		//Main querys to create the necessary databases and tables
+		//Main querys to create the necessary databases
 		$create_database_website = "CREATE DATABASE IF NOT EXISTS `". $this->dbname ."`;";
+		$create_database_forum = "CREATE DATABASE IF NOT EXISTS `". $this->dbforum ."`;";
 	
 		$con = @mysqli_connect($this->dbhost,$this->dbuser,$this->dbpass);
 	
 		//Creates database for the Website
 		mysqli_query($con,$create_database_website);
+		mysqli_query($con,$create_database_forum);
 	}
 	
 	public function addDb() {
@@ -232,8 +235,6 @@ class Install extends Database{
 					(8, 'Register', '?page=register', 5, 0, 'right');";
 		
 		$insert_data_info = "INSERT INTO `info` (`title`, `slogan`, `core`, `expansion`, `acc_db`, `char_db`, `world_db`, `style`, `onplayers`, `slider`) VALUES ('". $this->server_name ."', '". $this->server_slogan ."', '". $this->server_core ."', '". $expansion ."', '". $core['accounts'] ."', '". $core['characters'] ."', '". $core['world'] ."', 'default', '". $this->server_players ."', '". $this->server_slider ."');";
-				
-		$create_database_forum = "CREATE DATABASE IF NOT EXISTS `forum`;";
 			
 		$create_forum_category = "CREATE TABLE `categorys` (
 			`id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -307,9 +308,8 @@ class Install extends Database{
 		/*$this->error['data_in_menu'] =*/ $this->SimpleUpdateQuery($insert_data_menu);
 		/*$this->error['data_in_info'] =*/ $this->SimpleUpdateQuery($insert_data_info);
 		
-		//Creates database and tables for the Forum
-		/*$error['create_database_forum'] =*/ $this->SimpleUpdateQuery($create_database_forum);
-		$this->SelectDb("forum");
+		//Creates the tables for the Forum
+		$this->SelectDb(DBFORUM);
 		/*$error['create_table1_forum'] =*/ $this->SimpleUpdateQuery($create_forum_category);
 		/*$error['create_table2_forum'] =*/ $this->SimpleUpdateQuery($create_forum_forums);
 		/*$error['create_table3_forum'] =*/ $this->SimpleUpdateQuery($create_forum_menu);

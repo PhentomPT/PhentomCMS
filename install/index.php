@@ -22,6 +22,12 @@ $system->debugging = false;
 $system->caching = false;
 $system->cache_lifetime = 120;
 
+//Checks for language change
+if (isset($_GET['lang']) && !empty($_GET['lang'])){
+	$_SESSION['lang'] = $_GET['lang'];
+	$common->redirect();
+}
+
 //Checks for language
 if (!isset($_SESSION['lang']) || empty($_SESSION['lang'])){
 	$_SESSION['lang'] = "en";
@@ -31,15 +37,9 @@ else{
 	include (LANGUAGE_PATH . "/" . $_SESSION['lang'] . "/general.php");
 }
 
-//Checks for language change
-if (isset($_GET['lang']) && !empty($_GET['lang'])){
-	$_SESSION['lang'] = $_GET['lang'];
-	$common->redirect();
-}
-
 //Checks for preload file
-if (file_exists(CONTROLLER_PATH ."/preload.php")){
-	include (CONTROLLER_PATH ."/preload.php");
+if (file_exists(INCLUDE_PATH ."/preload.php")){
+	include (INCLUDE_PATH ."/preload.php");
 }
 
 //Displays the header

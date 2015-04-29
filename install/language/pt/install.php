@@ -3,7 +3,8 @@ $lang['db_info'] = "Informação da Base de Dados";
 $lang['db_host'] = "Host da BD";
 $lang['db_user'] = "Utilizador da BD";
 $lang['db_password'] = "Palavra Passe da BD";
-$lang['db_name'] = "Nome da BD";
+$lang['db_name'] = "Nome da BD do Site";
+$lang['db_forum'] = "Nome da DB do Forum";
 $lang['db_error'] = "Erro ao connectar a  BD.";
 
 $lang['server_info'] = "Informação do Servidor";
