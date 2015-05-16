@@ -81,7 +81,7 @@
 			<p><?php echo $error_text;?></p>
 		</div>
 		<div class="footer">
-			<p>If your having trouble contact the <a class="support" target="_blank" href="http://phentom.net/support">Support</a> or <a class="support" target="_blank" href="https://github.com/PhentomPT/PhentomCMS" >Gihub</a></p>
+			<p>If your having trouble contact the <a class="support" target="_blank" href="http://phentom.net/support">Support</a> or <a class="support" target="_blank" href="https://github.com/PhentomPT/PhentomCMS" >Github</a></p>
 		- Powered by <a class="phentom" target="_blank" href="http://phentom.net/">Phentom</a> -</div>
 	</body>
 </html>

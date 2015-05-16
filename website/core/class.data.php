@@ -47,14 +47,17 @@ class Data extends Database{
 	
 	//Check and processes the vote **WARNING THIS IS EXPERIMENTAL**
 	public function checkVote(){
+		
 		//List of servers accepted to vote
-		$accepted_servers = array('openwow' => "159.253.128.82",
+		$accepted_servers = array(
+				'openwow' => "159.253.128.82",
 				'topg' => "192.99.101.31",
 				'top100arena' => "209.59.143.11",
-				'arenatop100' => "198.20.70.235");
+				'arenatop100' => "198.20.70.235"
+		);
 	
 		if (in_array($_SERVER['REMOTE_ADDR'],$accepted_servers)){
-	
+			
 			//Retrieve the name of the voted server
 			foreach ($accepted_servers as $key => $value) {
 				if ($_SERVER['REMOTE_ADDR'] == $value){
@@ -103,15 +106,15 @@ class Data extends Database{
 			$last_time = $this->SimpleQuery("SELECT * FROM voted_cooldown WHERE username = '$user_id' AND voted_link = '$server'");
 			$now = date("Y/m/d H:i:s", time());
 	
-			if ($last_time -> num_rows == 0){
+			if (count($last_time) == 0){
 				$this->SimpleQuery("INSERT INTO voted_cooldown (username,voted_link,voted_time) VALUES('$user_id','$server','$now')");
 				$this->SelectDb($acc_db);
 				$this->SimpleQuery("UPDATE account SET vp = vp+$points WHERE username = '$user_id'");
 				echo "Success!";
 			}
 			else{
-				while($row = $last_time -> fetch_array(MYSQLI_ASSOC)){
-					$last_time_voted = date("Y/m/d H:i:s", strtotime($row['voted_time']));
+				foreach ($last_time as $key => $value){
+					$last_time_voted[$key] = date("Y/m/d H:i:s", strtotime($row['voted_time']));
 				}
 					
 				$can_vote = date("Y/m/d H:i:s",strtotime("+12 Hours", strtotime($last_time_voted)));
@@ -133,11 +136,12 @@ class Data extends Database{
 		}
 		else{
 			//Debug to get address from server
-			$now = date("Y/m/d H:i:s", time());
-			$user_id = "debug";
-			$this->SelectDb(DBNAME);
-			$this->SimpleQuery("INSERT INTO voted_cooldown (username,voted_link,voted_time) VALUES('$user_id','".$_SERVER['REMOTE_ADDR']."','$now')");
-			echo "Your not allowed here...";
+			//$now = date("Y/m/d H:i:s", time());
+			//$user_id = "debug";
+			//$this->SelectDb(DBNAME);
+			//$this->SimpleQuery("INSERT INTO voted_cooldown (username,voted_link,voted_time) VALUES('$user_id','".$_SERVER['REMOTE_ADDR']."','$now')");
+			//echo "Your not allowed here...";
 		}
 	}
 }
+die;
