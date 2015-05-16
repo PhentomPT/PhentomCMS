@@ -16,8 +16,7 @@ Description: Wow Free CMS
 
 ChangeLog:
 - A New File Structure.
-- Smarty Template Engine.
-- UIkit Front-End Framework.
-- OOP.
+- Smarty (3.1.21) Template Engine.
+- UIkit (2.20.3) Front-End Framework.
 - Plugin System.
 - Integrated Forum.
