@@ -74,23 +74,34 @@ class Install extends Database{
 		return $core_db;
 	}
 	
-	public function insertAdmin($core,$core_db){
-		switch ($core[0]['core']){
+	public function insertAdmin($core,$user,$pass,$expansion){
+		$core_db = $this->getCoreDatabases($core);
+		$true_expansion = $this->getExpansion($expansion,$core);
+		
+		$salt = strtoupper($user);
+		$password = strtoupper($pass);
+		$encrypted = SHA1($salt.':'.$password);
+		
+		switch ($core){
 			//Arcemu
 			case "arcemu":
-				$this->SimpleQuery("INSERT INTO account () VALUES ();");
+				$this->SimpleUpdateQuery("INSERT INTO ". $core_db['accounts'] .".accounts (login, password, gm, flags) VALUES ('". $user ."', '". $encrypted ."', 'az', '". $true_expansion ."');");
 				break;
 			//Trinity
 			case "trinity":
 			case "trinity_v6":
-				$this->SimpleQuery("INSERT INTO account () VALUES ();");
+				$this->SimpleUpdateQuery("INSERT INTO ". $core_db['accounts'] .".account (username, sha_pass_hash, expansion) VALUES ('". $user ."', '". $encrypted ."', '". $true_expansion ."');");
+				$account_id = $this->SimpleQuery("SELECT id FROM ". $core_db['accounts'] .".account WHERE username='". $user ."' LIMIT 1;");
+				$this->SimpleUpdateQuery("INSERT INTO ". $core_db['accounts'] .".account_access (id,gmlevel) VALUES ('". $account_id[0]['id'] ."', 3);");
 				break;
 			//Mangos
 			case "mangos":
-				$this->SimpleQuery("INSERT INTO account () VALUES ();");
+				$this->SimpleUpdateQuery("INSERT INTO ". $core_db['accounts'] .".account (username, sha_pass_hash, gmlevel, expansion) VALUES ('". $user ."','". $encrypted ."', 3, '". $true_expansion ."');");
 				break;
 			default:
-				$this->SimpleQuery("INSERT INTO account () VALUES ();");
+				$this->SimpleUpdateQuery("INSERT INTO ". $core_db['accounts'] .".account (username, sha_pass_hash, expansion) VALUES ('". $user ."', '". $encrypted ."', '". $true_expansion ."');");
+				$account_id = $this->SimpleQuery("SELECT id FROM ". $core_db['accounts'] .".account WHERE username='". $user ."' LIMIT 1;");
+				$this->SimpleUpdateQuery("INSERT INTO ". $core_db['accounts'] .".account_access (id,gmlevel) VALUES ('". $account_id[0]['id'] ."', 3);");
 				break;
 		}
 	}
