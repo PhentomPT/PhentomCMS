@@ -85,7 +85,7 @@ class Install extends Database{
 		switch ($core){
 			//Arcemu
 			case "arcemu":
-				$this->SimpleUpdateQuery("INSERT INTO ". $core_db['accounts'] .".accounts (login, password, gm, flags) VALUES ('". $user ."', '". $encrypted ."', 'az', '". $true_expansion ."');");
+				$this->SimpleUpdateQuery("INSERT INTO ". $core_db['accounts'] .".accounts (login, encrypted_password, gm, flags) VALUES ('". $user ."', '". $encrypted ."', 'az', '". $true_expansion ."');");
 				break;
 			//Trinity
 			case "trinity":
