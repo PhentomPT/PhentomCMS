@@ -1,0 +1,16 @@
+<article class="uk-article">
+	<form class="uk-form uk-form-horizontal" action="" method="post">
+		<legend><h3><i class="uk-icon-info-circle"></i> Requirements</h3></legend>
+		<div class="uk-width-1-1">
+			<ul class="uk-list uk-list-line">
+				<li>{if $php_version == true} <i class="uk-icon-check"></i> {else} <i class="uk-icon-close"></i> {/if} - {$php_error}</li>
+				<li>{if $permissions == true} <i class="uk-icon-check"></i> {else} <i class="uk-icon-close"></i> {/if} - Permissions to the project</li>
+				<li><i class="uk-icon-question"></i> - Mysql 5 or higher</li>
+			</ul>
+		</div>
+		<div class="uk-form-row uk-text-right">
+			{if $php_version == true && $permissions == true}<input type="hidden" value="done" name="intro_submit">{/if}
+			<input type="submit" value="{$next}" class="uk-button" {if $php_version == false || $permissions == false}disabled{/if}>
+		</div>
+	</form>
+</article>

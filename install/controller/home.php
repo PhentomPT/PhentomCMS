@@ -9,7 +9,10 @@ if (defined("DBHOST") && isset($_POST['db_submit'])){
 	$system->display(VIEW_PATH ."/server_info.html");
 }
 else{
-	if (isset($_POST['db_submit']) && !empty($_POST['db_submit'])){
+	if (isset($_POST['intro_submit']) && !empty($_POST['intro_submit'])){
+		$system->display(VIEW_PATH ."/db_info.html");
+	}
+	elseif (isset($_POST['db_submit']) && !empty($_POST['db_submit'])){
 		if (!empty($_POST['dbhost']) || !empty($_POST['dbuser']) || !empty($_POST['dbname'])){
 			if(!$try_connection = @mysqli_connect($_POST['dbhost'],$_POST['dbuser'],$_POST['dbpass'])){
 				$system->assign("error","db_error");
@@ -61,7 +64,8 @@ else{
 		$common->redirect("../");
 	}
 	else{
-		$system->assign("error","");
-		$system->display(VIEW_PATH ."/db_info.html");
+		$system->assign("php_version", version_compare(PHP_VERSION, '5.4.0', '>='));
+		$system->assign("permissions", is_writable(WEB_PATH));
+		$system->display(VIEW_PATH ."/intro.html");
 	}
 }
