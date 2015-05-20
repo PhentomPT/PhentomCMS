@@ -31,13 +31,23 @@ class Data extends Database{
 	public function getOnlinePlayers(){
 		$info = $this->serverInfo();
 		
-		//Arcemu
-		if ($info[0]['core'] == "arcemu"){
-			$query = "SELECT COUNT(id) as total_online_players FROM ". $info[0]['accounts'] .".account WHERE online=1";
-		}
-		//Trinity, Mangos
-		else{
-			$query = "SELECT COUNT(id) as total_online_players FROM ". $info[0]['accounts'] .".account WHERE online=1";
+		switch ($info[0]['core']){
+			//Arcemu
+			case "arcemu":
+				$query = "SELECT COUNT(id) as total_online_players FROM ". $info[0]['accounts'] .".account WHERE online=1";
+				break;
+			//Trinity
+			case "trinity":
+			case "trinity_v6":
+				$query = "SELECT COUNT(id) as total_online_players FROM ". $info[0]['accounts'] .".account WHERE online=1";
+				break;
+			//Mangos
+			case "mangos":
+				$query = "SELECT COUNT(id) as total_online_players FROM ". $info[0]['accounts'] .".account WHERE active_realm_id IN (1,2,3,4,5,6,7,8,9,10)";
+				break;
+			default:
+				$query = "SELECT COUNT(id) as total_online_players FROM ". $info[0]['accounts'] .".account WHERE online=1";
+				break;
 		}
 		
 		$return = $this->SimpleQuery($query);
@@ -144,4 +154,3 @@ class Data extends Database{
 		}
 	}
 }
-die;
