@@ -1,4 +1,6 @@
 <?php
+//Refuses direct access
+if (!defined("SSC")){ exit("You don't have access to this file"); }
 
 $username = $_POST['username'];
 $password = $common->encryptSha1($username,$_POST['password']);
