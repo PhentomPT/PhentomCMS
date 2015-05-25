@@ -25,7 +25,7 @@ $lang['no_error'] = "Nenhum erro foi detectado durante a instalação!";
 
 $lang['php_error'] = "PHP 5.4 ou superior é necessário.";
 $lang['permissions_error'] = "Dar permissões a pasta do projecto.";
-$lang['mysql_error'] = "Mysql 5.4 ou superior é necessário."
+$lang['mysql_error'] = "Mysql 5.4 ou superior é necessário.";
 
 foreach ($lang as $key=>$value){
 	$system->assign($key, $lang[$key]);
