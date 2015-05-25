@@ -4,8 +4,8 @@
 		<div class="uk-width-1-1">
 			<ul class="uk-list uk-list-line">
 				<li>{if $php_version == true} <i class="uk-icon-check"></i> {else} <i class="uk-icon-close"></i> {/if} - {$php_error}</li>
-				<li>{if $permissions == true} <i class="uk-icon-check"></i> {else} <i class="uk-icon-close"></i> {/if} - Permissions to the project</li>
-				<li><i class="uk-icon-question"></i> - Mysql 5 or higher</li>
+				<li>{if $permissions == true} <i class="uk-icon-check"></i> {else} <i class="uk-icon-close"></i> {/if} - {$permissions_error}</li>
+				<li><i class="uk-icon-question"></i> - {$mysql_error}</li>
 			</ul>
 		</div>
 		<div class="uk-form-row uk-text-right">
