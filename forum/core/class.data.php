@@ -2,9 +2,27 @@
 //Refuses direct access
 if (!defined("SSC")){ exit("You don't have access to this file"); }
 
+/**
+ * This class is used for forum related functions <br/>
+ * Extends the class.database.php in order to
+ * operate with information stored in the
+ * database
+ *
+ * @name	: class.data.php
+ * @package	: PhentomCMS
+ * @author	: PhentomPT <phentom.net@gmail.com>
+ * @link	: phentom.net
+ * @version	: 2.0
+ */
+
 class Data extends Database{
 
-	//Gets the menu by part (top / bar)
+	/**
+	 * Gets the menu by part (top / bar)
+	 * 
+	 * @param	: $part (string)
+	 * @return	: $return (array)
+	 */
 	public function getMenu($part){
 		if (empty($part)){
 			$error[] .= "error_menu";
@@ -27,7 +45,11 @@ class Data extends Database{
 		return $return;
 	}
 	
-	//Gets Posts
+	/**
+	 * Gets all the posts
+	 * 
+	 * @return	: $return (array)
+	 */
 	public function getPosts(){
 		$query = "SELECT *
 		FROM ". DBFORUM .".". FORUM_TBL_TOPICS ."

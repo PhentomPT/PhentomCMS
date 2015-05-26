@@ -31,6 +31,7 @@
 					font-size: 12px;
 					font-weight: lighter;
 					padding: 3px 10px;
+					word-break: break-all;
 				}
 			
 			.footer{
@@ -54,19 +55,33 @@
 	</head>
 	<body>
 		<?php 
-			if (!empty($con->connect_errno)){ $error_num = $con->connect_errno; }
-			else{ $error_num = "Undefined"; }
+			if (!empty($con->connect_errno)){ 
+				$error_num = $con->connect_errno; 
+			}
+			elseif(!empty($query)){
+				$error_num = "Query Error";
+			}
+			else{ 
+				$error_num = "Undefined"; 
+			}
 
-			if (!empty($con->connect_error)){ $error_text = $con->connect_error; }
-			else{ $error_text = "Check the config file within the application that got this error"; }
+			if (!empty($con->connect_error)){ 
+				$error_text = "Error: ". $con->connect_error;
+			}
+			elseif(!empty($query)){
+				$error_text = "Your query is: ". $query;
+			}
+			else{
+				$error_text = "Error: Check the config file within the application that got this error";
+			}
 		?>
 	
 		<div class="main" align="left">
-			<div class="title"><?php echo $error_num;?> - Database Error</div>
-			<p>Error: <?php echo $error_text;?></p>
+			<div class="title"><?php echo $error_num; ?> - Database Error</div>
+			<p><?php echo $error_text;?></p>
 		</div>
 		<div class="footer">
-			<p>If your having trouble contact the <a class="support" target="_blank" href="http://phentom.net/support">Support</a> or <a class="support" target="_blank" href="https://github.com/PhentomPT/PhentomCMS" >Gihub</a></p>
+			<p>If your having trouble contact the <a class="support" target="_blank" href="http://phentom.net/support">Support</a> or <a class="support" target="_blank" href="https://github.com/PhentomPT/PhentomCMS" >Github</a></p>
 		- Powered by <a class="phentom" target="_blank" href="http://phentom.net/">Phentom</a> -</div>
 	</body>
 </html>

@@ -2,6 +2,19 @@
 //Refuses direct access
 if (!defined("SSC")){ exit("You don't have access to this file"); }
 
+/**
+ * This class is used for installation related functions <br/>
+ * Extends the class.database.php in order to
+ * operate with information stored in the
+ * database
+ *
+ * @name	: class.install.php
+ * @package	: PhentomCMS
+ * @author	: PhentomPT <phentom.net@gmail.com>
+ * @link	: phentom.net
+ * @version	: 2.0
+ */
+
 class Install extends Database{
 	
 	public $dbhost;
@@ -19,6 +32,13 @@ class Install extends Database{
 	public $server_slider;
 	public $error;
 	
+	/**
+	 * Gets the right expansion number according to the server core
+	 *
+	 * @param	: $expansion (integer)
+	 * @param	: $core (string)
+	 * @return	: $expansion_number (integer)
+	 */
 	public function getExpansion($expansion,$core){
 		if ($core == "arcemu"){
 			switch ($expansion) {
@@ -46,6 +66,12 @@ class Install extends Database{
 		return $expansion_number;
 	}
 	
+	/**
+	 * Gets the name of the databases according to the server core
+	 *
+	 * @param	: $core (string)
+	 * @return	: $core_db (array)
+	 */
 	public function getCoreDatabases($core){
 		switch ($core) {
 			case "arcemu":
@@ -74,38 +100,48 @@ class Install extends Database{
 		return $core_db;
 	}
 	
-	public function insertAdmin($core,$user,$pass,$expansion){
-		$core_db = $this->getCoreDatabases($core);
-		$true_expansion = $this->getExpansion($expansion,$core);
+	/**
+	 * Inserts an admin account
+	 *
+	 */
+	public function insertAdmin(){
+		$core_db = $this->getCoreDatabases($this->server_core);
+		$true_expansion = $this->getExpansion($this->server_expansion,$this->server_core);
 		
-		$salt = strtoupper($user);
-		$password = strtoupper($pass);
+		$salt = strtoupper($this->server_user);
+		$password = strtoupper($this->server_password);
 		$encrypted = SHA1($salt.':'.$password);
 		
-		switch ($core){
-			//Arcemu
+		switch ($this->server_core){
 			case "arcemu":
-				$this->SimpleUpdateQuery("INSERT INTO ". $core_db['accounts'] .".accounts (login, encrypted_password, gm, flags) VALUES ('". $user ."', '". $encrypted ."', 'az', '". $true_expansion ."');");
+				$this->SimpleUpdateQuery("INSERT INTO ". $core_db['accounts'] .".accounts (login, encrypted_password, gm, flags) VALUES ('". $this->server_user ."', '". $encrypted ."', 'az', '". $true_expansion ."');");
+				$account_id = $this->SimpleQuery("SELECT acct as id, login as username FROM ". $core_db['accounts'] .".accounts ORDER BY acct DESC LIMIT 1");
 				break;
-			//Trinity
 			case "trinity":
 			case "trinity_v6":
-				$this->SimpleUpdateQuery("INSERT INTO ". $core_db['accounts'] .".account (username, sha_pass_hash, expansion) VALUES ('". $user ."', '". $encrypted ."', '". $true_expansion ."');");
-				$account_id = $this->SimpleQuery("SELECT id FROM ". $core_db['accounts'] .".account WHERE username='". $user ."' LIMIT 1;");
+				$this->SimpleUpdateQuery("INSERT INTO ". $core_db['accounts'] .".account (username, sha_pass_hash, expansion) VALUES ('". $this->server_user ."', '". $encrypted ."', '". $true_expansion ."');");
+				$account_id = $this->SimpleQuery("SELECT id, username FROM ". $core_db['accounts'] .".account WHERE username='". $this->server_user ."' LIMIT 1;");
 				$this->SimpleUpdateQuery("INSERT INTO ". $core_db['accounts'] .".account_access (id,gmlevel) VALUES ('". $account_id[0]['id'] ."', 3);");
 				break;
-			//Mangos
 			case "mangos":
-				$this->SimpleUpdateQuery("INSERT INTO ". $core_db['accounts'] .".account (username, sha_pass_hash, gmlevel, expansion) VALUES ('". $user ."','". $encrypted ."', 3, '". $true_expansion ."');");
+				$this->SimpleUpdateQuery("INSERT INTO ". $core_db['accounts'] .".account (username, sha_pass_hash, gmlevel, expansion) VALUES ('". $this->server_user ."','". $encrypted ."', 3, '". $true_expansion ."');");
+				$account_id = $this->SimpleQuery("SELECT id,username FROM ". $core_db['accounts'] .".account ORDER BY id DESC LIMIT 1");
 				break;
 			default:
-				$this->SimpleUpdateQuery("INSERT INTO ". $core_db['accounts'] .".account (username, sha_pass_hash, expansion) VALUES ('". $user ."', '". $encrypted ."', '". $true_expansion ."');");
-				$account_id = $this->SimpleQuery("SELECT id FROM ". $core_db['accounts'] .".account WHERE username='". $user ."' LIMIT 1;");
+				$this->SimpleUpdateQuery("INSERT INTO ". $core_db['accounts'] .".account (username, sha_pass_hash, expansion) VALUES ('". $this->server_user ."', '". $encrypted ."', '". $true_expansion ."');");
+				$account_id = $this->SimpleQuery("SELECT id, username FROM ". $core_db['accounts'] .".account WHERE username='". $this->server_user ."' LIMIT 1;");
 				$this->SimpleUpdateQuery("INSERT INTO ". $core_db['accounts'] .".account_access (id,gmlevel) VALUES ('". $account_id[0]['id'] ."', 3);");
 				break;
 		}
+		
+		$this->SimpleUpdateQuery("INSERT INTO ". DBNAME .".account_info (account_id,username) VALUES ('". $account_id[0]['id'] ."', '". $account_id[0]['username'] ."')");
 	}
 	
+	/**
+	 * Appends the database information to every config file,
+	 * and creates the website and forum database
+	 *
+	 */
 	public function addInfo() {
 		//Config File
 		$config_file = "core/config.php";
@@ -140,6 +176,10 @@ class Install extends Database{
 		mysqli_query($con,$create_database_forum);
 	}
 	
+	/**
+	 * Inserts every table needed in the database and its info
+	 *
+	 */
 	public function addDb() {
 		
 		//Gets the expansion number and the database names
@@ -247,6 +287,8 @@ class Install extends Database{
 		
 		$insert_data_info = "INSERT INTO `info` (`title`, `slogan`, `core`, `expansion`, `acc_db`, `char_db`, `world_db`, `style`, `onplayers`, `slider`) VALUES ('". $this->server_name ."', '". $this->server_slogan ."', '". $this->server_core ."', '". $expansion ."', '". $core['accounts'] ."', '". $core['characters'] ."', '". $core['world'] ."', 'default', '". $this->server_players ."', '". $this->server_slider ."');";
 			
+		$insert_data_news = "INSERT INTO `news` (`title`, `user`, `content`, `media`) VALUES ('Welcome to Phentom CMS!', 'Phentom', 'This is still in development, but every day it get's better!<br/>I hope you like it! Any question or bug just report it in github <br/>Thanks for all the support!', 'news.jpg');";
+		
 		$create_forum_category = "CREATE TABLE `categorys` (
 			`id` INT(11) NOT NULL AUTO_INCREMENT,
 			`name` VARCHAR(150) NOT NULL,
@@ -318,6 +360,7 @@ class Install extends Database{
 		/*$this->error['statistics'] =*/ $this->SimpleUpdateQuery($create_table_statistics);
 		/*$this->error['data_in_menu'] =*/ $this->SimpleUpdateQuery($insert_data_menu);
 		/*$this->error['data_in_info'] =*/ $this->SimpleUpdateQuery($insert_data_info);
+		/*$this->error['data_in_news'] =*/ $this->SimpleUpdateQuery($insert_data_news);
 		
 		//Creates the tables for the Forum
 		$this->SelectDb(DBFORUM);
@@ -328,6 +371,10 @@ class Install extends Database{
 		/*$error['create_table5_forum'] =*/ $this->SimpleUpdateQuery($create_forum_topics);
 	}
 	
+	/**
+	 * Finishes the installation
+	 *
+	 */
 	public function finish(){
 		//Renames the install folder to trash
 		rename(WEB_PATH ."/install", WEB_PATH ."/trash");

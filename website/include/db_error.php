@@ -77,7 +77,7 @@
 		?>
 	
 		<div class="main" align="left">
-			<div class="title"><?php echo $error_num;?> - Database Error</div>
+			<div class="title"><?php echo $error_num; ?> - Database Error</div>
 			<p><?php echo $error_text;?></p>
 		</div>
 		<div class="footer">

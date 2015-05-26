@@ -1,4 +1,7 @@
 <?php
+//Refuses direct access
+if (!defined("SSC")){ exit("You don't have access to this file"); }
+
 $lang['db_info'] = "Informação da Base de Dados";
 $lang['db_host'] = "Host da BD";
 $lang['db_user'] = "Utilizador da BD";

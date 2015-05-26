@@ -1,4 +1,7 @@
 <?php
+//Refuses direct access
+if (!defined("SSC")){ exit("You don't have access to this file"); }
+
 $lang['welcome'] = "Welcome";
 $lang['welcome_txt'] = "Welcome to the installation process. You'll just need to fill in the information according to your server and you'll be on your way to use this awesome CMS!";
 $lang['welcome_np'] = "Don't worry! You can change all the settings later.";

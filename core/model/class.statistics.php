@@ -2,13 +2,32 @@
 //Refuses direct access
 if (!defined("SSC")){ exit("You don't have access to this file"); }
 
+/**
+ * This class is used for account related functions <br/>
+ * Extends the class.common.php
+ *
+ * @name	: class.statistics.php
+ * @package	: PhentomCMS
+ * @author	: PhentomPT <phentom.net@gmail.com>
+ * @link	: phentom.net
+ * @version	: 2.0
+ */
+
 class Statistics extends Common{
 	
+	/**
+	 * Class constructor for the database
+	 *
+	 */
 	public function __construct(){
 		$this->db = new Database();
 	}
 	
-	//Gets the user IP
+	/**
+	 * Gets the user ip adress
+	 * 
+	 * @var	: ip (string)
+	 */
 	public function get_client_ip() {
 	    $ipaddress = '';
 	    if (getenv('HTTP_CLIENT_IP'))
@@ -25,10 +44,15 @@ class Statistics extends Common{
 	        $ipaddress = getenv('REMOTE_ADDR');
 	    else
 	        $ipaddress = 'UNKNOWN';
-	    $statistics->ip = $ipaddress;
+	    $this->ip = $ipaddress;
 	}
 	
-	//Gets the details from the users ip
+	/**
+	 * Gets the details from the users ip
+	 * 
+	 * @var		: locations (array)
+	 * @return	: On error (string)
+	 */
 	public function geoCheckIP() {
 		if (!filter_var($this->ip, FILTER_VALIDATE_IP)) {
 			return "IP is not valid";
@@ -51,10 +75,13 @@ class Statistics extends Common{
 			$ipInfo[$key] = preg_match($pattern, $response, $value) && !empty($value[1]) ? $value[1] : 'not found';
 		}
 	
-		$statistics->locations = $ipInfo;
+		$this->locations = $ipInfo;
 	}
 	
-	//Saves statistics to the DB
+	/**
+	 * Saves statistic information in the database
+	 * 
+	 */
 	public function saveStatistics(){
 		$your_session = $this->getSessionID();
 		
@@ -66,7 +93,13 @@ class Statistics extends Common{
 		}
 	}
 	
-	//Gets the true views **WARNING THIS IS IN DEVELOPMENT**
+	/**
+	 * ## WARNING THIS IS IN DEVELOPMENT ##
+	 * Gets the true views with a where condition if given
+	 * 
+	 * @param	: $where (string)
+	 * @return	: $total (integer)
+	 */
 	public function getTrueViews($where=""){
 		if (!empty($where)){
 			$where = "WHERE ".$where;
@@ -86,7 +119,17 @@ class Statistics extends Common{
 		return $this->total;
 	}
 	
-	//Counts the views by today,yesterday,2days_ago,3days_ago,4days_ago **WARNING THIS IS IN DEVELOPMENT**
+	/**
+	 *  ## WARNING THIS IS IN DEVELOPMENT ##
+	 * Counts the views by today, yesterday, 2days_ago, 3days_ago, 4days_ago and other
+	 * 
+	 * @var	: today (integer)
+	 * @var	: yesterday (integer)
+	 * @var	: day2ago (integer)
+	 * @var	: day3ago (integer)
+	 * @var	: day4ago (integer)
+	 * @var	: other (integer)
+	 */
 	public function viewsCount(){
 		$statistics = $this->db->SimpleQuery("SELECT * FROM statistics");
 		$todaydate = date("Y-m-d");

@@ -2,16 +2,35 @@
 //Refuses Direct Access
 if (!defined("SSC")){ exit("You don't have access to this file"); }
 
+/**
+ * This class is used to store common functions
+ *
+ * @name	: class.common.php
+ * @package	: PhentomCMS
+ * @author	: PhentomPT <phentom.net@gmail.com>
+ * @link	: phentom.net
+ * @version	: 2.0
+ */
+
 class Common{
 	
-	//Checks if the CMS is installed
+	/**
+	 * Checks if the CMS is installed and redirects if its not
+	 * 
+	 */
 	public function __construct(){
 		if (dirname($_SERVER['REQUEST_URI']) ."/install/" !== $_SERVER['REQUEST_URI'] && is_dir("../install")){
 			$this->redirect("../");
 		}
 	}
 	
-	//Encrypts a string to SHA1 format using a salt 
+	/**
+	 * Encrypts a string to SHA1 format using a salt
+	 * 
+	 * @param	: $salt (string)
+	 * @param	: $password (string)
+	 * @return	: $encrypted (string)
+	 */
 	public function encryptSha1($salt,$password){
 		$salt = strtoupper($salt);
 		$password = strtoupper($password);
@@ -19,7 +38,12 @@ class Common{
 		return $encrypted;
 	}
 
-	//Redirects to certain URL and can have a callback link 
+	/**
+	 * Redirects to a given URL or to a callback link
+	 * defined as a parameter in the url
+	 * 
+	 * @param	: $link (string) 
+	 */
 	public function redirect($link=""){
 		if (empty($link) || $link==""){
 			$link = "index.php";
@@ -32,7 +56,14 @@ class Common{
 		return header("Location: $link");
 	}
 
-	//Generates a random string with any size given
+	/**
+	 * Generates a random string with any given size <br/>
+	 * If the size is not determined it will generate
+	 * a 30 character string
+	 * 
+	 * @param	: $size (integer)
+	 * @return	: $string (string)
+	 */
 	public function randomString($size="30"){
 		$length = $size;
 		$string = "";
@@ -44,7 +75,12 @@ class Common{
 	   return $string;
 	}
 
-	//Generates a captcha code and can be inserted into a image
+	/**
+	 * Generates a captcha code and can have a background image
+	 * 
+	 * @param	: $image (string)
+	 * @return	: ImagePNG (image)
+	 */
 	public function captchaCode($image=""){
 		//header("Content-Type: image/png"); 
   		$ttf = "franconi.ttf";
@@ -54,10 +90,19 @@ class Common{
 		$bild = imagecreatefromgif($image);
 		$weisser = imagecolorallocate($bild, 255, 255, 255);
 		imagettftext($bild, 11, 10, 5, 20, $weisser, $ttf, $_SESSION["captcha_id"]);
-		ImagePNG($bild);  
+		return ImagePNG($bild);  
 	}
 	
-	//Converts a time since the starting time and the ending time (generaly used for MySQL times)
+	/**
+	 * Calculates the time since a starting time and an ending time (generaly used for MySQL given times) <br/>
+	 * If the ending time is not given, it is set to 
+	 * the present time
+	 * 
+	 * @param	: $time_start (integer)
+	 * @param	: $time_end (integer)
+	 * @return	: time & identified (string)
+	 * @todo	: Replace units with lang_tokens
+	 */
 	public function humanTiming ($time_start,$time_end=""){
 		if (empty($time_end) || $time_end=""){
 			$time_end = time();
@@ -82,13 +127,22 @@ class Common{
 		}
 	}
 	
-	//Converts a size and adds the unit
+	/**
+	 * Converts a given size and adds the unit
+	 * 
+	 * @param	: $size (integer)
+	 * @return	: $size & unit (string)
+	 */
 	public function convertSize($size){
 		$unit=array('b','kb','mb','gb','tb','pb');
 		return @round($size/pow(1024,($i=floor(log($size,1024)))),2).' '.$unit[$i];
 	}
 	
-	//Starts counting the loading time
+	/**
+	 * Starts counting the loading time
+	 * 
+	 * @return	: $this->start (integer)
+	 */
 	public function microTimeStart(){
 		$time = microtime();
 		$time = explode(' ', $time);
@@ -96,7 +150,11 @@ class Common{
 		$this->start = $time;
 	}
 	
-	//Stops counting the loading time and returns the result
+	/**
+	 * Stops counting the loading time and returns the result
+	 * 
+	 * @return	: $total_time (integer)
+	 */
 	public function microTimeStop(){
 		$time = microtime();
 		$time = explode(' ', $time);
@@ -106,71 +164,14 @@ class Common{
 		return $total_time;
 	}
 	
-	//Loads all classes passed in to the load variable
-	public function loadClass($load){
-		$common_dir = DIR . "core/model/";
-		$scanned_directory = array_diff(scandir($common_dir), array('..', '.','class.common.php','class.admin.php','class.database.php','class.statistics.php','index.html'));
-		foreach ($scanned_directory as $value){
-			require ($common_dir . $value);
-			$value = ucfirst($value);
-			$instance = new $value();
-		}
-	}
-	
-	//Loads all classes exept the ones passed and class.common.php **WARNING THIS IS EXPERIMENTAL**
-	public function loadAllClasses($dont_load){
-		$common_dir = DIR . "core/model/";
-		$scanned_directory = array_diff(scandir($common_dir), array('..', '.','class.common.php','class.admin.php','class.database.php','class.statistics.php','index.html',$dont_load));
-		foreach ($scanned_directory as $value){
-			require ($common_dir . $value);
-		}
-	}
-	
-	//Loads all plugins by group type (general,menu,sidebox,footer)
-	public function loadPlugin($type){
-		$plugin_dir = array_diff(scandir(PLUGIN_PATH), array("..",".","index.html"));
-		
-		if($type == "menu"){
-			foreach($_GET as $value){
-				$get = $value;
-			}
-			
-			if (is_dir(PLUGIN_PATH ."/". $get)){
-				foreach ($plugin_dir as $key => $value){
-					if (file_exists(PLUGIN_PATH ."/$value/menu.plug")){
-						if (file_exists(PLUGIN_PATH ."/$value/index.php")){
-							include (PLUGIN_PATH ."/$value/index.php");
-						}
-					}
-				}
-			}
-			else{
-				echo "404 - Page not found";
-			}
-		}
-		else{
-			$order = array();
-			
-			foreach ($plugin_dir as $key => $value){
-				if (file_exists(PLUGIN_PATH ."/". $value ."/". $type .".plug")){
-					$number = file_get_contents(PLUGIN_PATH ."/". $value ."/". $type .".plug");
-					if (is_numeric($number)){
-						$order[$number] = $value;
-					}
-				}
-			}
-			
-			ksort($order);
-			
-			foreach ($order as $key => $value){
-				if (file_exists(PLUGIN_PATH ."/". $value ."/index.php")){
-					include (PLUGIN_PATH ."/". $value ."/index.php");
-				}
-			}
-		}
-	}
-	
-	//Gets the expansion number from a detemine expansion (0..5) and core (arcemu,trinity,mangos,trinity_v6) 
+	/**
+	 * Gets the expansion number from a detemine expansion 
+	 * (0..5) and core (arcemu,trinity,mangos,trinity_v6)
+	 * 
+	 * @param	: $expansion (integer)
+	 * @param	: $core (string)
+	 * @return	: $expansion (integer)
+	 */
 	public function selectExpansion($expansion,$core){
 		if ($core == "arcemu"){
 			switch ($expansion) {
@@ -195,13 +196,23 @@ class Common{
 		return $expansion;
 	}
 	
-	//Gets the user session_id
+	/**
+	 * Gets the user session_id
+	 * 
+	 * @return	: $session_id (integer) 
+	 */
 	public function getSessionID(){
 		$session_id = session_id();
 		return $session_id;
 	}
 	
-	//Gets a image/video from a url or a link (youtube link included)
+	/**
+	 * ## WARNING THIS IS IN DEVELOPMENT ## <br/>
+	 * Gets a image/video from a url (youtube link included)
+	 *
+	 * @param	: $link (string)
+	 * @return	: $link (string)
+	 */
 	public function getLink($link){
 		$youtube = "/(((youtu\\.be\\/)|(www\\.\\/\\/youtube\\.com\\/watch\\?v=)|(youtube\\.com\\/watch\\?v=))(\\w{11}))/";
 		
@@ -218,14 +229,21 @@ class Common{
 				$link = preg_replace($extract_last, "", $match[1]);
 			}
 			else{
-				$link = "";
+				$link = $link;
 			}
 		}
 		
 		return $link;
 	}
 	
-	//This function will transform some string with BBCode to HTML tags **WARNING THIS IS IN DEVELOPMENT**
+	/**
+	 * ## WARNING THIS IS IN DEVELOPMENT ## <br/>
+	 * This function will transform some string with BBCode 
+	 * to HTML tags
+	 * 
+	 * @param	: $str (string)
+	 * @return	: $str (string)
+	 */
 	public function bbcodeHtml($str) {
 	  // delete 'http://' because will be added when convert the code
 	  $str = str_replace('[url=http://', '[url=', $str);

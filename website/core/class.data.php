@@ -2,9 +2,27 @@
 //Refuses direct access
 if (!defined("SSC")){ exit("You don't have access to this file"); }
 
+/**
+ * This class is used for website related functions <br/>
+ * Extends the class.database.php in order to
+ * operate with information stored in the
+ * database
+ *
+ * @name	: class.data.php
+ * @package	: PhentomCMS
+ * @author	: PhentomPT <phentom.net@gmail.com>
+ * @link	: phentom.net
+ * @version	: 2.0
+ */
+
 class Data extends Database{
 
-	//Gets the menu by part (left / right)
+	/**
+	 * Gets the menu by part (left / right)
+	 * 
+	 * @param	: $part (string)
+	 * @return	: $return (array)
+	 */
 	public function getMenu($part){
 		if (empty($part)){
 			$error[] .= "error_menu";
@@ -27,7 +45,11 @@ class Data extends Database{
 		return $return;
 	}
 	
-	//Returns total online players
+	/**
+	 * Returns total of online players
+	 * 
+	 * @return	: $return (array)
+	 */
 	public function getOnlinePlayers(){
 		$info = $this->serverInfo();
 		
@@ -55,7 +77,11 @@ class Data extends Database{
 		return $return;
 	}
 	
-	//Check and processes the vote **WARNING THIS IS EXPERIMENTAL**
+	/**
+	 * ## WARNING THIS IS EXPERIMENTAL ##
+	 * Checks and processes the vote action
+	 * 
+	 */
 	public function checkVote(){
 		
 		//List of servers accepted to vote

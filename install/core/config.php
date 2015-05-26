@@ -2,7 +2,19 @@
 //Refuses direct access
 if (!defined("SSC")){ exit("You don't have access to this file"); }
 
-//Stats session
+/**
+ * This file stores all the main system
+ * constants for the install application as
+ * well as session start or resume
+ *
+ * @name	: config.php
+ * @package	: PhentomCMS
+ * @author	: PhentomPT <phentom.net@gmail.com>
+ * @link	: phentom.net
+ * @version	: 2.0
+ */
+
+//Starts session
 session_start();
 ob_start();
 

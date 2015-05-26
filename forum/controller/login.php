@@ -2,8 +2,7 @@
 //Refuses direct access
 if (!defined("SSC")){ exit("You don't have access to this file"); }
 
-if(!isset($_POST['login'])){}
-else{
+if(isset($_POST['login'])){
 	if(!isset($_POST['email']) || !isset($_POST['password'])){
 		$system->assign("error", "fields_missing");
 	}
