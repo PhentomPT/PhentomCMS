@@ -54,7 +54,7 @@ else{
 			$install->server_expansion = $_POST['expansion'];
 			$install->server_players = $_POST['players'];
 			$install->server_slider = $_POST['slider'];
-			$install->addDb();
+			$install->finishDb();
 			$install->insertAdmin();
 			$system->assign("error", $install->error);
 			$system->display(VIEW_PATH ."/web_info.html");

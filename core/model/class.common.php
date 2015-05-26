@@ -104,13 +104,13 @@ class Common{
 	 * @todo	: Replace units with lang_tokens
 	 */
 	public function humanTiming ($time_start,$time_end=""){
-		if (empty($time_end) || $time_end=""){
+		if (empty($time_end)){
 			$time_end = time();
 		}
 		
 		$time_start = strtotime($time_start);
 		
-		$time = ($time_end - $time_start);
+		$time = ($time_end - $time_start)  + 3600;
 		$tokens = array (
 			31536000 => 'year',
 		    2592000 => 'month',

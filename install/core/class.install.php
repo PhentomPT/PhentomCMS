@@ -174,13 +174,15 @@ class Install extends Database{
 		//Creates database for the Website
 		mysqli_query($con,$create_database_website);
 		mysqli_query($con,$create_database_forum);
+		
+		mysqli_close($con);
 	}
 	
 	/**
 	 * Inserts every table needed in the database and its info
 	 *
 	 */
-	public function addDb() {
+	public function finishDb() {
 		
 		//Gets the expansion number and the database names
 		$expansion = $this->getExpansion($this->server_expansion, $this->server_core);
@@ -287,7 +289,7 @@ class Install extends Database{
 		
 		$insert_data_info = "INSERT INTO `info` (`title`, `slogan`, `core`, `expansion`, `acc_db`, `char_db`, `world_db`, `style`, `onplayers`, `slider`) VALUES ('". $this->server_name ."', '". $this->server_slogan ."', '". $this->server_core ."', '". $expansion ."', '". $core['accounts'] ."', '". $core['characters'] ."', '". $core['world'] ."', 'default', '". $this->server_players ."', '". $this->server_slider ."');";
 			
-		$insert_data_news = "INSERT INTO `news` (`title`, `user`, `content`, `media`) VALUES ('Welcome to Phentom CMS!', 'Phentom', 'This is still in development, but every day it get's better!<br/>I hope you like it! Any question or bug just report it in github <br/>Thanks for all the support!', 'news.jpg');";
+		$insert_data_news = "INSERT INTO `news` (`title`, `user`, `content`, `media`) VALUES ('Welcome to Phentom CMS!', 'Phentom', 'This is still in development, but every day it gets better!<br/>I hope you like it! Any question or bug just report it in github <br/>Thanks for all the support!', 'news.jpg');";
 		
 		$create_forum_category = "CREATE TABLE `categorys` (
 			`id` INT(11) NOT NULL AUTO_INCREMENT,
