@@ -207,8 +207,7 @@ class Install extends Database{
 			`rank` INT(11) NOT NULL DEFAULT '0',
 			`special` VARCHAR(50) NOT NULL DEFAULT '0',
 			`join_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-			PRIMARY KEY (`id`),
-			UNIQUE INDEX `account_id` (`account_id`)
+			PRIMARY KEY (`id`)
 		) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
 				
 		$create_table_info = "CREATE TABLE IF NOT EXISTS `info` (
