@@ -17,10 +17,11 @@ if (DIR == dirname(DIR) ."/trash"){
 	$common->redirect("../");
 }
 
-//$smarty->force_compile = true;
+//$system->force_compile = true;
 $system->debugging = false;
 $system->caching = false;
 $system->cache_lifetime = 120;
+$system->error_reporting = E_ALL & ~E_NOTICE;
 
 //Checks for language change
 if (isset($_GET['lang']) && !empty($_GET['lang'])){
