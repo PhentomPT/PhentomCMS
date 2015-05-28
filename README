@@ -1,42 +1,39 @@
       PhentomCMS V2
-- The Best WoW Free CMS -
---------------------------------------------------------------------------------
+- The Best WoW Free CMS -		
+ 		 
+Warning
+-------
+This project is under development and the features will be added overtime.
 
-Warning:
-- This project is under development.
-- Before starting the installation give permissions to the website folder.
-
---------------------------------------------------------------------------------
-
-Upcoming Updates:
+Upcoming Updates
+----------------
 - Mangos support
 - Add features to the back-end:
-      - Account options
-      - Server options
-      - Website options
-      - Language options
-      - Statistics
+  - Account options
+  - Server options
+  - Website options
+  - Language options
+  - Improve Statistics
 - Add features to the front-end:
-      - Slider
-      - Account panel options
-            - Vote
-            - Donate
-            - Character tools
-            - Store
-      - Gallery
-      - Armory
+  - Slider
+  - Account panel options:
+    - Vote
+    - Donate
+    - Character tools
+    - Store
+  - Gallery
+  - Armory
 
---------------------------------------------------------------------------------
-
-Author: Phentom
-Website: Phentom.net
-Description: Wow Free CMS
-
---------------------------------------------------------------------------------
-
-ChangeLog:
-- A New File Structure.
-- Smarty (3.1.21) Template Engine.
-- UIkit (2.20.3) Front-End Framework.
-- Plugin System.
+ChangeLog
+---------
+- A New File Structure.		
+- Smarty (3.1.21) Template Engine.		
+- UIkit (2.20.3) Front-End Framework.		
+- Plugin System.		
 - Integrated Forum.
+
+General Info
+------------
+- Author: Phentom
+- Website: Phentom.net
+- Description: Wow Free CMS
