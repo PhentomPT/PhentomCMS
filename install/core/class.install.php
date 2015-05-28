@@ -207,7 +207,8 @@ class Install extends Database{
 			`rank` INT(11) NOT NULL DEFAULT '0',
 			`special` VARCHAR(50) NOT NULL DEFAULT '0',
 			`join_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-			PRIMARY KEY (`id`)
+			PRIMARY KEY (`id`),
+			UNIQUE INDEX `account_id` (`account_id`)
 		) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
 				
 		$create_table_info = "CREATE TABLE IF NOT EXISTS `info` (
@@ -276,15 +277,16 @@ class Install extends Database{
 			PRIMARY KEY (`id`)
 			) ENGINE=InnoDB  DEFAULT CHARSET=latin1;";
 				
-		$insert_data_menu = "INSERT INTO `menu` (`id`, `name`, `link`, `link_order`, `logged`, `position`) VALUES
-					(1, 'Account P', '?page=account', 2, 1, 'left'),
-					(2, 'Forum', '?page=forum', 4, 0, 'left'),
-					(3, 'Store', '?page=store', 6, 1, 'right'),
-					(4, 'Armory', '?page=armory', 7, 0, 'right'),
-					(5, 'Media', '?page=media', 8, 0, 'right'),
-					(6, 'Home', 'index.php', 1, 0, 'left'),
-					(7, 'Login', '?page=login', 3, 0, 'left'),
-					(8, 'Register', '?page=register', 5, 0, 'right');";
+		$insert_data_menu = "INSERT INTO `menu` (`name`, `link`, `link_order`, `logged`, `position`) 
+			VALUES
+				('Account P', '?page=account', 2, 1, 'left'),
+				('Forum', '?page=forum', 4, 0, 'left'),
+				('Store', '?page=store', 6, 1, 'right'),
+				('Armory', '?page=armory', 7, 0, 'right'),
+				('Media', '?page=media', 8, 0, 'right'),
+				('Home', 'index.php', 1, 0, 'left'),
+				('Login', '?page=login', 3, 0, 'left'),
+				('Register', '?page=register', 5, 0, 'right');";
 		
 		$insert_data_info = "INSERT INTO `info` (`title`, `slogan`, `core`, `expansion`, `acc_db`, `char_db`, `world_db`, `style`, `onplayers`, `slider`) VALUES ('". $this->server_name ."', '". $this->server_slogan ."', '". $this->server_core ."', '". $expansion ."', '". $core['accounts'] ."', '". $core['characters'] ."', '". $core['world'] ."', 'default', '". $this->server_players ."', '". $this->server_slider ."');";
 			
