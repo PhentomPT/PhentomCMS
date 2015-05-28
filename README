@@ -1,42 +1,47 @@
-      PhentomCMS V2
-- The Best WoW Free CMS -
---------------------------------------------------------------------------------
+  <h3>PhentomCMS V2</h3>
+<h4>- The Best WoW Free CMS -</h4>
 
-Warning:
-- This project is under development.
-- Before starting the installation give permissions to the website folder.
+Warning
+-------
+This project is under development and the features will be implemented overtime.
 
---------------------------------------------------------------------------------
+Upcoming Updates
+----------------
+<ol>
+<li style="text-decoration: line-through;">Mangos support</li>
+<li>Add features to the back-end:</li>
+  <ul>
+    <li>Account options</li>
+    <li>Server options</li>
+    <li>Website options</li>
+    <li>Language options</li>
+    <li>Statistics</li>
+  </ul>
+<li>Add features to the front-end:</li>
+  <ul>
+    <li>Slider</li>
+    <li>Account panel options:</li>
+    <ul>
+      <li>Vote</li>
+      <li>Donate</li>
+      <li>Character tools</li>
+      <li>Store</li>
+    </ul>
+    <li>Gallery</li>
+    <li>Armory</li>
+  </ul>
+</ol>
 
-Upcoming Updates:
-- Mangos support
-- Add features to the back-end:
-      - Account options
-      - Server options
-      - Website options
-      - Language options
-      - Statistics
-- Add features to the front-end:
-      - Slider
-      - Account panel options
-            - Vote
-            - Donate
-            - Character tools
-            - Store
-      - Gallery
-      - Armory
+ChangeLog
+---------
+A New File Structure.
+Smarty (3.1.21) Template Engine.
+UIkit (2.20.3) Front-End Framework.
+Plugin System.
+Integrated Forum.
 
---------------------------------------------------------------------------------
-
+General Info
+------------
 Author: Phentom
 Website: Phentom.net
 Description: Wow Free CMS
-
---------------------------------------------------------------------------------
-
-ChangeLog:
-- A New File Structure.
-- Smarty (3.1.21) Template Engine.
-- UIkit (2.20.3) Front-End Framework.
-- Plugin System.
-- Integrated Forum.
