@@ -234,7 +234,7 @@ class Install extends Database{
 				  `link_order` int(11) DEFAULT NULL,
 				  `logged` int(11) NOT NULL DEFAULT '0',
 				  `position` varchar(50) NOT NULL DEFAULT 'left',
-				  `icon` varchar(50) NOT NULL,
+				  `icon` varchar(50),
 				  PRIMARY KEY (`id`)
 				) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
 				
