@@ -80,6 +80,7 @@ class Database{
 	
 		if ($array == FALSE){
 			ob_clean();
+			$query_error = $this->con->error;
 			include INCLUDE_PATH ."/db_error.php";
 			die();
 		}
@@ -103,6 +104,7 @@ class Database{
 		
 		if (!$stmt){
 			ob_clean();
+			$query_error = $this->con->error;
 			include INCLUDE_PATH ."/db_error.php";
 			die();
 		}
