@@ -114,27 +114,27 @@ class Install extends Database{
 		
 		switch ($this->server_core){
 			case "arcemu":
-				$this->SimpleUpdateQuery("INSERT INTO ". $core_db['accounts'] .".accounts (login, encrypted_password, gm, flags) VALUES ('". $this->server_user ."', '". $encrypted ."', 'az', '". $true_expansion ."');");
-				$account_id = $this->SimpleQuery("SELECT acct as id, login as username FROM ". $core_db['accounts'] .".accounts ORDER BY acct DESC LIMIT 1");
+				$this->SimpleUpdateQuery("INSERT INTO `". $core_db['accounts'] ."`.accounts (login, encrypted_password, gm, flags) VALUES ('". $this->server_user ."', '". $encrypted ."', 'az', '". $true_expansion ."');");
+				$account_id = $this->SimpleQuery("SELECT acct as id, login as username FROM `". $core_db['accounts'] ."`.accounts ORDER BY acct DESC LIMIT 1");
 				break;
 			case "trinity":
 			case "trinity_v6":
-				$this->SimpleUpdateQuery("INSERT INTO ". $core_db['accounts'] .".account (username, sha_pass_hash, expansion) VALUES ('". $this->server_user ."', '". $encrypted ."', '". $true_expansion ."');");
-				$account_id = $this->SimpleQuery("SELECT id, username FROM ". $core_db['accounts'] .".account WHERE username='". $this->server_user ."' LIMIT 1;");
-				$this->SimpleUpdateQuery("INSERT INTO ". $core_db['accounts'] .".account_access (id,gmlevel) VALUES ('". $account_id[0]['id'] ."', 3);");
+				$this->SimpleUpdateQuery("INSERT INTO `". $core_db['accounts'] ."`.account (username, sha_pass_hash, expansion) VALUES ('". $this->server_user ."', '". $encrypted ."', '". $true_expansion ."');");
+				$account_id = $this->SimpleQuery("SELECT id, username FROM `". $core_db['accounts'] ."`.account WHERE username='". $this->server_user ."' LIMIT 1;");
+				$this->SimpleUpdateQuery("INSERT INTO `". $core_db['accounts'] ."`.account_access (id,gmlevel) VALUES ('". $account_id[0]['id'] ."', 3);");
 				break;
 			case "mangos":
-				$this->SimpleUpdateQuery("INSERT INTO ". $core_db['accounts'] .".account (username, sha_pass_hash, gmlevel, expansion) VALUES ('". $this->server_user ."','". $encrypted ."', 3, '". $true_expansion ."');");
-				$account_id = $this->SimpleQuery("SELECT id,username FROM ". $core_db['accounts'] .".account ORDER BY id DESC LIMIT 1");
+				$this->SimpleUpdateQuery("INSERT INTO `". $core_db['accounts'] ."`.account (username, sha_pass_hash, gmlevel, expansion) VALUES ('". $this->server_user ."','". $encrypted ."', 3, '". $true_expansion ."');");
+				$account_id = $this->SimpleQuery("SELECT id,username FROM `". $core_db['accounts'] ."`.account ORDER BY id DESC LIMIT 1");
 				break;
 			default:
-				$this->SimpleUpdateQuery("INSERT INTO ". $core_db['accounts'] .".account (username, sha_pass_hash, expansion) VALUES ('". $this->server_user ."', '". $encrypted ."', '". $true_expansion ."');");
-				$account_id = $this->SimpleQuery("SELECT id, username FROM ". $core_db['accounts'] .".account WHERE username='". $this->server_user ."' LIMIT 1;");
-				$this->SimpleUpdateQuery("INSERT INTO ". $core_db['accounts'] .".account_access (id,gmlevel) VALUES ('". $account_id[0]['id'] ."', 3);");
+				$this->SimpleUpdateQuery("INSERT INTO `". $core_db['accounts'] ."`.account (username, sha_pass_hash, expansion) VALUES ('". $this->server_user ."', '". $encrypted ."', '". $true_expansion ."');");
+				$account_id = $this->SimpleQuery("SELECT id, username FROM `". $core_db['accounts'] ."`.account WHERE username='". $this->server_user ."' LIMIT 1;");
+				$this->SimpleUpdateQuery("INSERT INTO `". $core_db['accounts'] ."`.account_access (id,gmlevel) VALUES ('". $account_id[0]['id'] ."', 3);");
 				break;
 		}
 		
-		$this->SimpleUpdateQuery("INSERT INTO ". DBNAME .".account_info (account_id,username) VALUES ('". $account_id[0]['id'] ."', '". $account_id[0]['username'] ."')");
+		$this->SimpleUpdateQuery("INSERT INTO `". DBNAME ."`.account_info (account_id,username) VALUES ('". $account_id[0]['id'] ."', '". $account_id[0]['username'] ."')");
 	}
 	
 	/**
