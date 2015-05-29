@@ -69,7 +69,8 @@
 				$error_text = "Error: ". $con->connect_error;
 			}
 			elseif(!empty($query)){
-				$error_text = "Your query is: ". $query;
+				$error_text = "<p>Query error: ". $query_error ."</p>
+				<p>Your query is: ". $query ."</p>";
 			}
 			else{
 				$error_text = "Error: Check the config file within the application that got this error";
