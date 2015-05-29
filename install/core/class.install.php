@@ -223,7 +223,7 @@ class Install extends Database{
 				  `style` varchar(50) NOT NULL DEFAULT 'default',
 				  `onplayers` int(11) NOT NULL DEFAULT '". $this->server_players ."',
 				  `slider` varchar(50) NOT NULL DEFAULT '". $this->server_slider ."',
-				  `realmlist` text NOT NULL,
+				  `realmlist` text,
 				  PRIMARY KEY (`id`)
 				) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
 				
