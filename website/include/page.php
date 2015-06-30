@@ -12,9 +12,9 @@ foreach($_GET as $value){
 
 if (is_dir(PLUGIN_PATH ."/". $get)){
 	foreach ($plugin_dir as $key => $value){
-		if (file_exists(PLUGIN_PATH ."/$value/menu.plug")){
-			if (file_exists(PLUGIN_PATH ."/$value/index.php")){
-				include (PLUGIN_PATH ."/$value/index.php");
+		if (file_exists(PLUGIN_PATH ."/". $value ."/menu.plug")){
+			if (file_exists(PLUGIN_PATH ."/". $value ."/index.php")){
+				include (PLUGIN_PATH ."/". $value ."/index.php");
 			}
 		}
 	}

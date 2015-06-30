@@ -1,31 +1,49 @@
 {literal}
 <script>
 $(document).ready(function(){
-	$("input[name='say']").on("submit", function(){
+	
+	{/literal}{if !empty($smarty.session.username)}{literal}
+	$("#chat_form").on("submit", function(){
 		$msg = $("input[name='chatmsg']").val();
+		$username = "{/literal}{$smarty.session.username}{literal}";
 		
-		if($msg != "undefined"){
+		if(typeof $msg != "undefined"){
 			$.ajax({
 				method: "POST",
 				url: "plugin/chat/include/refresh_chat.php",
 				data: { chatmsg: $msg }
+			})
+			.success(function(){
+				$("input[name='chatmsg']").val("");
+				
+				$.ajax({
+					method: "POST",
+					url: "plugin/chat/include/refresh_chat.php",
+					data: { refresh: "1" }
+				})
+				.success(function(data){
+					$data = JSON.parse(data);
+					$("#chat_msgs").html($data['chatmsg']);
+				});
 			});
 		}
-
+		
 		return false;
 	});
+	{/literal}{/if}{literal}
+	
 	setInterval(function(){
 		$.ajax({
 			method: "POST",
-			url: "website/plugin/chat/include/refresh_chat.php",
+			url: "plugin/chat/include/refresh_chat.php",
 			data: { refresh: "1" }
 		})
-		.done(function(data){
+		.success(function(data){
 			$data = JSON.parse(data);
-			alert($data['chatmsg']);
 			$("#chat_msgs").html($data['chatmsg']);
 		});
 	}, 3000);
+	
 });
 </script>
 {/literal}
@@ -45,7 +63,7 @@ $(document).ready(function(){
 	</div>
 	<p>
 	{if !empty($smarty.session.username)}
-		<form action="" method="post">
+		<form action="" method="post" id="chat_form">
 			<p>{$chat_message} <input type="text" name="chatmsg" required="required" autocomplete="off"/></p>
 			<input type="submit" name="say" value="{$chat_say}"/>
 		</form>

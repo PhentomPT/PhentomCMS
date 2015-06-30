@@ -125,10 +125,6 @@ body{
 	box-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
 }
 
-.flexslider {
-	overflow: hidden;
-}
-
 .announce, .box {
 	text-align: left;
 }
@@ -179,37 +175,6 @@ body{
 	background: #8484ff;
 	color: #fff;
 	cursor: pointer;
-}
-
-.box .on_players_bar {
-	background: #272727;
-	height: 20px;
-	border-radius: 2px;
-	box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.5);
-}
-
-.box .on_players_bar:before {
-	height: 20px;
-	display: block;
-	content: "";
-	float: left;
-	background-color: #8484ff;
-	background-repeat: repeat-x;
-}
-
-.box .on_players {
-	width: 100%;
-	margin: 10px 0px 0px 0px;
-	text-align: center;
-}
-
-.box .on_players a {
-	color: #6666ff;
-	font-weight: bold;
-}
-
-.box .realmlist {
-	text-align: center;
 }
 
 .result {

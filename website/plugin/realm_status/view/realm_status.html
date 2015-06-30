@@ -1,9 +1,22 @@
+<link rel="stylesheet" href="plugin/realm_status/style/main.css" />
+<style>
+	.on_players_bar:before {
+		width: {($total_online_players * 100) / $server_info.0.onplayers}%;
+	}
+</style>
 <div class="box">
 	<h3>{$realm_status_title}</h3>
 	<p class="realmlist">
 		set realmlist<br />
 		{$server_info.0.realmlist}
 	</p>
+	<h4>
+		{if $realm_status == true}
+			<img src="plugin/realm_status/image/online.gif" /> {$online_status}
+		{else}
+			<img src="plugin/realm_status/image/offline.gif" /> {$offline_status}
+		{/if}
+	</h4>
 	<div class="on_players_bar"></div>
 	<div class="on_players">
 		{$players_online}: <a>{$total_online_players}</a>

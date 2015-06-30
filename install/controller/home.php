@@ -52,6 +52,7 @@ else{
 			$install->server_password = $_POST['password'];
 			$install->server_core = $_POST['core'];
 			$install->server_expansion = $_POST['expansion'];
+			$install->server_realmlist = $_POST['realmlist'];
 			$install->server_players = $_POST['players'];
 			$install->server_slider = $_POST['slider'];
 			$install->finishDb();

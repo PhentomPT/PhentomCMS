@@ -1,1 +1,8 @@
-2
+{
+	"title": "Chat Plugin",
+	"author": "PhentomPT",
+	"description": "Chat plugin for the PhentomCMS",
+	"website": "http://phentom.net",
+	"version": "1.0",
+	"order": "2"
+}

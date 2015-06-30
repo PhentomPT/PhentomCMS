@@ -6,4 +6,7 @@ if (file_exists(PLUGIN_PATH ."/realm_status/language/".$_SESSION['lang'].".php")
 	include ("language/".$_SESSION['lang'].".php");
 }
 
-include ("controller/realm_status.php");
+$realm_status = $objData->realmStatus();
+$system->assign("realm_status", $realm_status);
+
+$system->display(PLUGIN_PATH . "/realm_status/view/realm_status.html");

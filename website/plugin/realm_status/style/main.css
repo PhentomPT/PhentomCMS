@@ -1,0 +1,30 @@
+.realmlist {
+	text-align: center;
+}
+
+.on_players_bar {
+	background: #272727;
+	height: 20px;
+	border-radius: 2px;
+	box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+	.on_players_bar:before {
+		height: 20px;
+		display: block;
+		content: "";
+		float: left;
+		background-color: #8484ff;
+		background-repeat: repeat-x;
+	}
+
+.on_players {
+	width: 100%;
+	margin: 10px 0px 0px 0px;
+	text-align: center;
+}
+	
+	.on_players a {
+		color: #6666ff;
+		font-weight: bold;
+	}

@@ -9,17 +9,17 @@ $plugin_dir = array_diff(scandir(PLUGIN_PATH), array("..",".","index.html"));
 $order = array ();
 
 foreach ($plugin_dir as $key => $value) {
-	if (file_exists ( PLUGIN_PATH ."/$value/sidebox.plug")) {
-		$number = file_get_contents (PLUGIN_PATH ."/$value/sidebox.plug");
-		$order[$number] = $value;
+	if (file_exists(PLUGIN_PATH ."/". $value ."/sidebox.plug")) {
+		$number = json_decode(file_get_contents(PLUGIN_PATH ."/$value/sidebox.plug"));
+		$order[$number->order] = $value;
 	}
 }
 
-ksort ($order);
+ksort($order);
 
 foreach ($order as $key => $value) {
-	if (file_exists ( PLUGIN_PATH ."/$value/index.php")) {
-		include (PLUGIN_PATH ."/$value/index.php");
+	if (file_exists(PLUGIN_PATH ."/". $value ."/index.php")) {
+		include (PLUGIN_PATH ."/". $value ."/index.php");
 	}
 }
 

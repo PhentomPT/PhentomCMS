@@ -1,1 +1,8 @@
-1
+{
+	"title": "Login Plugin",
+	"author": "PhentomPT",
+	"description": "Login plugin for the PhentomCMS supporting (trinity,arcemu,mangos)",
+	"website": "http://phentom.net",
+	"version": "1.0",
+	"order": "1"
+}

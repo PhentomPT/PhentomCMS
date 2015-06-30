@@ -17,6 +17,7 @@ $lang['user'] = "Utilizador";
 $lang['password'] = "Palavra Passe, duas vezes";
 $lang['server_core'] = "Núcleo do Servidor";
 $lang['expansion'] = "Expanção";
+$lang['realmlist'] = "Lista Reino";
 $lang['max_players'] = "Máximo de Jogadores";
 $lang['slider'] = "Deslizador de Imagens";
 $lang['pass_error'] = "Passwords não correspondem";

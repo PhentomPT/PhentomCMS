@@ -1,1 +1,8 @@
-3
+{
+	"title": "Realm Status Plugin",
+	"author": "PhentomPT",
+	"description": "Realm status plugin for the PhentomCMS supporting (trinity,arcemu,mangos)",
+	"website": "http://phentom.net",
+	"version": "1.0",
+	"order": "3"
+}

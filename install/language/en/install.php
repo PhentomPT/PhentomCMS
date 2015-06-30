@@ -17,6 +17,7 @@ $lang['user'] = "Username";
 $lang['password'] = "Password, twice";
 $lang['server_core'] = "Server Core";
 $lang['expansion'] = "Expansion";
+$lang['realmlist'] = "RealmList";
 $lang['max_players'] = "Max Players";
 $lang['slider'] = "Web Slider";
 $lang['pass_error'] = "Password mismatch";

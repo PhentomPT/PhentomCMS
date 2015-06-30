@@ -1,8 +1,9 @@
 <?php
-//Refuses direct access
-if (!defined("SSC")){ exit("You don't have access to this file"); }
-
+//Prevents remote connections
 if ($_SERVER['SERVER_ADDR'] === $_SERVER['REMOTE_ADDR']){
+	
+	//Defines system constant
+	define("SSC", "Secure System Constant");
 	
 	require ("../../../core/config.php");
 	require ("../../../../core/model/class.database.php");
@@ -26,7 +27,7 @@ if ($_SERVER['SERVER_ADDR'] === $_SERVER['REMOTE_ADDR']){
 			if ($chat_messsages[$key]['user'] == "phentom"){
 				$chat .= "<img src='image/blizz.gif' alt='Blizz'/>";
 			}
-			$chat .= $chat_messsages[$key]['user'] ."</a>:";
+			$chat .= ucfirst($chat_messsages[$key]['user']) ." </a>: ";
 			$chat .= "<a>". $chat_messsages[$key]['msg'] ."</a>";
 			$chat .= "<div class='div_chat'></div>";
 		}

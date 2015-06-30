@@ -1,0 +1,14 @@
+<script src="../core/ui/js/components/lightbox.min.js"></script>
+<div class="news uk-width-medium-7-10 uk-width-small-1-1">
+	<div class="uk-grid">
+		{foreach from=$media key=key item=item}
+		<div class="media uk-width-1-3">
+			<a class="uk-thumbnail" href="image/{$media.$key.img}" data-uk-lightbox title="{$media.$key.title|ucfirst}">
+		    	<img src="image/{$media.$key.img}" alt="">
+		    	<div class="uk-thumbnail-caption">{$media.$key.title|ucfirst}</div>
+			</a>
+			<div class="uk-grid-divider"></div>
+		</div>
+		{/foreach}
+	</div>
+</div>

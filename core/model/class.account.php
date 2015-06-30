@@ -165,7 +165,6 @@ class Account extends Database{
 		
 		$core = $this->serverInfo();
 		
-		
 		switch ($core[0]['core']){
 			case "arcemu":
 				$query = "SELECT a.login as username, ai.join_date as join_date, COUNT(t.id) + COUNT(r.id) as total_posts, ai.vote_points as vp, ai.donation_points as dp, ai.avatar as avatar, ai.rank as rank, ai.special as special_rank

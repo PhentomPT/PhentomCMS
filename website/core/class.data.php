@@ -37,8 +37,22 @@ class Data extends Database{
 		}
 		
 		$query = "SELECT name, link, icon
-		FROM ". DBNAME .".". WEB_TBL_MENU ."
+		FROM `". DBNAME ."`.". WEB_TBL_MENU ."
 		WHERE position = '". $part ."' ". $logged ." ORDER BY link_order";
+		
+		$return = $this->SimpleQuery($query);
+		
+		return $return;
+	}
+	
+	/**
+	 * Gets all the media images/videos from database
+	 * 
+	 * @return	: $result (array)
+	 */
+	public function getMedia(){
+		$query = "SELECT title, img
+		FROM `". DBNAME ."`.". WEB_TBL_MEDIA;
 		
 		$return = $this->SimpleQuery($query);
 		
@@ -75,6 +89,44 @@ class Data extends Database{
 		$return = $this->SimpleQuery($query);
 		
 		return $return;
+	}
+	
+	/**
+	 * Returns the realm status <br/>
+	 * Online	: true <br/>
+	 * Offline	: false
+	 * 
+	 * @return	: (boolean) 
+	 */
+	public function realmStatus(){
+		$info = $this->serverInfo();
+		
+		switch ($info[0]['core']){
+			//Arcemu
+			case "arcemu":
+				$realm_port = 8129;
+				break;
+				//Trinity
+			case "trinity":
+			case "trinity_v6":
+				$realm_port = 8085;
+				break;
+				//Mangos
+			case "mangos":
+				$realm_port = 8085;
+				break;
+			default:
+				$realm_port = 8085;
+				break;
+		}
+		
+		$fp = @fsockopen ($_SERVER['SERVER_ADDR'], $realm_port,$errno,$errstr, 0.5);
+		if ($fp){ 
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	
 	/**

@@ -28,6 +28,7 @@ class Install extends Database{
 	public $server_password;
 	public $server_core;
 	public $server_expansion;
+	public $server_realmlist;
 	public $server_players;
 	public $server_slider;
 	public $error;
@@ -274,23 +275,39 @@ class Install extends Database{
 			`state` char(20) DEFAULT NULL,
 			`town` char(20) DEFAULT NULL,
 			`last_seen` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-			PRIMARY KEY (`id`)
-			) ENGINE=InnoDB  DEFAULT CHARSET=latin1;";
+		PRIMARY KEY (`id`)
+		) ENGINE=InnoDB  DEFAULT CHARSET=latin1;";
+		
+		$create_table_media = "CREATE TABLE `media` (
+			`id` INT(11) NOT NULL AUTO_INCREMENT,
+			`title` VARCHAR(50) NOT NULL,
+			`img` TEXT NOT NULL,
+		PRIMARY KEY (`id`)
+		) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
 				
 		$insert_data_menu = "INSERT INTO `menu` (`name`, `link`, `link_order`, `logged`, `position`) 
 			VALUES
 				('Account P', '?page=account', 2, 1, 'left'),
-				('Forum', '?page=forum', 4, 0, 'left'),
+				('Forum', '../forum', 4, 2, 'left'),
 				('Store', '?page=store', 6, 1, 'right'),
-				('Armory', '?page=armory', 7, 0, 'right'),
-				('Media', '?page=media', 8, 0, 'right'),
-				('Home', 'index.php', 1, 0, 'left'),
+				('Armory', '?page=armory', 7, 2, 'right'),
+				('Media', '?page=media', 8, 2, 'right'),
+				('Home', 'index.php', 1, 2, 'left'),
 				('Login', '?page=login', 3, 0, 'left'),
 				('Register', '?page=register', 5, 0, 'right');";
 		
-		$insert_data_info = "INSERT INTO `info` (`title`, `slogan`, `core`, `expansion`, `acc_db`, `char_db`, `world_db`, `style`, `onplayers`, `slider`) VALUES ('". $this->server_name ."', '". $this->server_slogan ."', '". $this->server_core ."', '". $expansion ."', '". $core['accounts'] ."', '". $core['characters'] ."', '". $core['world'] ."', 'default', '". $this->server_players ."', '". $this->server_slider ."');";
+		$insert_data_info = "INSERT INTO `info` (`title`, `slogan`, `core`, `expansion`, `acc_db`, `char_db`, `world_db`, `style`, `onplayers`, `slider`, `realmlist`) VALUES ('". $this->server_name ."', '". $this->server_slogan ."', '". $this->server_core ."', '". $expansion ."', '". $core['accounts'] ."', '". $core['characters'] ."', '". $core['world'] ."', 'default', '". $this->server_players ."', '". $this->server_slider ."', '". $this->server_realmlist ."');";
 			
 		$insert_data_news = "INSERT INTO `news` (`title`, `user`, `content`, `media`) VALUES ('Welcome to Phentom CMS!', 'Phentom', 'This is still in development, but every day it gets better!<br/>I hope you like it! Any question or bug just report it in github <br/>Thanks for all the support!', 'news.jpg');";
+		
+		$insert_data_media = "INSERT INTO `media` (title, img) 
+			VALUES 
+				('Title','news.jpg'),
+				('Title','news.jpg'),
+				('Title','news.jpg'),
+				('Title','news.jpg'),
+				('Title','news.jpg'),
+				('Title','news.jpg');";
 		
 		$create_forum_category = "CREATE TABLE `categorys` (
 			`id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -341,37 +358,55 @@ class Install extends Database{
 			`id_forum` INT(11) NOT NULL,
 			PRIMARY KEY (`id`)
 		) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
-
+		
+		$insert_forum_menu = "INSERT INTO `menu` (name,link,link_order,logged,position,icon) 
+			VALUES 
+				('Website','../website',1,2,'top',''),
+				('Login','?page=login',1,0,'bar',''),
+				('Logout','?page=logout',1,1,'bar',''),
+				('FAQ','?page=faq',2,2,'top',''),
+				('Account P','?page=account',2,1,'bar','');";
+		
+		$insert_category_info = "INSERT INTO `categorys` (name) 
+			VALUES 
+				('World of Warcraft'),
+				('Diablo'),
+				('MineCraft'),
+				('General');";
+		
+		$insert_forum_info = "INSERT INTO `forums` (name,description,id_category,color,type) VALUES ('Releases','Description for the forum',1,'#000','open');";
+		
+		$insert_topic_info = "INSERT INTO `topics` (title,content,type,posted_by,views,id_forum) VALUES ('Welcome!','Welcome to the PhentomCMS forum!',0,'Phentom',0,1);";
+		
 		//Creates tables for the Website
 		$this->SelectDb(DBNAME);
+		$this->SimpleUpdateQuery($create_table_chat);
+		$this->SimpleUpdateQuery($create_table_account_info);
+		$this->SimpleUpdateQuery($create_table_info);
+		$this->SimpleUpdateQuery($create_table_menu);
+		$this->SimpleUpdateQuery($create_table_news);
+		$this->SimpleUpdateQuery($create_table_voted_cooldown);
+		$this->SimpleUpdateQuery($create_table_vote_links);
+		$this->SimpleUpdateQuery($create_table_statistics);
+		$this->SimpleUpdateQuery($create_table_media);
 		
-		/***********************************************
-		 * 
-		 * The SimpleUpdateQuery function was changed,
-		 * before it returned and error to display in 
-		 * the end of the installation, now it clears 
-		 * the page and specifies the error.
-		 * 
-		 ***********************************************/
-		/*$this->error['chat'] =*/ $this->SimpleUpdateQuery($create_table_chat);
-		/*$this->error['account_info'] =*/ $this->SimpleUpdateQuery($create_table_account_info);
-		/*$this->error['info'] =*/ $this->SimpleUpdateQuery($create_table_info);
-		/*$this->error['menu'] =*/ $this->SimpleUpdateQuery($create_table_menu);
-		/*$this->error['news'] =*/ $this->SimpleUpdateQuery($create_table_news);
-		/*$this->error['vote_cooldown'] =*/ $this->SimpleUpdateQuery($create_table_voted_cooldown);
-		/*$this->error['vote_links'] =*/ $this->SimpleUpdateQuery($create_table_vote_links);
-		/*$this->error['statistics'] =*/ $this->SimpleUpdateQuery($create_table_statistics);
-		/*$this->error['data_in_menu'] =*/ $this->SimpleUpdateQuery($insert_data_menu);
-		/*$this->error['data_in_info'] =*/ $this->SimpleUpdateQuery($insert_data_info);
-		/*$this->error['data_in_news'] =*/ $this->SimpleUpdateQuery($insert_data_news);
+		$this->SimpleUpdateQuery($insert_data_menu);
+		$this->SimpleUpdateQuery($insert_data_info);
+		$this->SimpleUpdateQuery($insert_data_news);
+		$this->SimpleUpdateQuery($insert_data_media);
 		
 		//Creates the tables for the Forum
 		$this->SelectDb(DBFORUM);
-		/*$error['create_table1_forum'] =*/ $this->SimpleUpdateQuery($create_forum_category);
-		/*$error['create_table2_forum'] =*/ $this->SimpleUpdateQuery($create_forum_forums);
-		/*$error['create_table3_forum'] =*/ $this->SimpleUpdateQuery($create_forum_menu);
-		/*$error['create_table4_forum'] =*/ $this->SimpleUpdateQuery($create_forum_replys);
-		/*$error['create_table5_forum'] =*/ $this->SimpleUpdateQuery($create_forum_topics);
+		$this->SimpleUpdateQuery($create_forum_category);
+		$this->SimpleUpdateQuery($create_forum_forums);
+		$this->SimpleUpdateQuery($create_forum_menu);
+		$this->SimpleUpdateQuery($create_forum_replys);
+		$this->SimpleUpdateQuery($create_forum_topics);
+		
+		$this->SimpleUpdateQuery($insert_forum_menu);
+		$this->SimpleUpdateQuery($insert_category_info);
+		$this->SimpleUpdateQuery($insert_forum_info);
+		$this->SimpleUpdateQuery($insert_topic_info);
 	}
 	
 	/**

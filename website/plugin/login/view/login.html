@@ -17,7 +17,7 @@
 		</form>
 	</p>
 {else}
-	welcome, <a class='user'>{$smarty.session.username}</a>
+	Welcome, <a class='user'>{$smarty.session.username|ucfirst}</a>
 	<a href='?page=account'><button>Account P</button></a><p/>
 	<form action="?page=logout" method="post">
 		<input type="submit" name="logout" value="Logout" />
