@@ -225,6 +225,7 @@ class Install extends Database{
 				  `onplayers` int(11) NOT NULL DEFAULT '". $this->server_players ."',
 				  `slider` varchar(50) NOT NULL DEFAULT '". $this->server_slider ."',
 				  `realmlist` text,
+				  `connection_type` varchar(50),
 				  PRIMARY KEY (`id`)
 				) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
 				
@@ -293,10 +294,7 @@ class Install extends Database{
 			`password` VARCHAR(50) NOT NULL,
 			`type` VARCHAR(50) NOT NULL,
 			PRIMARY KEY (`id`)
-		)
-		COLLATE='latin1_swedish_ci'
-		ENGINE=InnoDB
-		;";
+		) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
 		
 		$insert_data_menu = "INSERT INTO `menu` (`name`, `link`, `link_order`, `logged`, `position`) 
 			VALUES
