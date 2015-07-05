@@ -72,16 +72,16 @@ class Soap_RA extends Database{
 		
 		if ($this->connection_type == "SOAP"){
 			$this->game_connection = new SoapClient(NULL, array(
-					'location' => "http://". $this->soap_host .":". $this->soap_port ."/",
+					'location' => "http://". $this->connection_host .":". $this->connection_port ."/",
 					'uri'      => 'urn:TC',
 					'style'    => SOAP_RPC,
-					'login'    => $this->soap_username,
-					'password' => $this->soap_password,
+					'login'    => $this->connection_username,
+					'password' => $this->connection_password,
 			));
 		}
 		
 		if ($this->connection_type == "RA"){
-			$this->game_connection = fsockopen($this->ra_host, $this->ra_port, $error, $error_str, 30);
+			$this->game_connection = fsockopen($this->connection_host, $this->connection_port, $error, $error_str, 30);
 		}
 	}
 	
@@ -178,7 +178,7 @@ class Soap_RA extends Database{
 	 * @return	: $return (string)
 	 */
 	public function unstuck($character){
-		$character = $this->escapeString($character);
+		$character = $this->db->escapeString($character);
 		
 		switch ($this->server_core) {
 			case "arcemu" :
@@ -215,14 +215,19 @@ class Soap_RA extends Database{
 	 * @return	: $return (string)
 	 */
 	public function send_items($subject,$message,$character,$items=""){
-		$subject = $this->escapeString($subject);
-		$message = $this->escapeString($message);
-		$character = $this->escapeString($character);
+		$subject = $this->db->escapeString($subject);
+		$message = $this->db->escapeString($message);
+		$character = $this->db->escapeString($character);
 		$list_items = "";
 		
 		if (!empty($items)){
-			foreach ($items as $item){
-				$list_items .= $this->escapeString($item) .",";
+			if (count($items) > 1){
+				foreach ($items as $item){
+					$list_items .= $this->db->escapeString($item) .",";
+				}
+			}
+			else{
+				$list_items = $items[0];
 			}
 		}
 		
@@ -255,8 +260,8 @@ class Soap_RA extends Database{
 	 * @return	: $return (string)
 	 */
 	public function teleport($character,$location){
-		$character = $this->escapeString($character);
-		$location = $this->escapeString($location);
+		$character = $this->db->escapeString($character);
+		$location = $this->db->escapeString($location);
 		
 		switch ($this->server_core) {
 			case "arcemu" :
