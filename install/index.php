@@ -3,7 +3,7 @@
 define("SSC", "Secure System Constant");
 
 //Loads requirement files
-require ("../core/config.php");
+require ("core/config.php");
 require ("../core/libs/smarty/Smarty.class.php");
 require ("../core/model/class.database.php");
 require ("../core/model/class.common.php");
