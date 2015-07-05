@@ -60,8 +60,10 @@ class Soap_RA extends Database{
 	/**
 	 * Creates a Soap or RA connection
 	 */
-	protected function __construct(){
-		$server_info = $this->serverInfo();
+	public function __construct(){
+		$this->db = new Database();
+		
+		$server_info = $this->db->serverInfo();
 		
 		$this->server_core = $server_info[0]['core'];
 		$this->connection_type = $server_info[0]['connection_type'];
@@ -95,7 +97,7 @@ class Soap_RA extends Database{
 			WHERE type = '". $type ."'
 		LIMIT 1";
 		
-		$soap_info = $this->SimpleQuery($query);
+		$soap_info = $this->db->SimpleQuery($query);
 		
 		$this->connection_host = $soap_info[0]['host'];
 		$this->connection_port = $soap_info[0]['port'];
