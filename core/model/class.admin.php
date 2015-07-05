@@ -4,8 +4,8 @@ if (!defined("SSC")){ exit("You don't have access to this file"); }
 
 /**
  * This class is used for administration related functions <br/>
- * Extends the class.database.php in order to
- * operate with information stored in the
+ * Extends the class.database.php in order to <br/>
+ * operate with information stored in the <br/>
  * database
  *
  * @name	: class.admin.php
@@ -152,6 +152,7 @@ class Admin extends Database{
 		$query .= $limit;
 	
 		$result = $this->SimpleQuery($query);
+		
 		return $result;
 	}
 	
@@ -222,9 +223,11 @@ class Admin extends Database{
 	 */
 	public function getCmsUpdate(){
 		$version = file_get_contents("http://www.phentom.net/wow_cms_version.txt");
+		
 		if ($version == $this->cms_version){
 			$version = "";
 		}
+		
 		return $version;
 	}
 }

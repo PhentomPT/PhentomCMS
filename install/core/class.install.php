@@ -284,7 +284,20 @@ class Install extends Database{
 			`img` TEXT NOT NULL,
 		PRIMARY KEY (`id`)
 		) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
-				
+		
+		$create_table_soap_ra = "CREATE TABLE `soap_ra` (
+			`id` INT(11) NOT NULL AUTO_INCREMENT,
+			`host` VARCHAR(50) NOT NULL,
+			`port` INT(11) NOT NULL,
+			`username` VARCHAR(50) NOT NULL,
+			`password` VARCHAR(50) NOT NULL,
+			`type` VARCHAR(50) NOT NULL,
+			PRIMARY KEY (`id`)
+		)
+		COLLATE='latin1_swedish_ci'
+		ENGINE=InnoDB
+		;";
+		
 		$insert_data_menu = "INSERT INTO `menu` (`name`, `link`, `link_order`, `logged`, `position`) 
 			VALUES
 				('Account P', '?page=account', 2, 1, 'left'),
@@ -389,6 +402,7 @@ class Install extends Database{
 		$this->SimpleUpdateQuery($create_table_vote_links);
 		$this->SimpleUpdateQuery($create_table_statistics);
 		$this->SimpleUpdateQuery($create_table_media);
+		$this->SimpleUpdateQuery($create_table_soap_ra);
 		
 		$this->SimpleUpdateQuery($insert_data_menu);
 		$this->SimpleUpdateQuery($insert_data_info);

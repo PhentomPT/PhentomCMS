@@ -149,17 +149,16 @@ class Account extends Database{
 	/**
 	 * Returns the user information from a given username
 	 * 
-	 * @param	: $username
+	 * @param	: $username (string)
 	 * @return	: $account_info (array)
 	 */
-	public function userInfo($username){
-		$username = $this->escapeString($username);
-		
+	public function userInfo($username=""){
 		if (empty($username)){
 			$username = $_SESSION['username'];
 			$email = "AND a.email='". $_SESSION['account_email']."'";
 		}
 		else{
+			$username = $this->escapeString($username);
 			$email = "";
 		}
 		

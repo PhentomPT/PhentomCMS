@@ -174,7 +174,7 @@ class Database{
 	 * @return	: $server_info (array)
 	 */
 	public function serverInfo(){
-		$server_info = $this->SimpleQuery("SELECT title, slogan, style, onplayers, slider, core, acc_db as accounts, char_db as characters, world_db as world, realmlist 
+		$server_info = $this->SimpleQuery("SELECT title, slogan, style, onplayers, slider, core, acc_db as accounts, char_db as characters, world_db as world, realmlist, connection_type 
 		FROM ". DBNAME .".". WEB_TBL_INFO ."");
 		
 		return $server_info;

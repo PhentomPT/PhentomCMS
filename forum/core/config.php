@@ -41,6 +41,7 @@ define("WEB_TBL_STATISTICS", "statistics");
 define("WEB_TBL_VOTED_COOLDOWN", "voted_cooldown");
 define("WEB_TBL_VOTE_LINKS", "vote_links");
 define("WEB_TBL_MEDIA", "media");
+define("WEB_TBL_SOAP", "soap");
 
 //Forum table constants
 define("FORUM_TBL_ACCOUNTS", "accounts");
