@@ -91,7 +91,7 @@ class Soap_RA extends Database{
 	 */
 	private function game_credentials($type){
 		$query = "SELECT host, port, username, password
-		FROM ". DBNAME .".". WEB_TBL_SOAP ." 
+		FROM ". DBNAME .".". WEB_TBL_SOAP_RA ." 
 			WHERE type = '". $type ."'
 		LIMIT 1";
 		
