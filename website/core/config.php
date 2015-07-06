@@ -21,15 +21,15 @@ ob_start();
 //System constants
 define("DIR", dirname(__DIR__));
 define("WEB_PATH", dirname(DIR)); //This is the primary path of the system
-define("CONTROLLER_PATH", APP_PATH ."/controller");
-define("VIEW_PATH", APP_PATH ."/view");
-define("CORE_PATH", APP_PATH ."/core");
-define("PLUGIN_PATH", APP_PATH ."/plugin");
-define("SCRIPT_PATH", APP_PATH ."/script");
-define("STYLE_PATH", APP_PATH ."/style");
-define("LANGUAGE_PATH", APP_PATH ."/language");
-define("IMAGE_PATH", APP_PATH ."/image");
-define("INCLUDE_PATH", APP_PATH ."/include");
+define("CONTROLLER_PATH", DIR ."/controller");
+define("VIEW_PATH", DIR ."/view");
+define("CORE_PATH", DIR ."/core");
+define("PLUGIN_PATH", DIR ."/plugin");
+define("SCRIPT_PATH", DIR ."/script");
+define("STYLE_PATH", DIR ."/style");
+define("LANGUAGE_PATH", DIR ."/language");
+define("IMAGE_PATH", DIR ."/image");
+define("INCLUDE_PATH", DIR ."/include");
 define("UPLOAD_PATH", IMAGE_PATH ."/uploads");
 
 //Website table constants
