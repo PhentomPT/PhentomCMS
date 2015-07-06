@@ -10,7 +10,7 @@ if (!defined("SSC")){ exit("You don't have access to this file"); }
  * @name	: config.php
  * @package	: PhentomCMS
  * @author	: PhentomPT <phentom.net@gmail.com>
- * @link	: phentom.net
+ * @link : phentom.net
  * @version	: 2.0
  */
 
@@ -19,7 +19,8 @@ session_start();
 ob_start();
 
 //System constants
-define("WEB_PATH", dirname(__DIR__)); //This is the primary path of the system
+define("DIR", dirname(__DIR__));
+define("WEB_PATH", dirname(DIR)); //This is the primary path of the system
 define("CONTROLLER_PATH", APP_PATH ."/controller");
 define("VIEW_PATH", APP_PATH ."/view");
 define("CORE_PATH", APP_PATH ."/core");

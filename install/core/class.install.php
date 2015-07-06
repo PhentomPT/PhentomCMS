@@ -16,7 +16,7 @@ if (!defined("SSC")){ exit("You don't have access to this file"); }
  */
 
 class Install extends Database{
-	
+
 	public $dbhost;
 	public $dbuser;
 	public $dbpass;
@@ -32,7 +32,7 @@ class Install extends Database{
 	public $server_players;
 	public $server_slider;
 	public $error;
-	
+
 	/**
 	 * Gets the right expansion number according to the server core
 	 *
@@ -58,15 +58,15 @@ class Install extends Database{
 				default:
 					$expansion_number = 8;
 					break;
-			}	
+			}
 		}
 		else{
 			$expansion_number = $expansion;
 		}
-		
+
 		return $expansion_number;
 	}
-	
+
 	/**
 	 * Gets the name of the databases according to the server core
 	 *
@@ -97,10 +97,10 @@ class Install extends Database{
 				$core_db['world'] = "world";
 				break;
 		}
-		
+
 		return $core_db;
 	}
-	
+
 	/**
 	 * Inserts an admin account
 	 *
@@ -108,11 +108,11 @@ class Install extends Database{
 	public function insertAdmin(){
 		$core_db = $this->getCoreDatabases($this->server_core);
 		$true_expansion = $this->getExpansion($this->server_expansion,$this->server_core);
-		
+
 		$salt = strtoupper($this->server_user);
 		$password = strtoupper($this->server_password);
 		$encrypted = SHA1($salt.':'.$password);
-		
+
 		switch ($this->server_core){
 			case "arcemu":
 				$this->SimpleUpdateQuery("INSERT INTO `". $core_db['accounts'] ."`.accounts (login, encrypted_password, gm, flags) VALUES ('". $this->server_user ."', '". $encrypted ."', 'az', '". $true_expansion ."');");
@@ -134,10 +134,10 @@ class Install extends Database{
 				$this->SimpleUpdateQuery("INSERT INTO `". $core_db['accounts'] ."`.account_access (id,gmlevel) VALUES ('". $account_id[0]['id'] ."', 3);");
 				break;
 		}
-		
+
 		$this->SimpleUpdateQuery("INSERT INTO `". DBNAME ."`.account_info (account_id,username) VALUES ('". $account_id[0]['id'] ."', '". $account_id[0]['username'] ."')");
 	}
-	
+
 	/**
 	 * Appends the database information to every config file,
 	 * and creates the website and forum database
@@ -146,49 +146,52 @@ class Install extends Database{
 	public function addInfo() {
 		//Config File
 		$config_file = "core/config.php";
-	
-		$config_data = '
-		//DB constants
+
+		$config_data = '//DB constants
 		define("DBHOST", "'.$this->dbhost.'");
 		define("DBUSER", "'.$this->dbuser.'");
 		define("DBPASS", "'.$this->dbpass.'");
 		define("DBNAME", "'.$this->dbname.'");
 		define("DBFORUM", "'.$this->dbforum.'");
 		define("DBPORT", "3306");';
-	
+
 		//Scans Webpath to get all web applications
 		$apps = array_diff(scandir(WEB_PATH), array(".","..","index.php","README",".git","core","LICENSE"));
-	
+
 		//Opens the config file of every web application and appends the data
 		foreach ($apps as $value){
 			$handle = fopen(WEB_PATH ."/". $value ."/". $config_file, 'a') or die("Cannot open file:  ". WEB_PATH ."/". $value ."/". $config_file);
 			fwrite($handle, $config_data);
 			fclose($handle);
 		}
-	
+
+		//Main querys to delete the necessary databases in case of errors
+		$create_database_website = "DROP DATABASE IF EXISTS `". $this->dbname ."`;";
+		$create_database_forum = "DROP DATABASE IF EXISTS `". $this->dbforum ."`;";
+
 		//Main querys to create the necessary databases
 		$create_database_website = "CREATE DATABASE IF NOT EXISTS `". $this->dbname ."`;";
 		$create_database_forum = "CREATE DATABASE IF NOT EXISTS `". $this->dbforum ."`;";
-	
+
 		$con = @mysqli_connect($this->dbhost,$this->dbuser,$this->dbpass);
-	
+
 		//Creates database for the Website
 		mysqli_query($con,$create_database_website);
 		mysqli_query($con,$create_database_forum);
-		
+
 		mysqli_close($con);
 	}
-	
+
 	/**
 	 * Inserts every table needed in the database and its info
 	 *
 	 */
 	public function finishDb() {
-		
+
 		//Gets the expansion number and the database names
 		$expansion = $this->getExpansion($this->server_expansion, $this->server_core);
 		$core = $this->getCoreDatabases($this->server_core);
-		
+
 		//Main querys to create the necessary tables
 		$create_table_chat = "CREATE TABLE IF NOT EXISTS `chat` (
 				  `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -197,7 +200,7 @@ class Install extends Database{
 				  `posttime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 				  PRIMARY KEY (`id`)
 				) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
-		
+
 		$create_table_account_info = "CREATE TABLE `account_info` (
 			`id` INT(11) NOT NULL AUTO_INCREMENT,
 			`account_id` INT(11) NOT NULL,
@@ -211,7 +214,7 @@ class Install extends Database{
 			PRIMARY KEY (`id`),
 			UNIQUE (`account_id`)
 		) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
-				
+
 		$create_table_info = "CREATE TABLE IF NOT EXISTS `info` (
 				  `id` int(11) NOT NULL AUTO_INCREMENT,
 				  `title` varchar(50) NOT NULL DEFAULT '". $this->server_name ."',
@@ -228,7 +231,7 @@ class Install extends Database{
 				  `connection_type` varchar(50),
 				  PRIMARY KEY (`id`)
 				) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
-				
+
 		$create_table_menu = "CREATE TABLE IF NOT EXISTS `menu` (
 				  `id` int(11) NOT NULL AUTO_INCREMENT,
 				  `name` varchar(50) NOT NULL DEFAULT 'link name',
@@ -239,7 +242,7 @@ class Install extends Database{
 				  `icon` varchar(50),
 				  PRIMARY KEY (`id`)
 				) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
-				
+
 		$create_table_news = "CREATE TABLE IF NOT EXISTS `news` (
 				  `id` int(11) NOT NULL AUTO_INCREMENT,
 				  `title` varchar(50) NOT NULL DEFAULT 'Announcement',
@@ -249,7 +252,7 @@ class Install extends Database{
 				  `posttime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 				  PRIMARY KEY (`id`)
 				) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
-			
+
 		$create_table_voted_cooldown = "CREATE TABLE IF NOT EXISTS `voted_cooldown` (
 				  `id` int(11) NOT NULL AUTO_INCREMENT,
 				  `username` varchar(50) NOT NULL DEFAULT '0',
@@ -258,7 +261,7 @@ class Install extends Database{
 				  `voted_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 				  PRIMARY KEY (`id`)
 				) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
-			
+
 		$create_table_vote_links = "CREATE TABLE IF NOT EXISTS `vote_links` (
 				  `id` int(11) NOT NULL AUTO_INCREMENT,
 				  `name` varchar(50) DEFAULT NULL,
@@ -267,7 +270,7 @@ class Install extends Database{
 				  `value` int(11) DEFAULT NULL,
 				  PRIMARY KEY (`id`)
 				) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
-		
+
 		$create_table_statistics = "CREATE TABLE IF NOT EXISTS `statistics` (
 			`id` int(11) NOT NULL AUTO_INCREMENT,
 			`session` char(100) DEFAULT NULL,
@@ -278,14 +281,14 @@ class Install extends Database{
 			`last_seen` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 		PRIMARY KEY (`id`)
 		) ENGINE=InnoDB  DEFAULT CHARSET=latin1;";
-		
+
 		$create_table_media = "CREATE TABLE `media` (
 			`id` INT(11) NOT NULL AUTO_INCREMENT,
 			`title` VARCHAR(50) NOT NULL,
 			`img` TEXT NOT NULL,
 		PRIMARY KEY (`id`)
 		) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
-		
+
 		$create_table_soap_ra = "CREATE TABLE `soap_ra` (
 			`id` INT(11) NOT NULL AUTO_INCREMENT,
 			`host` VARCHAR(50) NOT NULL,
@@ -295,8 +298,8 @@ class Install extends Database{
 			`type` VARCHAR(50) NOT NULL,
 			PRIMARY KEY (`id`)
 		) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
-		
-		$insert_data_menu = "INSERT INTO `menu` (`name`, `link`, `link_order`, `logged`, `position`) 
+
+		$insert_data_menu = "INSERT INTO `menu` (`name`, `link`, `link_order`, `logged`, `position`)
 			VALUES
 				('Account P', '?page=account', 2, 1, 'left'),
 				('Forum', '../forum', 4, 2, 'left'),
@@ -306,26 +309,26 @@ class Install extends Database{
 				('Home', 'index.php', 1, 2, 'left'),
 				('Login', '?page=login', 3, 0, 'left'),
 				('Register', '?page=register', 5, 0, 'right');";
-		
+
 		$insert_data_info = "INSERT INTO `info` (`title`, `slogan`, `core`, `expansion`, `acc_db`, `char_db`, `world_db`, `style`, `onplayers`, `slider`, `realmlist`) VALUES ('". $this->server_name ."', '". $this->server_slogan ."', '". $this->server_core ."', '". $expansion ."', '". $core['accounts'] ."', '". $core['characters'] ."', '". $core['world'] ."', 'default', '". $this->server_players ."', '". $this->server_slider ."', '". $this->server_realmlist ."');";
-			
+
 		$insert_data_news = "INSERT INTO `news` (`title`, `user`, `content`, `media`) VALUES ('Welcome to Phentom CMS!', 'Phentom', 'This is still in development, but every day it gets better!<br/>I hope you like it! Any question or bug just report it in github <br/>Thanks for all the support!', 'news.jpg');";
-		
-		$insert_data_media = "INSERT INTO `media` (title, img) 
-			VALUES 
+
+		$insert_data_media = "INSERT INTO `media` (title, img)
+			VALUES
 				('Title','news.jpg'),
 				('Title','news.jpg'),
 				('Title','news.jpg'),
 				('Title','news.jpg'),
 				('Title','news.jpg'),
 				('Title','news.jpg');";
-		
+
 		$create_forum_category = "CREATE TABLE `categorys` (
 			`id` INT(11) NOT NULL AUTO_INCREMENT,
 			`name` VARCHAR(150) NOT NULL,
 			PRIMARY KEY (`id`)
 		) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
-		
+
 		$create_forum_forums = "CREATE TABLE `forums` (
 			`id` INT(11) NOT NULL AUTO_INCREMENT,
 			`name` VARCHAR(150) NOT NULL,
@@ -335,7 +338,7 @@ class Install extends Database{
 			`type` VARCHAR(50) NOT NULL,
 			PRIMARY KEY (`id`)
 		) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
-		
+
 		$create_forum_menu = "CREATE TABLE `menu` (
 			`id` INT(11) NOT NULL AUTO_INCREMENT,
 			`name` VARCHAR(50) NOT NULL DEFAULT 'link name',
@@ -346,7 +349,7 @@ class Install extends Database{
 			`icon` VARCHAR(50) NOT NULL,
 			PRIMARY KEY (`id`)
 		) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
-		
+
 		$create_forum_replys = "CREATE TABLE `replys` (
 			`id` INT(11) NOT NULL AUTO_INCREMENT,
 			`title` VARCHAR(50) NOT NULL,
@@ -357,7 +360,7 @@ class Install extends Database{
 			`id_forum` INT(11) NOT NULL,
 			PRIMARY KEY (`id`)
 		) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
-		
+
 		$create_forum_topics = "CREATE TABLE `topics` (
 			`id` INT(11) NOT NULL AUTO_INCREMENT,
 			`title` VARCHAR(50) NOT NULL DEFAULT '0',
@@ -369,26 +372,26 @@ class Install extends Database{
 			`id_forum` INT(11) NOT NULL,
 			PRIMARY KEY (`id`)
 		) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
-		
-		$insert_forum_menu = "INSERT INTO `menu` (name,link,link_order,logged,position,icon) 
-			VALUES 
+
+		$insert_forum_menu = "INSERT INTO `menu` (name,link,link_order,logged,position,icon)
+			VALUES
 				('Website','../website',1,2,'top',''),
 				('Login','?page=login',1,0,'bar',''),
 				('Logout','?page=logout',1,1,'bar',''),
 				('FAQ','?page=faq',2,2,'top',''),
 				('Account P','?page=account',2,1,'bar','');";
-		
-		$insert_category_info = "INSERT INTO `categorys` (name) 
-			VALUES 
+
+		$insert_category_info = "INSERT INTO `categorys` (name)
+			VALUES
 				('World of Warcraft'),
 				('Diablo'),
 				('MineCraft'),
 				('General');";
-		
+
 		$insert_forum_info = "INSERT INTO `forums` (name,description,id_category,color,type) VALUES ('Releases','Description for the forum',1,'#000','open');";
-		
+
 		$insert_topic_info = "INSERT INTO `topics` (title,content,type,posted_by,views,id_forum) VALUES ('Welcome!','Welcome to the PhentomCMS forum!',0,'Phentom',0,1);";
-		
+
 		//Creates tables for the Website
 		$this->SelectDb(DBNAME);
 		$this->SimpleUpdateQuery($create_table_chat);
@@ -401,12 +404,12 @@ class Install extends Database{
 		$this->SimpleUpdateQuery($create_table_statistics);
 		$this->SimpleUpdateQuery($create_table_media);
 		$this->SimpleUpdateQuery($create_table_soap_ra);
-		
+
 		$this->SimpleUpdateQuery($insert_data_menu);
 		$this->SimpleUpdateQuery($insert_data_info);
 		$this->SimpleUpdateQuery($insert_data_news);
 		$this->SimpleUpdateQuery($insert_data_media);
-		
+
 		//Creates the tables for the Forum
 		$this->SelectDb(DBFORUM);
 		$this->SimpleUpdateQuery($create_forum_category);
@@ -414,13 +417,13 @@ class Install extends Database{
 		$this->SimpleUpdateQuery($create_forum_menu);
 		$this->SimpleUpdateQuery($create_forum_replys);
 		$this->SimpleUpdateQuery($create_forum_topics);
-		
+
 		$this->SimpleUpdateQuery($insert_forum_menu);
 		$this->SimpleUpdateQuery($insert_category_info);
 		$this->SimpleUpdateQuery($insert_forum_info);
 		$this->SimpleUpdateQuery($insert_topic_info);
 	}
-	
+
 	/**
 	 * Finishes the installation
 	 *
@@ -428,7 +431,7 @@ class Install extends Database{
 	public function finish(){
 		//Renames the install folder to trash
 		rename(WEB_PATH ."/install", WEB_PATH ."/trash");
-		
+
 		//Unsets the language session variable
 		unset($_SESSION['lang']);
 	}

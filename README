@@ -1,13 +1,12 @@
       PhentomCMS V2
-- The Best WoW Free CMS -		
- 		 
+- The Best WoW Free CMS -
+
 Warning
 -------
 This project is under development and the features will be added overtime.
 
 Upcoming Updates
 ----------------
-- Mangos support
 - Add features to the back-end:
   - Account options
   - Server options
@@ -21,15 +20,14 @@ Upcoming Updates
     - Donate
     - Character tools
     - Store
-  - Gallery
   - Armory
 
 ChangeLog
 ---------
-- A New File Structure.		
-- Smarty (3.1.21) Template Engine.		
-- UIkit (2.20.3) Front-End Framework.		
-- Plugin System.		
+- A New File Structure.
+- Smarty (3.1.21) Template Engine.
+- UIkit (2.20.3) Front-End Framework.
+- Plugin System.
 - Integrated Forum.
 
 General Info
@@ -37,3 +35,4 @@ General Info
 - Author: Phentom
 - Website: Phentom.net
 - Description: Wow Free CMS
+- Version: 2.0
