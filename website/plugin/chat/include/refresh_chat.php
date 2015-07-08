@@ -10,11 +10,6 @@ if ($_SERVER['SERVER_ADDR'] === $_SERVER['REMOTE_ADDR']){
 	
 	$db = new Database();
 	
-	//$smarty->force_compile = true;
-	$system->debugging = false;
-	$system->caching = false;
-	$system->cache_lifetime = 120;
-	
 	if (!empty($_POST['chatmsg'])){
 		$db->SimpleUpdateQuery("INSERT INTO ". DBNAME .".". WEB_TBL_CHAT ." (user,msg) VALUES ('". $_SESSION['username'] ."','". $_POST['chatmsg'] ."')");
 	}
@@ -22,6 +17,7 @@ if ($_SERVER['SERVER_ADDR'] === $_SERVER['REMOTE_ADDR']){
 	if (!empty($_POST['refresh'])){
 		$chat_messsages = $db->SelectQuery("user,msg", DBNAME .".". WEB_TBL_CHAT,"","","id DESC","5");
 		
+		$chat = "";
 		foreach ($chat_messsages as $key => $value){
 			$chat .= "<a class='user'>";
 			if ($chat_messsages[$key]['user'] == "phentom"){
