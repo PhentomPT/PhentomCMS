@@ -112,6 +112,15 @@ class Account extends Database{
 				$result = $this->SimpleQuery("SELECT acct as id, login as username FROM ". $core[0]['accounts'] .".accounts ORDER BY acct DESC LIMIT 1");
 				break;
 			case "trinity":
+				$check = $this->SimpleQuery("SELECT id FROM ". $core[0]['accounts'] .".account WHERE email='$email'");
+				
+				if (count($check) > 0){
+					return "user_exists";
+				}
+				
+				$this->SimpleUpdateQuery("INSERT INTO ". $core[0]['accounts'] .".account (username,email,sha_pass_hash) VALUES ('$username','$email','$password')");
+				$result = $this->SimpleQuery("SELECT id,username FROM ". $core[0]['accounts'] .".account ORDER BY id DESC LIMIT 1");
+				break;
 			case "trinity_v6":
 				$check = $this->SimpleQuery("SELECT id FROM ". $core[0]['accounts'] .".account WHERE email='$email'");
 				
@@ -120,6 +129,7 @@ class Account extends Database{
 				}
 				
 				$this->SimpleUpdateQuery("INSERT INTO ". $core[0]['accounts'] .".account (username,email,sha_pass_hash) VALUES ('$username','$email','$password')");
+				$this->SimpleUpdateQuery("INSERT INTO ". $core[0]['accounts'] .".battlenet_accounts (email,sha_pass_hash) VALUES ('$email','$password')");
 				$result = $this->SimpleQuery("SELECT id,username FROM ". $core[0]['accounts'] .".account ORDER BY id DESC LIMIT 1");
 				break;
 			case "mangos":

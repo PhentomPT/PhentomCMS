@@ -15,6 +15,16 @@ if (!defined("SSC")){ exit("You don't have access to this file"); }
 
 class Statistics extends Common{
 	
+	public $ip;
+	public $locations;
+	public $total;
+	public $today;
+	public $yesterday;
+	public $day2ago;
+	public $day3ago;
+	public $day4ago;
+	public $other;
+	
 	/**
 	 * Class constructor for the database
 	 *
@@ -85,11 +95,10 @@ class Statistics extends Common{
 	public function saveStatistics(){
 		$your_session = $this->getSessionID();
 		
-		$this->db->SelectDb(DBNAME);
-		$get_session = $this->db->SimpleQuery("SELECT * FROM statistics WHERE session='$your_session'");
+		$get_session = $this->db->SimpleQuery("SELECT * FROM ". DBNAME .".". WEB_TBL_STATISTICS ." WHERE session='$your_session'");
 		
 		if (count($get_session) < 1){
-			$this->db->SimpleQuery("INSERT INTO statistics (session,ip,country,state,town) VALUES ('$your_session','$this->ip','".$this->locations['country']."','".$this->locations['state']."','".$this->locations['town']."')");
+			$this->db->SimpleQuery("INSERT INTO ". DBNAME .".". WEB_TBL_STATISTICS ." (session,ip,country,state,town) VALUES ('$your_session','$this->ip','".$this->locations['country']."','".$this->locations['state']."','".$this->locations['town']."')");
 		}
 	}
 	
@@ -105,8 +114,7 @@ class Statistics extends Common{
 			$where = "WHERE ".$where;
 		}
 		
-		$this->db->SelectDb(DBNAME);
-		$true_viewers = $this->db->SimpleQuery("SELECT * FROM statistics $where");
+		$true_viewers = $this->db->SimpleQuery("SELECT * FROM ". DBNAME .".". WEB_TBL_STATISTICS ." $where");
 		
 		$ips = array();
 		
@@ -131,7 +139,7 @@ class Statistics extends Common{
 	 * @var	: other (integer)
 	 */
 	public function viewsCount(){
-		$statistics = $this->db->SimpleQuery("SELECT * FROM statistics");
+		$statistics = $this->db->SimpleQuery("SELECT * FROM ". DBNAME .".". WEB_TBL_STATISTICS ."");
 		$todaydate = date("Y-m-d");
 		
 		foreach ($statistics as $key => $value){

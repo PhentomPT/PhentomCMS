@@ -1,6 +1,7 @@
 <?php
 //Prevents remote connections
-if ($_SERVER['SERVER_ADDR'] === $_SERVER['REMOTE_ADDR']){
+$server_adress = array_key_exists('SERVER_ADDR',$_SERVER) ? $_SERVER['SERVER_ADDR'] : $_SERVER['LOCAL_ADDR'];
+if ($server_adress === $_SERVER['REMOTE_ADDR']){
 	
 	//Defines system constant
 	define("SSC", "Secure System Constant");
@@ -28,9 +29,10 @@ if ($_SERVER['SERVER_ADDR'] === $_SERVER['REMOTE_ADDR']){
 			$chat .= "<div class='div_chat'></div>";
 		}
 		
-		$return['chatmsg'] = $chat;
-		
-		echo json_encode($return);
+		//$return['chatmsg'] = $chat;
+		//echo json_encode($return);
+		echo $chat;
 	}
 }
+$server_adress = "";
 exit();

@@ -22,8 +22,8 @@ $(document).ready(function(){
 					data: { refresh: "1" }
 				})
 				.success(function(data){
-					$data = JSON.parse(data);
-					$("#chat_msgs").html($data['chatmsg']);
+					//$data = JSON.parse(data);
+					$("#chat_msgs").html(data);
 				});
 			});
 		}
@@ -39,8 +39,8 @@ $(document).ready(function(){
 			data: { refresh: "1" }
 		})
 		.success(function(data){
-			$data = JSON.parse(data);
-			$("#chat_msgs").html($data['chatmsg']);
+			//$data = JSON.parse(data);
+			$("#chat_msgs").html(data);
 		});
 	}, 3000);
 	
