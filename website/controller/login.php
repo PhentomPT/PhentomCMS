@@ -6,7 +6,7 @@ if (isset($_POST['username']) && isset($_POST['password'])){
 	$username = $_POST['username'];
 	
 	if ($server_info[0]['core'] == "trinity_v6"){
-		$password = $_POST['rpassword'];
+		$password = $_POST['password'];
 	}
 	else{
 		$password = $common->encryptSha1($username,$_POST['password']);
