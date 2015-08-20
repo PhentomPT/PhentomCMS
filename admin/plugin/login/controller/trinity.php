@@ -7,7 +7,20 @@ if (!defined("SSC")){ exit("You don't have access to this file"); }
  * and logs in or gives an error
  */
 $username = $_POST['username'];
-$password = $common->encryptSha1($username,$_POST['password']);
+
+if ($server_info[0]['core'] == "trinity_v6"){
+	$password = $_POST['password'];
+	
+	$check_email = $db->SimpleQuery("SELECT ac.email as email
+	FROM ". $server_info[0]['accounts'].".account a 
+		LEFT JOIN ". $server_info[0]['accounts'].".account_access ac ON ac.id = a.id
+	WHERE a.username='$username'");
+	
+	$password = $common->encryptSha1($check_email[0]['email'],$password);
+}
+else{
+	$password = $common->encryptSha1($username,$password);
+}
 
 $check_account = $db->SimpleQuery("SELECT * 
 FROM ". $server_info[0]['accounts'].".account a 

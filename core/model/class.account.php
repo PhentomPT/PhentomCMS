@@ -63,7 +63,11 @@ class Account extends Database{
 				$check_account = $this->SimpleQuery("SELECT acct as id, login as username, email FROM ". $core[0]['accounts'] .".accounts WHERE login='$username' AND encrypted_password='$password'");
 				break;
 			case "trinity":
+				$check_account = $this->SimpleQuery("SELECT id, username, email FROM ". $core[0]['accounts'] .".account WHERE username='$username' AND sha_pass_hash='$password'");
+				break;
 			case "trinity_v6":
+				$check_email = $this->SimpleQuery("SELECT email FROM ". $core[0]['accounts'] .".account WHERE username='$username'");
+				$password = sha1(strtoupper($check_email[0]['email']),strtoupper($password));
 				$check_account = $this->SimpleQuery("SELECT id, username, email FROM ". $core[0]['accounts'] .".account WHERE username='$username' AND sha_pass_hash='$password'");
 				break;
 			case "mangos":
