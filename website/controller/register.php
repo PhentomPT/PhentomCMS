@@ -6,8 +6,12 @@ if (isset($_POST['register'])){
 	if ($_POST['rpassword'] == $_POST['vpassword']){
 		$username = $_POST['rusername'];
 		$email = $_POST['remail'];
-		$password = $common->encryptSha1($username,$_POST['rpassword']);
-		
+		if ($server_info[0]['core'] == "trinity_v6"){
+			$password = $common->encryptSha1($email,$_POST['rpassword']);
+		}
+		else{
+			$password = $common->encryptSha1($username,$_POST['rpassword']);
+		}
 		$register = $objAccount->register($username, $password, $email);
 		
 		if ($register == "registered"){
