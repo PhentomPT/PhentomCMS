@@ -16,7 +16,7 @@ if ($server_info[0]['core'] == "trinity_v6"){
 		LEFT JOIN ". $server_info[0]['accounts'].".account_access ac ON ac.id = a.id
 	WHERE a.username='$username'");
 	
-	$password = $common->encryptSha1($check_email[0]['email'],$password);
+	$password = strtoupper(bin2hex(strrev(hex2bin(strtoupper(hash("sha256",strtoupper(hash("sha256", strtoupper($check_email[0]['email'])).":".strtoupper($password))))))));
 }
 else{
 	$password = $common->encryptSha1($username,$password);
