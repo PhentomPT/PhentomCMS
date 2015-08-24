@@ -7,7 +7,7 @@ if (isset($_POST['register'])){
 		$username = $_POST['rusername'];
 		$email = $_POST['remail'];
 		if ($server_info[0]['core'] == "trinity_v6"){
-			$password = $common->encryptSha1($email,$_POST['rpassword']);
+			$password = strtoupper(bin2hex(strrev(hex2bin(strtoupper(hash("sha256",strtoupper(hash("sha256", strtoupper($email)).":".strtoupper($_POST['rpassword']))))))));
 		}
 		else{
 			$password = $common->encryptSha1($username,$_POST['rpassword']);
