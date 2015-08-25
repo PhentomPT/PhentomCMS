@@ -14,6 +14,7 @@ $lang['server_info'] = "Server Info";
 $lang['server_name'] = "Server Name";
 $lang['server_slogan'] = "Server Slogan";
 $lang['user'] = "Username";
+$lang['email'] = "Email";
 $lang['password'] = "Password, twice";
 $lang['server_core'] = "Server Core";
 $lang['expansion'] = "Expansion";
