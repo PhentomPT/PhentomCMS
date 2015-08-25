@@ -14,6 +14,7 @@ $lang['server_info'] = "Informação do Servidor";
 $lang['server_name'] = "Nome do Servidor";
 $lang['server_slogan'] = "Slogan do Servidor";
 $lang['user'] = "Utilizador";
+$lang['email'] = "Email";
 $lang['password'] = "Palavra Passe, duas vezes";
 $lang['server_core'] = "Núcleo do Servidor";
 $lang['expansion'] = "Expanção";
