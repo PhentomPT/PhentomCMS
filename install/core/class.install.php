@@ -25,6 +25,7 @@ class Install extends Database{
 	public $server_name;
 	public $server_slogan;
 	public $server_user;
+	public $server_email;
 	public $server_password;
 	public $server_core;
 	public $server_expansion;
@@ -119,10 +120,16 @@ class Install extends Database{
 				$account_id = $this->SimpleQuery("SELECT acct as id, login as username FROM `". $core_db['accounts'] ."`.accounts ORDER BY acct DESC LIMIT 1");
 				break;
 			case "trinity":
-			case "trinity_v6":
 				$this->SimpleUpdateQuery("INSERT INTO `". $core_db['accounts'] ."`.account (username, sha_pass_hash, expansion) VALUES ('". $this->server_user ."', '". $encrypted ."', '". $true_expansion ."');");
 				$account_id = $this->SimpleQuery("SELECT id, username FROM `". $core_db['accounts'] ."`.account WHERE username='". $this->server_user ."' LIMIT 1;");
 				$this->SimpleUpdateQuery("INSERT INTO `". $core_db['accounts'] ."`.account_access (id,gmlevel) VALUES ('". $account_id[0]['id'] ."', 3);");
+				break;
+			case "trinity_v6":
+				$encrypted = strtoupper(bin2hex(strrev(hex2bin(strtoupper(hash("sha256",strtoupper(hash("sha256", strtoupper($this->server_email)).":".strtoupper($this->server_password))))))));
+				$this->SimpleUpdateQuery("INSERT INTO ". $core_db['accounts'] .".battlenet_accounts (email,sha_pass_hash) VALUES ('".$this->server_email."','$encrypted')");
+				$battle_net_result = $this->SimpleQuery("SELECT id FROM ". $core_db['accounts'] .".battlenet_accounts ORDER BY id DESC LIMIT 1");
+				$this->SimpleUpdateQuery("INSERT INTO ". $core_db['accounts'] .".account (username,email,sha_pass_hash,battlenet_account) VALUES ('".$this->server_user."','".$this->server_email."','$encrypted','". $battle_net_result[0]['id'] ."')");
+				$result = $this->SimpleQuery("SELECT id,username FROM ". $core_db['accounts'] .".account ORDER BY id DESC LIMIT 1");
 				break;
 			case "mangos":
 				$this->SimpleUpdateQuery("INSERT INTO `". $core_db['accounts'] ."`.account (username, sha_pass_hash, gmlevel, expansion) VALUES ('". $this->server_user ."','". $encrypted ."', 3, '". $true_expansion ."');");
