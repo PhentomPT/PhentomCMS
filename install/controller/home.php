@@ -38,6 +38,7 @@ else{
 			if (isset($_POST['server_name'])){ $system->assign("server_name_value", $_POST['server_name']); }
 			if (isset($_POST['slogan'])){ $system->assign("slogan", $_POST['slogan']); }
 			if (isset($_POST['user'])){ $system->assign("user_value", $_POST['user']); }
+			if (isset($_POST['email'])){ $system->assign("email_value", $_POST['email']); }
 			if (isset($_POST['core'])){ $system->assign("core", $_POST['core']); }
 			if (isset($_POST['expansion'])){ $system->assign("expansion_value", $_POST['expansion']); }
 			if (isset($_POST['players'])){ $system->assign("players", $_POST['players']); }
@@ -49,6 +50,7 @@ else{
 			$install->server_name = $_POST['server_name'];
 			$install->server_slogan = $_POST['slogan'];
 			$install->server_user = $_POST['user'];
+			$install->server_email = $_POST['email'];
 			$install->server_password = $_POST['password'];
 			$install->server_core = $_POST['core'];
 			$install->server_expansion = $_POST['expansion'];
