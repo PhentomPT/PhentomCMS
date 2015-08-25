@@ -132,8 +132,10 @@ class Account extends Database{
 					return "user_exists";
 				}
 				
-				$this->SimpleUpdateQuery("INSERT INTO ". $core[0]['accounts'] .".account (username,email,sha_pass_hash) VALUES ('$username','$email','$password')");
 				$this->SimpleUpdateQuery("INSERT INTO ". $core[0]['accounts'] .".battlenet_accounts (email,sha_pass_hash) VALUES ('$email','$password')");
+				$battle_net_result = $this->SimpleQuery("SELECT id FROM ". $core[0]['accounts'] .".battlenet_accounts ORDER BY id DESC LIMIT 1");
+				
+				$this->SimpleUpdateQuery("INSERT INTO ". $core[0]['accounts'] .".account (username,email,sha_pass_hash,battlenet_account) VALUES ('$username','$email','$password','". $battle_net_result[0]['id'] ."')");
 				$result = $this->SimpleQuery("SELECT id,username FROM ". $core[0]['accounts'] .".account ORDER BY id DESC LIMIT 1");
 				break;
 			case "mangos":
